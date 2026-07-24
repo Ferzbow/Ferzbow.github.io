@@ -29,12 +29,46 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
-      background: var(--bg);
+      background: linear-gradient(-45deg, #070913, #0f0c1b, #05141c, #0a0f1d, #14081c);
+      background-size: 400% 400%;
+      animation: rgbBackground 16s ease infinite;
       color: var(--text);
       font-family: var(--font);
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      position: relative;
     }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -30%;
+      left: -30%;
+      width: 160%;
+      height: 160%;
+      background: radial-gradient(circle at 20% 30%, rgba(56, 189, 248, 0.15), transparent 40%),
+                  radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.15), transparent 40%),
+                  radial-gradient(circle at 50% 85%, rgba(236, 72, 153, 0.12), transparent 40%),
+                  radial-gradient(circle at 10% 75%, rgba(16, 185, 129, 0.12), transparent 40%);
+      z-index: -1;
+      pointer-events: none;
+      animation: rgbGlow 20s ease-in-out infinite alternate;
+      filter: blur(80px);
+    }
+
+    @keyframes rgbBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes rgbGlow {
+      0% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.15) rotate(180deg); }
+      100% { transform: scale(1) rotate(360deg); }
+    }
+
     .container {
       max-width: var(--max-w);
       margin: 0 auto;
