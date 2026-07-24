@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智慧物流 AI 課程成果 | Ferzbow</title>
+  <meta name="description" content="Ferzbow 在青年 AI 實戰養成班智慧物流班的四週課程成果，包含 RFM 分群、供應鏈優化、精準行銷引擎與智慧控制塔。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg-card: #141414;
+      --border: rgba(255, 255, 255, 0.15);
+      --text: #ffffff;
+      --text-muted: #cbd5e1;
+      --text-dim: #94a3b8;
+      --accent: #38bdf8;
+      --w1: #3b82f6;
+      --w2: #22c55e;
+      --w3: #f59e0b;
+      --w4: #a78bfa;
+      --font: 'Inter', 'Noto Sans TC', sans-serif;
+      --mono: 'Fira Code', monospace;
+      --radius: 12px;
+      --max-w: 1080px;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #04040a;
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 0, 100, 0.8), transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(0, 240, 255, 0.8), transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(0, 255, 100, 0.8), transparent 40%),
+        radial-gradient(circle at 20% 80%, rgba(255, 220, 0, 0.8), transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(200, 0, 255, 0.75), transparent 45%);
+      z-index: -2;
+      pointer-events: none;
+      filter: blur(60px) saturate(250%) brightness(130%);
+      animation: rgbHueRotate 6s linear infinite, rgbSpin 10s ease-in-out infinite alternate;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.1), rgba(4, 4, 10, 0.45));
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    @keyframes rgbHueRotate {
+      0% { filter: blur(60px) saturate(250%) brightness(130%) hue-rotate(0deg); }
+      100% { filter: blur(60px) saturate(250%) brightness(130%) hue-rotate(360deg); }
+    }
+    @keyframes rgbSpin {
+      0% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.2) rotate(180deg); }
+      100% { transform: scale(1) rotate(360deg); }
+    }
+    @keyframes rgbFlow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .rgb-text {
+      background: linear-gradient(90deg, #ff0055, #ff00cc, #00ccff, #00ff66, #ffcc00, #ff0055);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rgbFlow 4s linear infinite;
+    }
+
+    /* Nav */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10, 10, 10, 0.85);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-size: 1.4rem; font-weight: 800;
+      color: var(--text); text-decoration: none;
+      letter-spacing: -0.03em;
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--text-muted); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500;
+      padding: 8px 16px; border-radius: 50px;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .back-link:hover {
+      color: var(--text); border-color: var(--accent);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.15);
+    }
+
+    /* Page Hero */
+    .page-hero {
+      padding: 140px 0 60px;
+      text-align: center;
+    }
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .course-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      color: var(--accent);
+      font-size: 0.85rem; font-weight: 600;
+      padding: 6px 18px; border-radius: 50px;
+      margin-bottom: 20px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .page-hero h1 {
+      font-size: 3.2rem; font-weight: 900;
+      letter-spacing: -0.04em; line-height: 1.1;
+      margin-bottom: 16px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    .page-hero p {
+      font-size: 1.1rem; color: var(--text-muted);
+      max-width: 560px; margin: 0 auto 48px;
+      line-height: 1.8;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    /* Progress Timeline */
+    .timeline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 64px;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .tl-step {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 8px; flex: 1; max-width: 180px;
+    }
+    .tl-dot {
+      width: 44px; height: 44px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: 800; font-family: var(--mono);
+      border: 2px solid;
+      transition: all 0.3s;
+      position: relative; z-index: 1;
+    }
+    .tl-dot.w1 { background: rgba(59, 130, 246, 0.15); border-color: #3b82f6; color: #3b82f6; }
+    .tl-dot.w2 { background: rgba(34, 197, 94, 0.15); border-color: #22c55e; color: #22c55e; }
+    .tl-dot.w3 { background: rgba(245, 158, 11, 0.15); border-color: #f59e0b; color: #f59e0b; }
+    .tl-dot.w4 { background: rgba(167, 139, 250, 0.15); border-color: #a78bfa; color: #a78bfa; }
+    .tl-label { font-size: 0.78rem; color: var(--text-dim); font-weight: 500; text-align: center; }
+    .tl-connector {
+      height: 2px; flex: 1; max-width: 60px;
+      background: linear-gradient(90deg, #3b82f6, #22c55e, #f59e0b, #a78bfa);
+      opacity: 0.3; margin-bottom: 24px;
+    }
+
+    /* Week Cards */
+    section.weeks { padding: 0 0 100px; }
+    .weeks-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+
+    .week-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.35s ease;
+      display: flex; flex-direction: column;
+      position: relative;
+      opacity: 0; transform: translateY(28px);
+    }
+    .week-card.visible { opacity: 1; transform: translateY(0); }
+    .week-card.visible { transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.35s ease, border-color 0.35s ease; }
+
+    .week-card::after {
+      content: '';
+      position: absolute; inset: -1px;
+      border-radius: 16px;
+      padding: 2px;
+      background: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bf7, #7a00ff, #ff00c8, #ff0000);
+      background-size: 400% 400%;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0.3;
+      animation: rgbFlow 6s linear infinite;
+      transition: opacity 0.35s;
+      pointer-events: none;
+    }
+    .week-card:hover::after { opacity: 0.8; }
+    .week-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-stripe {
+      height: 5px; width: 100%;
+      flex-shrink: 0;
+    }
+    .card-stripe.w1 { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+    .card-stripe.w2 { background: linear-gradient(90deg, #22c55e, #4ade80); }
+    .card-stripe.w3 { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+    .card-stripe.w4 { background: linear-gradient(90deg, #a78bfa, #c4b5fd); }
+
+    .card-inner {
+      padding: 32px;
+      display: flex; flex-direction: column;
+      flex: 1;
+    }
+    .week-meta {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .week-tag {
+      font-size: 0.72rem; font-weight: 700;
+      font-family: var(--mono);
+      text-transform: uppercase; letter-spacing: 0.1em;
+      padding: 4px 12px; border-radius: 20px;
+    }
+    .week-tag.w1 { background: rgba(59, 130, 246, 0.15); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.25); }
+    .week-tag.w2 { background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.25); }
+    .week-tag.w3 { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.25); }
+    .week-tag.w4 { background: rgba(167, 139, 250, 0.15); color: #a78bfa; border: 1px solid rgba(167, 139, 250, 0.25); }
+    .week-role {
+      font-size: 0.78rem; font-weight: 600; color: var(--text-dim);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 3px 12px; border-radius: 20px;
+    }
+
+    .card-emoji { font-size: 2.2rem; margin-bottom: 12px; }
+    .card-inner h2 {
+      font-size: 1.25rem; font-weight: 800;
+      line-height: 1.3; margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .card-inner p {
+      font-size: 0.9rem; color: var(--text-muted);
+      line-height: 1.75; margin-bottom: 20px; flex: 1;
+    }
+
+    .card-highlights {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 24px;
+    }
+    .highlight {
+      font-size: 0.75rem; font-weight: 600;
+      padding: 3px 10px; border-radius: 20px;
+    }
+    .highlight.w1 { background: rgba(59, 130, 246, 0.1); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.2); }
+    .highlight.w2 { background: rgba(34, 197, 94, 0.1); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.2); }
+    .highlight.w3 { background: rgba(245, 158, 11, 0.1); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.2); }
+    .highlight.w4 { background: rgba(167, 139, 250, 0.1); color: #c4b5fd; border: 1px solid rgba(167, 139, 250, 0.2); }
+
+    .card-kpi {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 12px; margin-bottom: 24px;
+    }
+    .kpi-item {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px; padding: 10px 6px;
+    }
+    .kpi-val {
+      display: block; font-size: 1.15rem; font-weight: 800;
+      font-family: var(--mono);
+    }
+    .kpi-lbl { display: block; font-size: 0.7rem; color: var(--text-dim); margin-top: 2px; }
+
+    .card-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 50px;
+      font-size: 0.9rem; font-weight: 700;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: all 0.25s;
+      width: fit-content;
+    }
+    .card-cta.w1 { background: rgba(59, 130, 246, 0.15); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3); }
+    .card-cta.w2 { background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); }
+    .card-cta.w3 { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .card-cta.w4 { background: rgba(167, 139, 250, 0.15); color: #a78bfa; border: 1px solid rgba(167, 139, 250, 0.3); }
+    .card-cta:hover { transform: translateY(-2px); filter: brightness(1.2); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); }
+    .cta-arrow { transition: transform 0.2s; }
+    .card-cta:hover .cta-arrow { transform: translateX(4px); }
+
+    /* Summary Stats */
+    .summary {
+      padding: 60px 0;
+      background: rgba(20, 20, 28, 0.6);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 80px;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .sum-card {
+      text-align: center; padding: 28px 16px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      position: relative; overflow: hidden;
+    }
+    .sum-card::before {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, #ff0055, #00ccff, #00ff66, #ffcc00);
+      background-size: 300% 100%;
+      animation: rgbFlow 4s linear infinite;
+      opacity: 0.5;
+    }
+    .sum-num {
+      display: block; font-size: 2.4rem; font-weight: 900;
+      font-family: var(--mono); color: var(--accent);
+      line-height: 1;
+    }
+    .sum-lbl { display: block; font-size: 0.82rem; color: var(--text-dim); margin-top: 6px; }
+
+    /* Footer */
+    footer {
+      text-align: center; padding: 40px 0;
+      border-top: 1px solid var(--border);
+      color: var(--text-dim); font-size: 0.85rem;
+    }
+    footer a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    footer a:hover { text-decoration: underline; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .page-hero h1 { font-size: 2.2rem; }
+      .weeks-grid { grid-template-columns: 1fr; }
+      .summary-grid { grid-template-columns: repeat(2, 1fr); }
+      .timeline { display: none; }
+    }
+    @media (max-width: 480px) {
+      .summary-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Nav -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="./" class="logo rgb-text">F.</a>
+      <a href="./" class="back-link">
+        ← 返回作品集
+      </a>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <header class="page-hero">
+    <div class="container">
+      <div class="course-badge">🚚 青年 AI 實戰養成班 · 智慧物流班</div>
+      <h1 class="rgb-text">智慧物流 AI<br>四週課程成果</h1>
+      <p>從零到端到端：RFM 分群 → 供應鏈優化 → 精準行銷引擎 → 智慧控制塔，<br>完整記錄一個 AI 架構師的養成過程。</p>
+
+      <!-- Timeline -->
+      <div class="timeline">
+        <div class="tl-step">
+          <div class="tl-dot w1">1</div>
+          <div class="tl-label">資料驅動師<br>RFM 分群</div>
+        </div>
+        <div class="tl-connector"></div>
+        <div class="tl-step">
+          <div class="tl-dot w2">2</div>
+          <div class="tl-label">管理工程師<br>供應鏈優化</div>
+        </div>
+        <div class="tl-connector"></div>
+        <div class="tl-step">
+          <div class="tl-dot w3">3</div>
+          <div class="tl-label">AI 價值師<br>精準行銷</div>
+        </div>
+        <div class="tl-connector"></div>
+        <div class="tl-step">
+          <div class="tl-dot w4">4</div>
+          <div class="tl-label">智慧架構師<br>控制塔整合</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Summary Stats -->
+  <div class="summary">
+    <div class="container">
+      <div class="summary-grid">
+        <div class="sum-card">
+          <span class="sum-num">4</span>
+          <span class="sum-lbl">週密集訓練</span>
+        </div>
+        <div class="sum-card">
+          <span class="sum-num">7+</span>
+          <span class="sum-lbl">專案產出</span>
+        </div>
+        <div class="sum-card">
+          <span class="sum-num">1,500</span>
+          <span class="sum-lbl">客戶資料筆數</span>
+        </div>
+        <div class="sum-card">
+          <span class="sum-num">-18%</span>
+          <span class="sum-lbl">VRP 路線里程優化</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Week Cards -->
+  <section class="weeks">
+    <div class="container">
+      <div class="weeks-grid">
+
+        <!-- Week 1 -->
+        <article class="week-card">
+          <div class="card-stripe w1"></div>
+          <div class="card-inner">
+            <div class="week-meta">
+              <span class="week-tag w1">Week 01</span>
+              <span class="week-role">資料驅動師</span>
+            </div>
+            <div class="card-emoji">📊</div>
+            <h2>RFM 客戶價值分群<br>與數據體檢</h2>
+            <p>對 800+ 筆物流訂單進行資料清洗（處理 6 種髒資料模式），並以 RFM 模型將 1,500 名客戶分群，找出高價值核心客群。驗證「80% 業績來自 20% 客戶」的真實商業法則，並建置 Python 即時儀表板。</p>
+            <div class="card-highlights">
+              <span class="highlight w1">Python</span>
+              <span class="highlight w1">Pandas</span>
+              <span class="highlight w1">RFM Model</span>
+              <span class="highlight w1">資料清洗</span>
+              <span class="highlight w1">儀表板</span>
+            </div>
+            <div class="card-kpi">
+              <div class="kpi-item">
+                <span class="kpi-val" style="color: #3b82f6;">800+</span>
+                <span class="kpi-lbl">訂單清洗</span>
+              </div>
+              <div class="kpi-item">
+                <span class="kpi-val" style="color: #3b82f6;">1,500</span>
+                <span class="kpi-lbl">客戶分群</span>
+              </div>
+              <div class="kpi-item">
+                <span class="kpi-val" style="color: #3b82f6;">8</span>
+                <span class="kpi-lbl">客群類型</span>
+              </div>
+            </div>
+            <a href="./w1.html" class="card-cta w1">
+              查看完整專案 <span class="cta-arrow">→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Week 2 -->
+        <article class="week-card">
+          <div class="card-stripe w2"></div>
+          <div class="card-inner">
+            <div class="week-meta">
+              <span class="week-tag w2">Week 02</span>
+              <span class="week-role">管理工程師</span>
+            </div>
+            <div class="card-emoji">🏭</div>
+            <h2>供應鏈健診<br>與倉儲路徑最佳化</h2>
+            <p>建立供應鏈健診儀表板，針對儲位路線進行分析與排程優化。運用約束理論（TOC）辨識瓶頸工序，並撰寫 Python 決策建議腳本，理解「排程的核心是瓶頸，不是平均」的精髓。</p>
+            <div class="card-highlights">
+              <span class="highlight w2">Python</span>
+              <span class="highlight w2">TOC 約束理論</span>
+              <span class="highlight w2">WMS</span>
+              <span class="highlight w2">TMS</span>
+              <span class="highlight w2">排程優化</span>
+            </div>
+            <div class="card-kpi">
+              <div class="kpi-item">
+                <span class="kpi-val" style="color: #22c55e;">TOC</span>
+                <span class="kpi-lbl">瓶頸分析</span>
+              </div>
+              <div class="kpi-item">
+                <span class="kpi-val" style="color: #22c55e;">WMS</span>
+                <span class="kpi-lbl">倉儲排程</span>
+              </div>
+              <div class="kpi-item">
+                <span class="kpi-val" style="color: #22c55e;">TMS</span>
+                <span class="kpi-lbl">運輸管理</span>
+              </div>
+            </div>
+            <a href="./w2.html" class="card-cta w2">
+              查看完整專案 <span class="cta-arrow">→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Week 3 -->
+        <article class="week-card">
+          <div class="card-stripe w3"></div>
+          <div class="card-inner">
+            <div class="week-meta">
+              <span class="week-tag w3">Week 03</span>
+              <span class="week-role">AI 價值師</span>
+            </div>
+            <div class="card-emoji">🎯</div>
+            <h2>精準行銷引擎<br>— 5 模組 Streamlit App</h2>
+            <p>整合流失預警、銷量預測、關聯推薦與客戶儀表板，打造完整的精準行銷引擎。以 Streamlit 建置互動式 Web App，串接 1,500 名客戶資料，體會 AI 真正的價值是放大人的決策能力。</p>
+            <div class="card-highlights">
+              <span class="highlight w3">Streamlit</span>
+              <span class="highlight w3">Scikit-learn</span>
+              <span class="highlight w3">流失預測</span>
+              <span class="highlight w3">K-means</span>
+              <span class="highlight w3">Apriori</span>
+            </div>
+            <div class="card-kpi">
+              <div class="kpi-item">
+                <span class="kpi-val" style="color: #f59e0b;">5</span>
+                <span class="kpi-lbl">功能模組</span>
+              </div>
+              <div class="kpi-item">
+                <span class="kpi-val" style="color: #f59e0b;">ML</span>
+                <span class="kpi-lbl">監督式學習</span>
+              </div>
+              <div class="kpi-item">
+                <span class="kpi-val" style="color: #f59e0b;">Web</span>
+                <span class="kpi-lbl">Streamlit App</span>
+              </div>
+            </div>
+            <a href="./w3.html" class="card-cta w3">
+              查看完整專案 <span class="cta-arrow">→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Week 4 -->
+        <article class="week-card">
+          <div class="card-stripe w4"></div>
+          <div class="card-inner">
+            <div class="week-meta">
+              <span class="week-tag w4">Week 04</span>
+              <span class="week-role">智慧架構師</span>
+            </div>
+            <div class="card-emoji">🤖</div>
+            <h2>智慧物流控制塔<br>與路徑最佳化</h2>
+            <p>整合前三週所有數據資產，使用 OR-Tools 求解車輛路徑問題（VRP），並結合 LLM Agent 建立自動化控制塔原型，實現從數據採集到決策輸出的端到端自動化流程。</p>
+            <div class="card-highlights">
+              <span class="highlight w4">OR-Tools</span>
+              <span class="highlight w4">LLM Agent</span>
+              <span class="highlight w4">VRP 最佳化</span>
+              <span class="highlight w4">系統整合</span>
+            </div>
+            <div class="card-kpi">
+              <div class="kpi-item">
+                <span class="kpi-val" style="color: #a78bfa;">-18%</span>
+                <span class="kpi-lbl">里程優化</span>
+              </div>
+              <div class="kpi-item">
+                <span class="kpi-val" style="color: #a78bfa;">98.6%</span>
+                <span class="kpi-lbl">準時達交率</span>
+              </div>
+              <div class="kpi-item">
+                <span class="kpi-val" style="color: #a78bfa;">E2E</span>
+                <span class="kpi-lbl">端到端流程</span>
+              </div>
+            </div>
+            <a href="./w4.html" class="card-cta w4">
+              查看完整專案 <span class="cta-arrow">→</span>
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>© 2026 Ferzbow · <a href="./">返回作品集首頁</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // Fade in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.week-card').forEach((el, i) => {
+      el.style.transitionDelay = (i * 0.08) + 's';
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>

@@ -4,43 +4,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ferzbow | 智慧物流 AI 架構師</title>
-  <meta name="description" content="Ferzbow 的個人作品集。專注於智慧物流領域的數據分析、供應鏈優化與 AI 應用。">
+  <title>Ferzbow | Portfolio</title>
+  <meta name="description" content="Ferzbow 的個人作品集。遊戲開發者、AI 工程師、全端開發者。涵蓋 Unity 遊戲、智慧物流 AI、Web 應用等多元專案。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0a0a0a;
       --bg-card: #141414;
-      --border: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.12);
       --text: #ffffff;
       --text-muted: #cbd5e1;
       --text-dim: #94a3b8;
       --accent: #38bdf8;
-      --w1: #3b82f6;
-      --w2: #22c55e;
-      --w3: #f59e0b;
-      --w4: #a78bfa;
       --font: 'Inter', 'Noto Sans TC', sans-serif;
       --mono: 'Fira Code', monospace;
-      --radius: 12px;
-      --max-w: 1080px;
+      --radius: 14px;
+      --max-w: 1100px;
     }
 
-    *,
-    *::before,
-    *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       background: #04040a;
@@ -49,620 +34,326 @@
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
-      position: relative;
       overflow-x: hidden;
+      position: relative;
     }
 
-    /* High Saturation & High Brightness Moving RGB Background Spheres */
+    /* Animated RGB background spheres */
     body::before {
       content: '';
-      position: fixed;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at 20% 20%, rgba(255, 0, 100, 0.8), transparent 40%),
+      position: fixed; top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 0, 100, 0.8), transparent 40%),
         radial-gradient(circle at 80% 20%, rgba(0, 240, 255, 0.8), transparent 40%),
         radial-gradient(circle at 80% 80%, rgba(0, 255, 100, 0.8), transparent 40%),
         radial-gradient(circle at 20% 80%, rgba(255, 220, 0, 0.8), transparent 40%),
         radial-gradient(circle at 50% 50%, rgba(200, 0, 255, 0.75), transparent 45%);
-      z-index: -2;
-      pointer-events: none;
+      z-index: -2; pointer-events: none;
       filter: blur(60px) saturate(250%) brightness(130%);
       animation: rgbHueRotate 6s linear infinite, rgbSpin 10s ease-in-out infinite alternate;
     }
-
-    /* Subtle Dark Vignette for contrast */
     body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
+      content: ''; position: fixed; inset: 0;
       background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.1), rgba(4, 4, 10, 0.45));
-      z-index: -1;
-      pointer-events: none;
+      z-index: -1; pointer-events: none;
     }
 
     @keyframes rgbHueRotate {
-      0% {
-        filter: blur(60px) saturate(250%) brightness(130%) hue-rotate(0deg);
-      }
-
-      100% {
-        filter: blur(60px) saturate(250%) brightness(130%) hue-rotate(360deg);
-      }
+      0% { filter: blur(60px) saturate(250%) brightness(130%) hue-rotate(0deg); }
+      100% { filter: blur(60px) saturate(250%) brightness(130%) hue-rotate(360deg); }
     }
-
     @keyframes rgbSpin {
-      0% {
-        transform: scale(1) rotate(0deg);
-      }
-
-      50% {
-        transform: scale(1.2) rotate(180deg);
-      }
-
-      100% {
-        transform: scale(1) rotate(360deg);
-      }
+      0% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.2) rotate(180deg); }
+      100% { transform: scale(1) rotate(360deg); }
+    }
+    @keyframes rgbFlow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(56, 189, 248, 0.15); }
+      50% { box-shadow: 0 0 40px rgba(56, 189, 248, 0.35); }
     }
 
-    /* Full Rainbow Text Animation */
     .rgb-text {
       background: linear-gradient(90deg, #ff0055, #ff00cc, #00ccff, #00ff66, #ffcc00, #ff0055);
       background-size: 300% 300%;
-      -webkit-background-clip: text;
-      background-clip: text;
+      -webkit-background-clip: text; background-clip: text;
       -webkit-text-fill-color: transparent;
       animation: rgbFlow 4s linear infinite;
     }
 
-    @keyframes rgbFlow {
-      0% {
-        background-position: 0% 50%;
-      }
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
 
-      100% {
-        background-position: 300% 50%;
-      }
+    /* ---- NAV ---- */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10, 10, 10, 0.82);
+      -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 24px;
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      font-size: 1.7rem; font-weight: 800;
+      text-decoration: none; letter-spacing: -0.04em;
+    }
+    .nav-links { list-style: none; display: flex; gap: 28px; }
+    .nav-links a {
+      color: var(--text-muted); text-decoration: none;
+      font-size: 0.88rem; font-weight: 500; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ---- HERO ---- */
+    #hero { padding: 180px 0 100px; text-align: center; }
+    .hero-tag {
+      font-size: 0.95rem; color: var(--text-dim); font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 16px; animation: fadeUp 0.6s ease both;
+    }
+    .hero-name {
+      font-size: 5rem; font-weight: 900;
+      letter-spacing: -0.05em; line-height: 1;
+      margin-bottom: 20px;
+      animation: fadeUp 0.6s 0.08s ease both;
+    }
+    .hero-roles {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 10px; margin-bottom: 28px;
+      animation: fadeUp 0.6s 0.16s ease both;
+    }
+    .role-pill {
+      font-size: 0.85rem; font-weight: 700;
+      padding: 6px 18px; border-radius: 50px;
+      border: 1px solid;
+    }
+    .role-pill.game { background: rgba(167, 139, 250, 0.1); color: #c4b5fd; border-color: rgba(167, 139, 250, 0.3); }
+    .role-pill.ai   { background: rgba(56, 189, 248, 0.1);  color: #38bdf8; border-color: rgba(56, 189, 248, 0.3); }
+    .role-pill.dev  { background: rgba(34, 197, 94, 0.1);   color: #4ade80; border-color: rgba(34, 197, 94, 0.3); }
+    .hero-desc {
+      font-size: 1.1rem; color: #ffffff; font-weight: 500;
+      max-width: 580px; margin: 0 auto 44px; line-height: 1.8;
+      background: rgba(0, 0, 0, 0.5); padding: 18px 30px; border-radius: 16px;
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+      animation: fadeUp 0.6s 0.24s ease both;
+    }
+    .hero-btns {
+      display: flex; gap: 14px; justify-content: center;
+      animation: fadeUp 0.6s 0.32s ease both;
+    }
+    .btn-fill, .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 32px; border-radius: 50px;
+      font-size: 0.92rem; font-weight: 700; text-decoration: none;
+      transition: all 0.25s; border: none; cursor: pointer;
+    }
+    .btn-fill { background: var(--accent); color: #000; }
+    .btn-fill:hover { background: #5bcefa; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35); }
+    .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .btn-ghost:hover { border-color: var(--text-muted); transform: translateY(-2px); }
+
+    /* ---- SECTION HEADER ---- */
+    section { padding: 100px 0; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent);
+      background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2);
+      padding: 5px 14px; border-radius: 50px; margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: 2.2rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 12px;
+    }
+    .section-sub {
+      color: var(--text-muted); max-width: 540px; font-size: 0.98rem; line-height: 1.8;
+      margin-bottom: 52px;
     }
 
-    /* RGB Border Card Styling */
-    .project-card,
-    .stat-card,
-    .skill-group,
-    .contact-card {
-      position: relative;
-      border: 1px solid rgba(255, 255, 255, 0.12) !important;
-      transition: all 0.3s ease;
+    /* ---- ABOUT ---- */
+    #about { background: rgba(20, 20, 28, 0.55); }
+    .about-layout {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
     }
-
-    .project-card::after,
-    .stat-card::after,
-    .skill-group::after,
-    .contact-card::after {
+    .about-text p { color: var(--text-muted); font-size: 0.97rem; line-height: 1.85; margin-bottom: 18px; }
+    .about-text strong { color: var(--text); font-weight: 600; }
+    .stat-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .stat-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px; padding: 22px; text-align: center;
+      position: relative; overflow: hidden;
+      transition: all 0.3s;
+    }
+    .stat-box::after {
       content: '';
-      position: absolute;
-      inset: -1px;
-      border-radius: 12px;
-      padding: 2px;
+      position: absolute; inset: -1px; border-radius: 12px; padding: 1px;
       background: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bf7, #7a00ff, #ff00c8, #ff0000);
       background-size: 400% 400%;
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      opacity: 0.4;
-      animation: rgbFlow 6s linear infinite;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      opacity: 0.2; animation: rgbFlow 6s linear infinite;
+      transition: opacity 0.3s; pointer-events: none;
     }
+    .stat-box:hover::after { opacity: 0.7; }
+    .stat-box:hover { transform: translateY(-3px); }
+    .stat-n { display: block; font-size: 2.2rem; font-weight: 900; font-family: var(--mono); color: var(--accent); }
+    .stat-l { display: block; font-size: 0.8rem; color: var(--text-dim); margin-top: 4px; }
 
-    .project-card:hover::after,
-    .stat-card:hover::after,
-    .skill-group:hover::after,
-    .contact-card:hover::after {
-      opacity: 1;
-      filter: drop-shadow(0 0 8px rgba(0, 230, 255, 0.8));
-    }
+    /* ---- PROJECTS ---- */
+    .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
 
-    .container {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    /* Nav */
-    #nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      background: rgba(10, 10, 10, 0.85);
-      -webkit-backdrop-filter: blur(12px);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 24px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .logo {
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: var(--text);
-      text-decoration: none;
-      letter-spacing: -0.03em;
-    }
-
-    .logo span {
-      color: var(--accent);
-    }
-
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 32px;
-    }
-
-    .nav-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover {
-      color: var(--text);
-    }
-
-    /* Hero */
-    #hero {
-      padding: 180px 0 120px;
-      text-align: center;
-    }
-
-    .hero-tag {
-      font-size: 1.1rem;
-      color: #e2e8f0;
-      font-weight: 600;
-      margin-bottom: 12px;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
-      letter-spacing: 0.05em;
-    }
-
-    .hero-name {
-      font-size: 4.5rem;
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      line-height: 1.1;
-      margin-bottom: 16px;
-      filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.9));
-    }
-
-    .hero-role {
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: #ffffff;
-      margin-bottom: 24px;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
-    }
-
-    .hero-role .accent {
-      color: #38bdf8;
-      text-shadow: 0 0 15px rgba(56, 189, 248, 0.8), 0 2px 10px rgba(0, 0, 0, 0.9);
-    }
-
-    .hero-desc {
-      font-size: 1.15rem;
-      color: #ffffff;
-      font-weight: 500;
-      max-width: 600px;
-      margin: 0 auto 40px;
-      line-height: 1.8;
-      background: rgba(0, 0, 0, 0.55);
-      padding: 16px 28px;
-      border-radius: 16px;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
-    }
-
-    .hero-btns {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-    }
-
-    .btn-fill,
-    .btn-ghost {
-      display: inline-flex;
-      align-items: center;
-      padding: 14px 32px;
-      border-radius: 50px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.25s;
-      cursor: pointer;
-      border: none;
-    }
-
-    .btn-fill {
-      background: var(--accent);
-      color: #000;
-    }
-
-    .btn-fill:hover {
-      background: #5bcefa;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(56, 189, 248, 0.3);
-    }
-
-    .btn-ghost {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
-
-    .btn-ghost:hover {
-      border-color: var(--text-muted);
-      transform: translateY(-2px);
-    }
-
-    /* Sections */
-    section {
-      padding: 100px 0;
-    }
-
-    .section-title {
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
-      text-align: center;
-    }
-
-    .section-sub {
-      text-align: center;
-      color: var(--text-muted);
-      max-width: 560px;
-      margin: 0 auto 48px;
-      font-size: 1rem;
-    }
-
-    /* About */
-    #about {
+    .proj-card {
       background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: var(--radius); overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: all 0.3s ease; position: relative;
     }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr;
-      gap: 48px;
-      align-items: start;
+    .proj-card::after {
+      content: '';
+      position: absolute; inset: -1px; border-radius: var(--radius); padding: 2px;
+      background: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bf7, #7a00ff, #ff00c8, #ff0000);
+      background-size: 400% 400%;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      opacity: 0.25; animation: rgbFlow 6s linear infinite;
+      transition: opacity 0.3s; pointer-events: none;
     }
+    .proj-card:hover::after { opacity: 0.9; filter: drop-shadow(0 0 8px rgba(0, 230, 255, 0.5)); }
+    .proj-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5); }
 
-    .about-text p {
-      margin-bottom: 16px;
-      color: var(--text-muted);
-      font-size: 0.98rem;
-      line-height: 1.85;
+    .proj-stripe { height: 4px; width: 100%; flex-shrink: 0; }
+    .proj-body { padding: 26px; flex: 1; display: flex; flex-direction: column; }
+    .proj-cat {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 20px; margin-bottom: 14px; width: fit-content;
     }
-
-    .about-text strong {
-      color: var(--text);
-      font-weight: 600;
+    .proj-body h3 { font-size: 1.05rem; font-weight: 800; line-height: 1.35; margin-bottom: 10px; }
+    .proj-body p { font-size: 0.87rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px; flex: 1; }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 18px; }
+    .proj-tag {
+      font-size: 0.72rem; padding: 2px 9px; border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05); color: var(--text-dim);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
-
-    .about-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
+    .proj-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.83rem; color: var(--accent); font-weight: 700;
+      text-decoration: none; padding: 9px 18px; border-radius: 50px;
+      background: rgba(56, 189, 248, 0.07); border: 1px solid rgba(56, 189, 248, 0.2);
+      transition: all 0.2s; width: fit-content;
     }
-
-    .stat-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
-      text-align: center;
+    .proj-link:hover { background: rgba(56, 189, 248, 0.15); transform: translateY(-1px); }
+    .proj-link-secondary {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.83rem; color: var(--text-muted); font-weight: 600;
+      text-decoration: none; padding: 9px 18px; border-radius: 50px;
+      background: transparent; border: 1px solid var(--border);
+      transition: all 0.2s;
     }
+    .proj-link-secondary:hover { border-color: var(--text-muted); color: var(--text); }
+    .proj-links-row { display: flex; gap: 10px; flex-wrap: wrap; border-top: 1px solid var(--border); padding-top: 16px; }
 
-    .stat-num {
-      display: block;
-      font-size: 2rem;
-      font-weight: 800;
-      font-family: var(--mono);
-      color: var(--accent);
+    /* Category colors */
+    .cat-game { background: rgba(167, 139, 250, 0.1); color: #c4b5fd; border: 1px solid rgba(167, 139, 250, 0.25); }
+    .cat-ai { background: rgba(56, 189, 248, 0.1); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.25); }
+    .cat-web { background: rgba(34, 197, 94, 0.1); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.25); }
+    .stripe-game { background: linear-gradient(90deg, #a78bfa, #c4b5fd); }
+    .stripe-ai   { background: linear-gradient(90deg, #38bdf8, #7dd3fc); }
+    .stripe-web  { background: linear-gradient(90deg, #22c55e, #4ade80); }
+    .stripe-log  { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+    .cat-log { background: rgba(245, 158, 11, 0.1); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.25); }
+
+    /* ---- SKILLS ---- */
+    #skills { background: rgba(20, 20, 28, 0.55); }
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .skill-card {
+      background: var(--bg); border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius); padding: 26px;
+      position: relative; overflow: hidden; transition: all 0.3s;
     }
-
-    .stat-lbl {
-      display: block;
-      font-size: 0.82rem;
-      color: var(--text-dim);
-      margin-top: 4px;
+    .skill-card::after {
+      content: '';
+      position: absolute; inset: -1px; border-radius: var(--radius); padding: 1px;
+      background: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bf7, #7a00ff, #ff00c8, #ff0000);
+      background-size: 400% 400%;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      opacity: 0.15; animation: rgbFlow 6s linear infinite;
+      transition: opacity 0.3s; pointer-events: none;
     }
-
-    /* Projects */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
+    .skill-card:hover::after { opacity: 0.65; }
+    .skill-card:hover { transform: translateY(-3px); }
+    .skill-icon { font-size: 1.6rem; margin-bottom: 10px; }
+    .skill-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--accent); margin-bottom: 14px; }
+    .skill-card ul { list-style: none; }
+    .skill-card li {
+      font-size: 0.85rem; color: var(--text-muted);
+      padding: 5px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     }
+    .skill-card li:last-child { border-bottom: none; }
 
-    .project-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      transition: all 0.3s;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .project-card:hover {
-      border-color: rgba(255, 255, 255, 0.15);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-    }
-
-    .card-accent {
-      height: 4px;
-      width: 100%;
-    }
-
-    .card-accent.w1 {
-      background: #3b82f6;
-    }
-
-    .card-accent.w2 {
-      background: #22c55e;
-    }
-
-    .card-accent.w3 {
-      background: #f59e0b;
-    }
-
-    .card-accent.w4 {
-      background: #a78bfa;
-    }
-
-    .card-body {
-      padding: 28px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 14px;
-    }
-
-    .card-week {
-      font-size: 0.78rem;
-      font-weight: 700;
-      font-family: var(--mono);
-      color: var(--accent);
-      text-transform: uppercase;
-    }
-
-    .card-role {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--text-dim);
-      background: rgba(255, 255, 255, 0.05);
-      padding: 2px 10px;
-      border-radius: 20px;
-    }
-
-    .card-body h3 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-      line-height: 1.4;
-    }
-
-    .card-body p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-      margin-bottom: 16px;
-      flex: 1;
-    }
-
-    .card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 20px;
-    }
-
-    .card-tags span {
-      font-size: 0.75rem;
-      padding: 3px 10px;
-      border-radius: 20px;
-      background: rgba(56, 189, 248, 0.08);
-      color: var(--accent);
-      border: 1px solid rgba(56, 189, 248, 0.15);
-    }
-
-    .card-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      border-top: 1px solid var(--border);
-      padding-top: 16px;
-    }
-
-    .card-links a {
-      font-size: 0.85rem;
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      transition: color 0.2s;
-    }
-
-    .card-links a:hover {
-      color: #5bcefa;
-    }
-
-    .card-note {
-      font-size: 0.85rem;
-      color: var(--text-dim);
-      font-style: italic;
-    }
-
-    /* Skills */
-    #skills {
-      background: var(--bg-card);
-    }
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-    }
-
-    .skill-group {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 28px;
-    }
-
-    .skill-group h4 {
-      font-size: 0.95rem;
-      font-weight: 700;
-      margin-bottom: 16px;
-      color: var(--accent);
-    }
-
-    .skill-group ul {
-      list-style: none;
-    }
-
-    .skill-group li {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      padding: 6px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-    }
-
-    .skill-group li:last-child {
-      border-bottom: none;
-    }
-
-    /* Contact */
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-    }
-
+    /* ---- CONTACT ---- */
+    .contact-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
     .contact-card {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px 36px;
-      text-decoration: none;
-      color: var(--text);
-      transition: all 0.25s;
+      display: flex; align-items: center; gap: 16px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 22px 34px;
+      text-decoration: none; color: var(--text);
+      transition: all 0.25s; position: relative; overflow: hidden;
     }
-
-    .contact-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(56, 189, 248, 0.1);
+    .contact-card::after {
+      content: '';
+      position: absolute; inset: -1px; border-radius: var(--radius); padding: 1px;
+      background: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bf7, #7a00ff, #ff00c8, #ff0000);
+      background-size: 400% 400%;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      opacity: 0.2; animation: rgbFlow 6s linear infinite;
+      transition: opacity 0.3s; pointer-events: none;
     }
+    .contact-card:hover::after { opacity: 0.8; }
+    .contact-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .contact-icon { color: var(--accent); display: flex; flex-shrink: 0; }
+    .contact-name { font-weight: 700; font-size: 1rem; }
+    .contact-handle { font-size: 0.83rem; color: var(--text-muted); }
 
-    .contact-icon {
-      color: var(--accent);
-      display: flex;
-    }
-
-    .contact-name {
-      font-weight: 700;
-      font-size: 1rem;
-    }
-
-    .contact-handle {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    /* Footer */
+    /* ---- FOOTER ---- */
     footer {
-      text-align: center;
-      padding: 40px 0;
+      text-align: center; padding: 40px 0;
       border-top: 1px solid var(--border);
-      color: var(--text-dim);
-      font-size: 0.85rem;
+      color: var(--text-dim); font-size: 0.85rem;
     }
 
-    /* Responsive */
+    /* ---- FADE-IN ---- */
+    .fade-in { opacity: 0; transform: translateY(22px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 900px) {
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    }
     @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-      }
-
-      .about-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .projects-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .skills-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .contact-links {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .hero-name {
-        font-size: 3rem;
-      }
-
-      .hero-desc br {
-        display: none;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .skills-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Fade in animation */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
+      .nav-links { display: none; }
+      .hero-name { font-size: 3.4rem; }
+      .about-layout { grid-template-columns: 1fr; gap: 40px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .contact-grid { flex-direction: column; align-items: center; }
     }
   </style>
 </head>
@@ -672,11 +363,10 @@
   <!-- Nav -->
   <nav id="nav">
     <div class="nav-inner">
-      <a href="#" class="logo rgb-text">F<span>.</span></a>
+      <a href="#" class="logo rgb-text">F.</a>
       <ul class="nav-links">
         <li><a href="#about">關於我</a></li>
-        <li><a href="#projects">專案作品</a></li>
-        <li><a href="#slides">BOSS_I 簡報</a></li>
+        <li><a href="#projects">作品集</a></li>
         <li><a href="#skills">技術能力</a></li>
         <li><a href="#contact">聯絡</a></li>
       </ul>
@@ -688,12 +378,17 @@
     <div class="container">
       <p class="hero-tag">Hi, I'm</p>
       <h1 class="hero-name rgb-text">Ferzbow</h1>
-      <p class="hero-role">智慧物流 <span class="accent rgb-text">AI 架構師</span></p>
+      <div class="hero-roles">
+        <span class="role-pill game">🎮 遊戲開發者</span>
+        <span class="role-pill ai">🤖 AI 工程師</span>
+        <span class="role-pill dev">💻 全端開發者</span>
+      </div>
       <p class="hero-desc">
-        我用數據分析、機器學習與最佳化演算法，<br>解決物流產業的真實痛點。
+        我在多個領域深耕——從 Unity 3D 遊戲到智慧物流 AI，<br>
+        從資料科學到 Web 全端，用技術把創意變成現實。
       </p>
       <div class="hero-btns">
-        <a href="#projects" class="btn-fill">查看作品</a>
+        <a href="#projects" class="btn-fill">查看作品集</a>
         <a href="#contact" class="btn-ghost">聯絡我</a>
       </div>
     </div>
@@ -702,37 +397,36 @@
   <!-- About -->
   <section id="about">
     <div class="container">
-      <h2 class="section-title">關於我</h2>
-      <div class="about-grid">
+      <div class="about-layout">
         <div class="about-text">
+          <div class="section-label">👤 About Me</div>
+          <h2 class="section-title">關於我</h2>
           <p>
-            在「青年 AI 實戰養成班 · 智慧物流班」的四週密集訓練中，我從零建構了一套完整的智慧物流能力棧：
+            我是 <strong>Ferzbow</strong>，一個熱愛跨領域創作的開發者。遊戲設計讓我學會如何說故事，AI 讓我學會如何從混沌中找規律，全端開發讓我學會如何把想法部署給世界。
           </p>
           <p>
-            第一週我學會用 <strong>RFM 模型</strong>做客戶分群，驗證了「80% 業績來自 20% 客戶」的真實商業法則；第二週深入 <strong>WMS/TMS
-              倉儲排程</strong>，理解到「排程的核心是瓶頸，不是平均」；第三週用<strong>監督式學習</strong>建立流失預測模型，體會到 AI 真正的價值是放大人的決策能力；第四週將前三週成果整合成
-            <strong>LLM Agent 控制塔</strong>與 OR-Tools 路徑最佳化，完成端到端的智慧物流解決方案。
+            目前正在持續累積作品——<strong>Unity 地牢冒險遊戲 Fluxus</strong>、<strong>智慧物流 AI 四週完整課程成果</strong>，以及各種 Web 與後端實驗。我相信好的作品不只是技術 Demo，而是能讓人感受到用心的東西。
           </p>
           <p>
-            我相信好的 AI 專案不只是技術 Demo，而是能讓人聽懂它值多少錢。
+            未來想做什麼？繼續做好玩的東西。
           </p>
         </div>
-        <div class="about-stats">
-          <div class="stat-card fade-in">
-            <span class="stat-num">4</span>
-            <span class="stat-lbl">週實戰訓練</span>
+        <div class="stat-row">
+          <div class="stat-box fade-in">
+            <span class="stat-n">Unity</span>
+            <span class="stat-l">遊戲引擎開發</span>
           </div>
-          <div class="stat-card fade-in">
-            <span class="stat-num">7+</span>
-            <span class="stat-lbl">專案產出</span>
+          <div class="stat-box fade-in">
+            <span class="stat-n">7+</span>
+            <span class="stat-l">AI 專案產出</span>
           </div>
-          <div class="stat-card fade-in">
-            <span class="stat-num">3</span>
-            <span class="stat-lbl">完整報告</span>
+          <div class="stat-box fade-in">
+            <span class="stat-n">5+</span>
+            <span class="stat-l">程式語言</span>
           </div>
-          <div class="stat-card fade-in">
-            <span class="stat-num">1</span>
-            <span class="stat-lbl">Streamlit App</span>
+          <div class="stat-box fade-in">
+            <span class="stat-n">∞</span>
+            <span class="stat-l">學習中</span>
           </div>
         </div>
       </div>
@@ -742,126 +436,126 @@
   <!-- Projects -->
   <section id="projects">
     <div class="container">
-      <h2 class="section-title">專案作品</h2>
-      <p class="section-sub">以下是我在培訓期間完成的核心專案，點擊查看完整分析流程與成果。</p>
+      <div class="section-label">🗂️ Works</div>
+      <h2 class="section-title">作品集</h2>
+      <p class="section-sub">涵蓋遊戲開發、AI 應用、智慧物流與 Web 開發的多元作品。</p>
 
       <div class="projects-grid">
 
-        <!-- Project 1 -->
-        <article class="project-card fade-in">
-          <div class="card-accent w1"></div>
-          <div class="card-body">
-            <div class="card-top">
-              <span class="card-week">Week 1</span>
-              <span class="card-role">資料驅動師</span>
+        <!-- Fluxus Game -->
+        <article class="proj-card fade-in">
+          <div class="proj-stripe stripe-game"></div>
+          <div class="proj-body">
+            <span class="proj-cat cat-game">🎮 遊戲開發</span>
+            <h3>Fluxus — Unity 地牢冒險遊戲</h3>
+            <p>以 Unity 3D 開發的地牢冒險 Prototype，包含完整的物理系統、程序生成地牢、敵人 AI 與互動機制。已發布至 itch.io，可線上試玩。</p>
+            <div class="proj-tags">
+              <span class="proj-tag">Unity 3D</span>
+              <span class="proj-tag">C#</span>
+              <span class="proj-tag">物理引擎</span>
+              <span class="proj-tag">程序生成</span>
+              <span class="proj-tag">itch.io</span>
             </div>
-            <h3>RFM 客戶價值分群與數據體檢</h3>
-            <p>
-              對 800+ 筆物流訂單進行資料清洗（處理 6 種髒資料模式），並以 RFM 模型將 1,500 名客戶分群，找出高價值核心客群。同時建置 Python 即時儀表板進行可視化監控。
-            </p>
-            <div class="card-tags">
-              <span>Python</span>
-              <span>Pandas</span>
-              <span>RFM</span>
-              <span>資料清洗</span>
-              <span>儀表板</span>
-            </div>
-            <div class="card-links">
-              <a href="./w1.html">查看完整專案 &rarr;</a>
+            <div class="proj-links-row">
+              <a href="https://ferzbow.itch.io/fluxus" target="_blank" class="proj-link">🎮 線上試玩 →</a>
+              <a href="https://github.com/Ferzbow" target="_blank" class="proj-link-secondary">GitHub</a>
             </div>
           </div>
         </article>
 
-        <!-- Project 2 -->
-        <article class="project-card fade-in">
-          <div class="card-accent w2"></div>
-          <div class="card-body">
-            <div class="card-top">
-              <span class="card-week">Week 2</span>
-              <span class="card-role">管理工程師</span>
+        <!-- Logistics AI Course -->
+        <article class="proj-card fade-in">
+          <div class="proj-stripe stripe-log"></div>
+          <div class="proj-body">
+            <span class="proj-cat cat-log">🚚 智慧物流 AI</span>
+            <h3>青年 AI 實戰養成班<br>— 智慧物流四週完整成果</h3>
+            <p>四週密集訓練的完整成果：RFM 客戶分群、供應鏈健診、精準行銷引擎（Streamlit App），到智慧控制塔 + OR-Tools VRP 最佳化。端到端 AI 物流解決方案。</p>
+            <div class="proj-tags">
+              <span class="proj-tag">Python</span>
+              <span class="proj-tag">Scikit-learn</span>
+              <span class="proj-tag">OR-Tools</span>
+              <span class="proj-tag">LLM Agent</span>
+              <span class="proj-tag">Streamlit</span>
+              <span class="proj-tag">RFM</span>
             </div>
-            <h3>供應鏈健診與倉儲路徑最佳化</h3>
-            <p>
-              建立供應鏈健診儀表板，針對儲位路線進行分析與排程優化。運用約束理論（TOC）辨識瓶頸工序，並撰寫 Python 決策建議腳本，實現揀貨動線自動化排程。
-            </p>
-            <div class="card-tags">
-              <span>Python</span>
-              <span>TOC</span>
-              <span>WMS</span>
-              <span>排程優化</span>
-              <span>儀表板</span>
-            </div>
-            <div class="card-links">
-              <a href="./w2.html">查看完整專案 &rarr;</a>
+            <div class="proj-links-row">
+              <a href="./logistics.html" class="proj-link">查看課程成果 →</a>
             </div>
           </div>
         </article>
 
-        <!-- Project 3 -->
-        <article class="project-card fade-in">
-          <div class="card-accent w3"></div>
-          <div class="card-body">
-            <div class="card-top">
-              <span class="card-week">Week 3</span>
-              <span class="card-role">AI 價值師</span>
+        <!-- Precision Marketing PDF -->
+        <article class="proj-card fade-in">
+          <div class="proj-stripe stripe-ai"></div>
+          <div class="proj-body">
+            <span class="proj-cat cat-ai">🤖 AI 研究</span>
+            <h3>分群大師：K-means 精準行銷<br>NotebookLM 簡報</h3>
+            <p>以 NotebookLM 整合 K-means 分群與個人化推薦引擎成果，製作成 12 頁精煉簡報《Precision Marketing Prism》，展示 AI 驅動的行銷決策框架。</p>
+            <div class="proj-tags">
+              <span class="proj-tag">NotebookLM</span>
+              <span class="proj-tag">K-means</span>
+              <span class="proj-tag">Apriori</span>
+              <span class="proj-tag">Prophet</span>
+              <span class="proj-tag">精準行銷</span>
             </div>
-            <h3>精準行銷引擎 — 5 模組 Streamlit App</h3>
-            <p>
-              整合流失預警、銷量預測、關聯推薦與客戶儀表板，打造完整的精準行銷引擎。以 Streamlit 建置互動式 Web App，串接 1,500 名客戶資料與 D11-D14 四天的分析成果。
-            </p>
-            <div class="card-tags">
-              <span>Streamlit</span>
-              <span>Scikit-learn</span>
-              <span>流失預測</span>
-              <span>K-means</span>
-              <span>Apriori</span>
-            </div>
-            <div class="card-links">
-              <a href="./w3.html">查看完整專案 &rarr;</a>
+            <div class="proj-links-row">
+              <a href="./Precision_Marketing_Prism.pdf" target="_blank" class="proj-link">開啟 PDF →</a>
             </div>
           </div>
         </article>
 
-        <!-- Project 4 -->
-        <article class="project-card fade-in">
-          <div class="card-accent w4"></div>
-          <div class="card-body">
-            <div class="card-top">
-              <span class="card-week">Week 4</span>
-              <span class="card-role">智慧架構師</span>
+        <!-- Web Dev / GitHub -->
+        <article class="proj-card fade-in">
+          <div class="proj-stripe stripe-web"></div>
+          <div class="proj-body">
+            <span class="proj-cat cat-web">💻 Web 開發</span>
+            <h3>個人作品集網站<br>— GitHub Pages 靜態部署</h3>
+            <p>你正在瀏覽的這個網站。以純 HTML/CSS/JS 手刻，包含動態 RGB 背景、玻璃擬態卡片、滾動動畫等現代視覺效果，部署於 GitHub Pages。</p>
+            <div class="proj-tags">
+              <span class="proj-tag">HTML5</span>
+              <span class="proj-tag">CSS3</span>
+              <span class="proj-tag">JavaScript</span>
+              <span class="proj-tag">GitHub Pages</span>
+              <span class="proj-tag">動畫設計</span>
             </div>
-            <h3>智慧物流控制塔與路徑最佳化</h3>
-            <p>
-              整合前三週所有數據資產，使用 OR-Tools 求解車輛路徑問題（VRP），並結合 LLM Agent 建立自動化控制塔原型，實現從數據採集到決策輸出的端到端自動化流程。
-            </p>
-            <div class="card-tags">
-              <span>OR-Tools</span>
-              <span>LLM Agent</span>
-              <span>VRP</span>
-              <span>系統整合</span>
-            </div>
-            <div class="card-links">
-              <a href="./w4.html">查看完整專案 &rarr;</a>
+            <div class="proj-links-row">
+              <a href="https://github.com/Ferzbow/Ferzbow.github.io" target="_blank" class="proj-link">查看原始碼 →</a>
             </div>
           </div>
         </article>
 
-      </div>
-    </div>
-  </section>
+        <!-- Node.js / Backend -->
+        <article class="proj-card fade-in">
+          <div class="proj-stripe stripe-web"></div>
+          <div class="proj-body">
+            <span class="proj-cat cat-web">🖧 後端開發</span>
+            <h3>Node.js Express<br>後端應用實驗</h3>
+            <p>使用 Node.js + Express 建置的後端應用實驗，包含 RESTful API 設計、伺服器端渲染與資料庫整合。探索現代 Web 後端架構的實踐。</p>
+            <div class="proj-tags">
+              <span class="proj-tag">Node.js</span>
+              <span class="proj-tag">Express</span>
+              <span class="proj-tag">RESTful API</span>
+              <span class="proj-tag">JavaScript</span>
+            </div>
+            <div class="proj-links-row">
+              <a href="https://github.com/Ferzbow?tab=repositories" target="_blank" class="proj-link">GitHub 倉庫 →</a>
+            </div>
+          </div>
+        </article>
 
-  <!-- BOSS_I Presentation Showcase -->
-  <section id="slides" style="background: rgba(20,20,24,0.65);">
-    <div class="container">
-      <h2 class="section-title">BOSS_I 簡報展示 (NotebookLM)</h2>
-      <p class="section-sub">《分群大師：從混沌數據到精準打擊》— Task 13 K-means 與個人化推薦引擎 12 頁簡報成果。</p>
-      
-      <div class="fade-in" style="margin-bottom: 24px;">
-        <embed src="./Precision_Marketing_Prism.pdf" type="application/pdf" style="width: 100%; height: 720px; border-radius: 16px; border: 1px solid rgba(56, 189, 248, 0.3); box-shadow: 0 12px 40px rgba(0,0,0,0.6); background: #111;" />
-      </div>
+        <!-- More coming -->
+        <article class="proj-card fade-in" style="border-style: dashed; border-color: rgba(255,255,255,0.08);">
+          <div class="proj-stripe" style="background: linear-gradient(90deg, #374151, #4b5563);"></div>
+          <div class="proj-body" style="align-items: center; justify-content: center; text-align: center; min-height: 280px;">
+            <div style="font-size: 2.5rem; margin-bottom: 16px;">✦</div>
+            <h3 style="color: var(--text-dim); font-size: 1rem;">更多作品建置中…</h3>
+            <p style="color: var(--text-dim); font-size: 0.85rem; margin-top: 8px;">
+              持續在做新東西。<br>敬請期待。
+            </p>
+            <a href="https://github.com/Ferzbow?tab=repositories" target="_blank" class="proj-link" style="margin-top: 20px;">追蹤 GitHub →</a>
+          </div>
+        </article>
 
-      <div style="text-align: center;">
-        <a href="./Precision_Marketing_Prism.pdf" target="_blank" class="btn-fill">全螢幕開啟 / 下載簡報 PDF &rarr;</a>
       </div>
     </div>
   </section>
@@ -869,70 +563,73 @@
   <!-- Skills -->
   <section id="skills">
     <div class="container">
+      <div class="section-label">⚡ Skills</div>
       <h2 class="section-title">技術能力</h2>
-      <p class="section-sub">涵蓋程式語言、Unity 遊戲引擎開發、AI 數據科學與智慧物流運籌優化之全方位技能棧。</p>
-      
-      <div class="skills-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
-        <div class="skill-group fade-in">
-          <h4>💻 程式語言</h4>
+      <p class="section-sub">涵蓋程式語言、遊戲引擎、AI 數據科學、全端開發與智慧物流的全方位技能棧。</p>
+      <div class="skills-grid">
+
+        <div class="skill-card fade-in">
+          <div class="skill-icon">💻</div>
+          <h4>程式語言</h4>
           <ul>
             <li>Python</li>
             <li>C# / C++</li>
-            <li>SQL</li>
             <li>JavaScript / TypeScript / Node.js</li>
+            <li>SQL</li>
             <li>HTML5 / CSS3</li>
             <li>Java / Go</li>
           </ul>
         </div>
 
-        <div class="skill-group fade-in">
-          <h4>🗄️ 資料庫 &amp; 數據工程</h4>
-          <ul>
-            <li>PostgreSQL</li>
-            <li>MS SQL Server (MSSQL)</li>
-            <li>MySQL / MariaDB</li>
-            <li>SQLite</li>
-            <li>ERD 圖規劃與資料正規化</li>
-            <li>ETL Pipeline 資料清洗與整合</li>
-          </ul>
-        </div>
-
-        <div class="skill-group fade-in">
-          <h4>🎮 遊戲開發 &amp; 引擎</h4>
+        <div class="skill-card fade-in">
+          <div class="skill-icon">🎮</div>
+          <h4>遊戲開發 &amp; Unity</h4>
           <ul>
             <li>Unity 3D / 2D 架構開發</li>
-            <li>Fluxus 地牢冒險 Prototype 專案</li>
             <li>C# 物件導向程式設計</li>
             <li>物理引擎、UI Toolkit 與 Shader</li>
-            <li>互動式物流與遊戲機制模擬</li>
+            <li>程序生成與地牢設計</li>
             <li>跨平台建置與發布 (itch.io)</li>
           </ul>
         </div>
 
-        <div class="skill-group fade-in">
-          <h4>🤖 數據科學 &amp; AI</h4>
+        <div class="skill-card fade-in">
+          <div class="skill-icon">🤖</div>
+          <h4>數據科學 &amp; AI</h4>
           <ul>
             <li>RFM 模型 &amp; K-means 聚類</li>
-            <li>機器學習演算法</li>
-            <li>Apriori 購物籃關聯分析</li>
-            <li>Prophet 時序銷量預測</li>
+            <li>Scikit-learn 機器學習</li>
+            <li>Apriori 關聯規則分析</li>
+            <li>Prophet 時序預測</li>
             <li>LLM Agent 串接 &amp; AIGC 應用</li>
           </ul>
         </div>
 
-        <div class="skill-group fade-in">
-          <h4>🚚 智慧物流 &amp; 運籌</h4>
+        <div class="skill-card fade-in">
+          <div class="skill-icon">🗄️</div>
+          <h4>資料庫 &amp; 數據工程</h4>
           <ul>
-            <li>OR-Tools 車輛路徑最佳化</li>
-            <li>WMS 倉儲管理 &amp; TMS 運輸排程</li>
-            <li>TOC 約束理論 &amp; 瓶頸排解</li>
-            <li>供應鏈數據治理與控制塔</li>
-            <li>冷鏈溫控監控與品質稽核</li>
+            <li>PostgreSQL / MySQL / MSSQL</li>
+            <li>SQLite</li>
+            <li>ERD 圖規劃與資料正規化</li>
+            <li>ETL Pipeline 資料清洗</li>
           </ul>
         </div>
 
-        <div class="skill-group fade-in">
-          <h4>🛠️ 開發工具 &amp; 部署</h4>
+        <div class="skill-card fade-in">
+          <div class="skill-icon">🚚</div>
+          <h4>智慧物流 &amp; 運籌</h4>
+          <ul>
+            <li>OR-Tools 車輛路徑最佳化</li>
+            <li>WMS 倉儲 &amp; TMS 運輸排程</li>
+            <li>TOC 約束理論 &amp; 瓶頸排解</li>
+            <li>供應鏈數據治理與控制塔</li>
+          </ul>
+        </div>
+
+        <div class="skill-card fade-in">
+          <div class="skill-icon">🛠️</div>
+          <h4>開發工具 &amp; 部署</h4>
           <ul>
             <li>Git / GitHub / GitHub Pages</li>
             <li>Streamlit / RESTful API</li>
@@ -940,42 +637,46 @@
             <li>端到端系統架構設計</li>
           </ul>
         </div>
+
       </div>
     </div>
   </section>
 
   <!-- Contact -->
   <section id="contact">
-    <div class="container">
+    <div class="container" style="text-align: center;">
+      <div class="section-label" style="display: inline-flex;">📬 Contact</div>
       <h2 class="section-title">聯絡我</h2>
-      <p class="section-sub">如果您對智慧物流、AI 應用或任何合作機會有興趣，歡迎聯繫。</p>
-      <div class="contact-links">
+      <p class="section-sub" style="margin-left: auto; margin-right: auto;">有任何合作機會、想法交流或單純想說哈囉，都歡迎聯繫。</p>
+      <div class="contact-grid">
         <a href="https://github.com/Ferzbow?tab=repositories" target="_blank" class="contact-card fade-in">
           <span class="contact-icon">
             <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24">
-              <path
-                d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
             </svg>
           </span>
-          <span class="contact-name">GitHub</span>
-          <span class="contact-handle">@Ferzbow</span>
+          <div>
+            <div class="contact-name">GitHub</div>
+            <div class="contact-handle">@Ferzbow</div>
+          </div>
         </a>
         <a href="https://ferzbow.itch.io/fluxus" target="_blank" class="contact-card fade-in">
-          <span class="contact-icon" style="font-size: 1.5rem;">
-            🎮
-          </span>
-          <span class="contact-name">itch.io (Game)</span>
-          <span class="contact-handle">Fluxus (Unity Prototype)</span>
+          <span class="contact-icon" style="font-size: 1.6rem;">🎮</span>
+          <div>
+            <div class="contact-name">itch.io</div>
+            <div class="contact-handle">Fluxus (Unity Prototype)</div>
+          </div>
         </a>
         <a href="mailto:ferzbow@gmail.com" class="contact-card fade-in">
           <span class="contact-icon">
             <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
           </span>
-          <span class="contact-name">Email</span>
-          <span class="contact-handle">ferzbow@gmail.com</span>
+          <div>
+            <div class="contact-name">Email</div>
+            <div class="contact-handle">ferzbow@gmail.com</div>
+          </div>
         </a>
       </div>
     </div>
@@ -984,7 +685,7 @@
   <!-- Footer -->
   <footer>
     <div class="container">
-      <p>&copy; 2026 Ferzbow. Built with care.</p>
+      <p>© 2026 Ferzbow. Built with care &amp; caffeine.</p>
     </div>
   </footer>
 
@@ -1010,10 +711,11 @@
       });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.fade-in').forEach(function (el) {
+    document.querySelectorAll('.fade-in').forEach(function (el, i) {
+      el.style.transitionDelay = (i * 0.06) + 's';
       observer.observe(el);
     });
   </script>
-</body>
 
+</body>
 </html>
