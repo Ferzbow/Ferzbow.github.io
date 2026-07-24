@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>精準行銷引擎 — 5 模組 Streamlit App | Ferzbow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0a0a0a;--card:#141414;--border:rgba(255,255,255,0.08);--text:#e5e5e5;--muted:#888;--dim:#555;--accent:#38bdf8;--font:'Inter','Noto Sans TC',sans-serif;--mono:'Fira Code',monospace;--radius:12px}
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.7;-webkit-font-smoothing:antialiased}
+    .top-bar{position:sticky;top:0;z-index:100;background:rgba(10,10,10,0.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px;height:56px;display:flex;align-items:center;gap:16px}
+    .top-bar a{color:var(--accent);text-decoration:none;font-size:0.9rem;font-weight:600}
+    .top-bar a:hover{text-decoration:underline}
+    .top-bar span{color:var(--dim);font-size:0.85rem}
+    .page-header{max-width:960px;margin:0 auto;padding:48px 24px 24px}
+    .page-header h1{font-size:1.8rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:8px}
+    .page-header p{color:var(--muted);font-size:1rem}
+    .content{max-width:960px;margin:0 auto;padding:0 24px 80px}
+    /* PDF embed */
+    .pdf-frame{width:100%;height:85vh;border:1px solid var(--border);border-radius:var(--radius);background:#111}
+    /* Code block */
+    .code-section{margin-bottom:32px}
+    .code-section h3{font-size:1.1rem;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+    .code-section h3 .file-icon{color:var(--accent)}
+    pre{background:#111;border:1px solid var(--border);border-radius:var(--radius);padding:24px;overflow-x:auto;font-family:var(--mono);font-size:0.82rem;line-height:1.6;color:#d4d4d4;tab-size:4;white-space:pre}
+    /* File list */
+    .file-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:24px 0}
+    .file-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;display:flex;align-items:center;gap:12px;font-size:0.9rem;color:var(--muted);text-decoration:none;transition:all 0.2s}
+    .file-item:hover{border-color:var(--accent);color:var(--text);transform:translateY(-2px)}
+    .file-item .fi{font-size:1.2rem}
+    /* Markdown rendered */
+    .md-content{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:32px;font-size:0.92rem;line-height:1.8;color:var(--muted)}
+    .md-content h1,.md-content h2,.md-content h3{color:var(--text);margin:24px 0 12px;font-weight:700}
+    .md-content h1{font-size:1.5rem;border-bottom:1px solid var(--border);padding-bottom:8px}
+    .md-content h2{font-size:1.25rem}
+    .md-content h3{font-size:1.05rem}
+    .md-content p{margin-bottom:12px}
+    .md-content code{background:rgba(56,189,248,0.1);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:0.85em;color:var(--accent)}
+    .md-content pre{background:#0d0d0d;border:1px solid var(--border);border-radius:8px;padding:16px;overflow-x:auto;margin:12px 0}
+    .md-content pre code{background:none;padding:0;color:#d4d4d4}
+    .md-content table{width:100%;border-collapse:collapse;margin:16px 0;font-size:0.85rem}
+    .md-content th,.md-content td{padding:10px 14px;border:1px solid var(--border);text-align:left}
+    .md-content th{background:rgba(255,255,255,0.03);color:var(--text);font-weight:600}
+    .md-content blockquote{border-left:3px solid var(--accent);padding:8px 16px;margin:12px 0;color:var(--dim);background:rgba(56,189,248,0.03);border-radius:0 8px 8px 0}
+    .md-content ul,.md-content ol{padding-left:24px;margin-bottom:12px}
+    .md-content li{margin-bottom:4px}
+    .md-content strong{color:var(--text)}
+    .tabs{display:flex;gap:4px;margin-bottom:24px;border-bottom:1px solid var(--border);padding-bottom:0}
+    .tab{padding:10px 20px;font-size:0.9rem;font-weight:600;color:var(--dim);background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;font-family:var(--font)}
+    .tab:hover{color:var(--muted)}
+    .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <a href="./">← 返回作品集</a>
+    <span>/</span>
+    <span>Week 3 · AI 價值師</span>
+  </div>
+  <div class="page-header">
+    <h1>精準行銷引擎 — 5 模組 Streamlit App</h1>
+    <p>Week 3 · AI 價值師</p>
+  </div>
+  <div class="content">
+    
+<div class="tabs">
+  <button class="tab active" data-target="w3-readme">📖 專案說明</button>
+  <button class="tab" data-target="w3-home">Home.py</button><button class="tab" data-target="w3-m1">M1 客戶儀表板</button><button class="tab" data-target="w3-m2">M2 流失預警</button><button class="tab" data-target="w3-m3">M3 銷量預測</button><button class="tab" data-target="w3-m4">M4 推薦引擎</button><button class="tab" data-target="w3-m5">M5 一頁建議書</button>
+</div>
+<div id="w3-readme" class="tab-panel active">
+  <div class="md-content">
+    <h1>D15 範例程式 · BOSS III 精準行銷引擎(整合 App)</h1>
+
+<blockquote><strong>對應講義</strong>:<code>02_CoursePlan/W3_AI價值師/Day15_教材包/Day15_講義.md</code></blockquote>
+<blockquote><strong>對應任務</strong>:BOSS III · 5 模組 Streamlit App + 5 分鐘 Demo</blockquote>
+<blockquote><strong>本日性質特殊</strong>:不是教學單一觀念,是把 W3 D11-D14 五天能力整合成一個產品</blockquote>
+
+<p>``<code></p>
+<p>D15_BOSS_III/</p>
+<p>├── README.md                      ← 本檔</p>
+<p>├── requirements.txt               ← pip 依賴</p>
+<p>├── gen_all.py                     ← ★ 合成 D12/D13 來源資料 + 載入 D14 官方分群答案(fixtures/d14/) → data/</p>
+<p>├── prepare_data.py                ← ★ 把 data/ 裡的四天產出串接成「一份主檔」(不是單純拷貝)</p>
+<p>├── data/                          ← 來源資料與整合結果都放這(與兩支腳本同目錄)</p>
+<p>│   ├── customers.csv                  ★ 唯一客戶主檔(1,500 人 + K-means 群)</p>
+<p>│   ├── customer_clustered.csv         (同上,沿用舊檔名)</p>
+<p>│   ├── customer_rfm.csv               (D14 分群前 RFM)</p>
+<p>│   ├── customer_churn.csv             (主檔 + Churn 標籤,用 D11 的方法重算)</p>
+<p>│   ├── churn_top10.csv                (在主檔上重算的 Top10)</p>
+<p>│   ├── transactions.csv               (D13 訂單 + customer_id,可 join 主檔)</p>
+<p>│   ├── sales_monthly.csv              (D12 數值,SKU 改名為品名)</p>
+<p>│   ├── sales_top5_forecast.csv        (同上)</p>
+<p>│   ├── sku_catalog.csv                (品號字典:品號 ↔ 品名)</p>
+<p>│   ├── apriori_top5_rules.csv         (D13 原樣)</p>
+<p>│   └── _LINEAGE.md                    ← 資料血緣說明(自動產生)</p>
+<p>├── Home.py                        ← Streamlit 主頁(首屏)</p>
+<p>├── lib/</p>
+<p>│   └── recommend.py               ← 從 D14 移植的推薦函式</p>
+<p>└── pages/                         ← Streamlit 自動掃 pages/ 變側邊欄</p>
+<p>    ├── 1_M1_客戶儀表板.py</p>
+<p>    ├── 2_M2_流失預警.py</p>
+<p>    ├── 3_M3_銷量預測.py</p>
+<p>    ├── 4_M4_推薦引擎.py</p>
+<p>    └── 5_M5_一頁建議書.py</p>
+</code>`<code>
+
+<blockquote>📌 <strong>非標準四件套</strong>:沿 SOP §十 v1.1 規範,本日改為 Streamlit App 套件。沒有 .ipynb / 示範.py / Orange3.md,因為整合 App 適合直接跑 Streamlit。</blockquote>
+
+<h2>⚠️ 整合日的資料為什麼要「重接」而不是「拷貝」</h2>
+
+<p>D11~D14 每一天各自練一種方法,也<strong>各自用自己的練習資料集</strong> —— 這四份<strong>彼此不可 join</strong>:</p>
+
+<table><thead><tr><th>天</th><th>練習資料</th><th>規模</th><th>問題</th></tr></thead><tbody><tr><td>D11</td><td></code>customer_churn.csv<code></td><td>1,000 客戶</td><td>與 D14 同 ID <strong>不同人</strong>(R/F/M 全不同)</td><td></td></tr><tr><td>D12</td><td></code>sales_monthly.csv<code></td><td>10 支 SKU</td><td><strong>只有品號</strong>(</code>SKU_001…<code>),沒有品名</td><td></td></tr><tr><td>D13</td><td></code>transactions.csv<code></td><td>30 品</td><td>有品號 + 品名,但<strong>沒有 customer_id</strong>,接不到客戶</td><td></td></tr><tr><td>D14</td><td></code>customer_rfm.csv<code></td><td>1,500 客戶</td><td>—</td></tr></tbody></table>直接拷進同一個 App,就會出現「M2 說 C0479 已 163 天沒下單、M4 卻說他是 22 天前剛下單的穩定客」這種自打嘴巴的 demo。BOSS III 規則 2 是「<strong>資料一致性:所有模組用同一份客戶 / SKU 主檔</strong>」,所以 </code>prepare_data.py<code> 做四件事:
+
+<table><thead><tr><th>#</th><th>做什麼</th><th>對 D11~D14 的影響</th></tr></thead><tbody><tr><td>①</td><td><strong>一份客戶主檔</strong> = D14 的 1,500 位客戶(含 K-means 群)</td><td>無</td><td></td></tr><tr><td>②</td><td><strong>流失名單重算</strong>:借 D11 的方法(同一組流失機率模型 + 同一棵 </code>max_depth=4<code> 決策樹)套回主檔 → Top10 必然落在主檔的沉睡 / 高風險群</td><td>無(D11 那份 1,000 人的練習資料不動)</td><td></td></tr><tr><td>③</td><td><strong>交易接上客戶</strong>:D13 訂單加 </code>customer_id<code>(依 Frequency 加權指派)</td><td>無(Apriori 是 order × sku 層級,規則 / lift 不變)</td><td></td></tr><tr><td>④</td><td><strong>品號 join</strong>:D12 的數值完全不動,用 D13 的品號字典(</code>sku_catalog.csv<code>)補上品名 → M3 預測 </code>SKU_001<code>,查字典知道是「尿布」,M4 就推「買尿布的人也買啤酒」</td><td>無(MAPE / 預測值不變)</td></tr></tbody></table>跑完會自我檢查五項一致性(全過才會結束),血緣寫在 </code>data/_LINEAGE.md<code>。
+
+<blockquote><strong>教學上怎麼講</strong>:D11~D14 是「<strong>各自練方法</strong>」,D15 是「<strong>在一份能串起來的資料上,把方法整合成產品</strong>」。</blockquote>
+
+<h2>前置條件</h2>
+
+<p>D15 需要的<strong>來源資料全部放在 </code>data/<code></strong>(與 </code>gen_all.py<code>、</code>prepare_data.py<code> 同目錄):</p>
+
+<table><thead><tr><th>data/ 的 CSV</th><th>相當於哪一天的產出</th><th>用途</th></tr></thead><tbody><tr><td></code>customer_clustered.csv<code></td><td>D14 答案版</td><td>★ 客戶主檔(M1 / M2 / M4 / M5 全部吃這份)</td><td></td></tr><tr><td></code>customer_rfm.csv<code></td><td>D14 gen</td><td>M1 補充</td><td></td></tr><tr><td></code>transactions.csv<code></td><td>D13 gen</td><td>★ M4(接上 customer_id 後可 join 主檔)</td><td></td></tr><tr><td></code>sku_catalog.csv<code></td><td>D13 gen</td><td>★ 品號字典(D12 的品號 ↔ 品名)</td><td></td></tr><tr><td></code>apriori_top5_rules.csv<code></td><td>D13 答案版</td><td>★ M4</td><td></td></tr><tr><td></code>sales_monthly.csv<code></td><td>D12 gen</td><td>★ M3</td><td></td></tr><tr><td></code>sales_top5_forecast.csv<code></td><td>D12 答案版</td><td>★ M3</td></tr></tbody></table>這七個檔可以從各天的資料夾複製過來,<strong>也可以直接用 </code>gen_all.py<code> 一次合成</strong>(見下一節)。
+
+<blockquote><strong>D11 的 CSV 不在清單裡</strong> —— M2 的流失名單是用 D11 的<strong>方法</strong>在客戶主檔上重算的(見上一節 ②),不是拷貝 D11 那份 1,000 人的練習資料。</blockquote>
+
+<h2>快速開始</h2>
+
+<h3>1. 安裝依賴</h3>
+
+</code>`<code>bash
+<p>pip install -r requirements.txt</p>
+</code>`<code>
+
+<h3>2. 產生來源資料(從零重建;已經有 data/ 就可跳過)</h3>
+
+</code>`<code>bash
+<p>python gen_all.py</p>
+<h1>載入 D14 官方分群答案(fixtures/d14/) + 合成 D13 交易籃子/Apriori + D12 月銷量/Prophet → data/</h1>
+</code>`<code>
+
+</code>gen_all.py<code> 會顧好三條故事線的接點,不然 </code>prepare_data.py<code> 的整合檢查會擋下來:
+<p>分群名稱固定是 M1/M4 頁面寫死的那四個;D12 銷量最高的 5 支 SKU,品名一定出現在 D13 的關聯規則裡(M3 說「下個月尿布備 1,480 個」,M4 才接得下去「買尿布的人也買啤酒」)。</p>
+<p>其中 D12 那段沿用 </code>gen_sales_monthly.py<code> 的同一組亂數,月銷量數值與 D12 那天<strong>逐格相同</strong>。</p>
+
+<h3>3. 整合資料(一鍵)</h3>
+
+</code>`<code>bash
+<p>python prepare_data.py</p>
+<h1>就地(in-place)把 data/ 裡四天的產出對齊成一份主檔 + 一套商品字典</h1>
+</code>`<code>
+
+<p>預期輸出:</p>
+
+</code>`<code>
+<p>① 客戶主檔 ← D14 customer_clustered.csv</p>
+<p>[OK] data/customer_clustered.csv        1500 列 × 10 欄   ★ 唯一客戶主檔(1,500 人)</p>
+<p>② 流失預測 ← 把 D11 的模型套回主檔的 1,500 人</p>
+<p>     bias=-4.794 → 平均流失機率 10.0%</p>
+<p>[OK] data/churn_top10.csv                 10 列 × 10 欄   ★ 名單中的人都在主檔裡,群別一致</p>
+<p>③ 交易明細 ← D13 transactions.csv + 主檔 customer_id</p>
+<p>[OK] data/transactions.csv             13026 列 × 4 欄   ★ 可 join 主檔(1179 位客戶有交易紀錄)</p>
+<p>④ 銷量預測 ← D12 原數值 + 統一商品字典</p>
+<p>[OK] data/sales_top5_forecast.csv          5 列 × 14 欄   ★ Top5 預測品項 = M4 推薦規則裡的品項</p>
+
+<p>=== 整合檢查 ===</p>
+<p>  ✔ churn_top10 的客戶都在主檔裡</p>
+<p>  ✔ churn_top10 的群別與主檔一致</p>
+<p>  ✔ transactions 的客戶都在主檔裡</p>
+<p>  ✔ transactions 的品項都在品號字典裡</p>
+<p>  ✔ D12 的品號都查得到品名(品號 join 成功)</p>
+<p>  ✔ M3 預測的 Top5 品項都出現在 M4 的 Apriori 規則裡</p>
+</code>`<code>
+
+<h3>4. 啟動 App</h3>
+
+</code>`<code>bash
+<p>streamlit run Home.py</p>
+</code>`<code>
+
+<p>開瀏覽器到 http://localhost:8501,左側欄看到 5 個模組:</p>
+<ul><li>🏠 Home</li></ul>
+<ul><li>📊 M1 客戶儀表板</li></ul>
+<ul><li>🚨 M2 流失預警</li></ul>
+<ul><li>📈 M3 銷量預測</li></ul>
+<ul><li>🎯 M4 推薦引擎(★ 核心)</li></ul>
+<ul><li>📝 M5 一頁建議書</li></ul>
+
+<h2>5 模組對應</h2>
+
+<table><thead><tr><th>模組</th><th>來源天</th><th>內容</th></tr></thead><tbody><tr><td><strong>M1 客戶儀表板</strong></td><td>D14 K-means</td><td>4 群分布 + R/M 散點 + 群描述表</td><td></td></tr><tr><td><strong>M2 流失預警</strong></td><td>D11 決策樹</td><td>Top 10 名單 + 風險原因 + 一鍵下載</td><td></td></tr><tr><td><strong>M3 銷量預測</strong></td><td>D12 Prophet</td><td>SKU 篩選 + 預測線 + 信賴區間 + 採購建議</td><td></td></tr><tr><td><strong>M4 推薦引擎</strong> ★</td><td>D13 + D14</td><td>輸入 customer_id → 群 + Top 3 推薦 + Line OA 文案</td><td></td></tr><tr><td><strong>M5 一頁建議書</strong></td><td>全部</td><td>給 CMO 的單頁總結(用 Streamlit </code>st.markdown<code> + KPI)</td></tr></tbody></table>## Demo 5 分鐘節奏(沿 BOSS III 講義)
+
+</code>`<code>
+<p>[0:00-0:30]  Home + 一句話結論</p>
+<p>[0:30-1:00]  M1 客戶儀表板(30 秒)</p>
+<p>[1:00-1:30]  M2 流失預警(30 秒)</p>
+<p>[1:30-2:00]  M3 銷量預測(30 秒)</p>
+<p>[2:00-3:30]  M4 推薦引擎 ★(90 秒)← 重點</p>
+<p>[3:30-4:00]  M5 一頁建議書(30 秒)</p>
+<p>[4:00-4:30]  W3 主軸回收「預知 · 推薦 · 創價」</p>
+<p>[4:30-5:00]  Q&amp;A</p>
+</code>``
+
+<h2>學員作業</h2>
+
+<p>W3 BOSS III 的學員交付物是「<strong>自己跑出 5 個模組的整合 App</strong>」── 本範例是<strong>參考實作</strong>,學員可以:</p>
+
+<p>1. 直接跑(看怎麼運作)</p>
+<p>2. 改成自己的 dataset(例如真實公司資料)</p>
+<p>3. 加額外功能(What-if 模擬器、雲端部署)</p>
+<p>4. 修文案、修配色、修排版</p>
+
+<h2>與 BOSS II Streamlit 的差異</h2>
+
+<table><thead><tr><th>維度</th><th>BOSS II 物流控制塔(W2)</th><th>BOSS III 精準行銷引擎(W3)</th></tr></thead><tbody><tr><td>主軸</td><td>看現在(BI)</td><td>看未來(AI)</td><td></td></tr><tr><td>模型</td><td>統計 / 篩選</td><td>監督式分類 / 回歸 / 非監督式</td><td></td></tr><tr><td>互動</td><td>看數字</td><td>預測 / 推薦 / 主動建議</td><td></td></tr><tr><td>部署</td><td>內部儀表板</td><td>對外可展示產品</td></tr></tbody></table>## 已知限制
+
+<ul><li>推薦引擎 M4 是<strong>簡化版</strong>(同樣推薦給所有客戶,只差文案語氣)</li></ul>
+<p>  - 真實系統需要交易資料 join + LTV / 庫存等</p>
+<p>  - W4 進階會展示完整版</p>
+<ul><li>沒做雲端部署(留 Bonus 加分項,Streamlit Cloud / Render 任選)</li></ul>
+<ul><li>M5 一頁建議書沒接 GenAI(留 Bonus 加分項,可串 Claude API)</li></ul>
+
+<h2>版本</h2>
+
+<table><thead><tr><th>版本</th><th>日期</th><th>修訂</th></tr></thead><tbody><tr><td>v0.1</td><td>2026-05-05</td><td>初版,沿 BOSS III 講義 5 模組規格</td></tr></tbody></table>---
+
+<p>*Allen老師(AIBILA團隊) · 智慧物流班 · W3 Day 15 BOSS III · 2026*</p>
+
+  </div>
+</div>
+<div id="w3-home" class="tab-panel"><div class="code-section"><h3><span class="file-icon">🐍</span> Home.py</h3><pre># -*- coding: utf-8 -*-
+"""
+Home.py · BOSS III 決策總覽
+==========================
+給 CMO 的精準行銷引擎入口:
+  30 秒結論 → 不作為損失 → What-if 模擬器 → 三前瞻訊號 → 五模組故事線 → 風險三情境
+跑法:
+  streamlit run Home.py
+"""
+import sys
+import streamlit as st
+import pandas as pd
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent))
+from lib.kpi import revenue_model, DEFAULT_RETENTION, DEFAULT_VIP_CONV, DEFAULT_WAKE
+from lib.ui import page_header, how_to_read, footer
+
+st.set_page_config(
+    page_title="BOSS III · 精準行銷引擎",
+    page_icon="🎯",
+    layout="wide",
+)
+
+page_header(
+    "00", "決策總覽",
+    "🎯 精準行銷引擎 — CMO 決策總覽",
+    "把歷史資料轉成流失風險、下月需求與個人化推薦,讓行銷在客戶流失前先行動。",
+    "1,500 位客戶主檔 × 流失預測模型 × Top 5 銷量預測 × 購物籃關聯規則",
+)
+
+# ============================================================
+# 載入資料(所有數字由真資料計算,不寫死)
+# ============================================================
+data_dir = Path(__file__).parent / "data"
+
+try:
+    df_customers = pd.read_csv(data_dir / "customer_clustered.csv", encoding="utf-8-sig")
+except FileNotFoundError:
+    st.error("找不到 data/customer_clustered.csv,請先跑 prepare_data.py")
+    st.stop()
+
+try:
+    df_top10 = pd.read_csv(data_dir / "churn_top10.csv", encoding="utf-8-sig")
+    n_top10 = len(df_top10)
+except FileNotFoundError:
+    n_top10 = 0
+
+try:
+    df_rules = pd.read_csv(data_dir / "apriori_top5_rules.csv", encoding="utf-8-sig")
+    n_rules = len(df_rules)
+    best_rule = df_rules.sort_values("lift", ascending=False).iloc[0]
+    max_lift = best_rule["lift"]
+except FileNotFoundError:
+    n_rules, max_lift, best_rule = 0, 0, None
+
+# M3 前瞻訊號:Top 5 下月需求 vs 近 3 月均值
+try:
+    df_forecast = pd.read_csv(data_dir / "sales_top5_forecast.csv", encoding="utf-8-sig")
+    df_hist = pd.read_csv(data_dir / "sales_monthly.csv", parse_dates=["date"], encoding="utf-8-sig")
+    next_total = df_forecast["next_yhat"].sum()
+    top5_monthly = df_hist[df_hist["is_top5"]].groupby("date")["qty"].sum().sort_index()
+    base3 = top5_monthly.tail(3).mean()
+except FileNotFoundError:
+    next_total = base3 = None
+
+# ============================================================
+# What-if 模擬器(加分項):拉桿假設 → 即時重算下方所有金額
+# ============================================================
+with st.expander("🎛 What-if 模擬器:調整行銷假設,結論與風險即時重算", expanded=False):
+    w1, w2, w3 = st.columns(3)
+    retention_rate = w1.slider("流失挽留成功率", 0, 100, int(DEFAULT_RETENTION * 100), 5, format="%d%%") / 100
+    vip_conv_rate  = w2.slider("VIP 套組轉換率", 0, 100, int(DEFAULT_VIP_CONV * 100), 5, format="%d%%") / 100
+    wake_rate      = w3.slider("沉睡客喚醒率", 0, 100, int(DEFAULT_WAKE * 100), 5, format="%d%%") / 100
+    st.caption(
+        f"假設基準:挽留 {DEFAULT_RETENTION:.0%} / VIP 轉換 {DEFAULT_VIP_CONV:.0%} / "
+        f"喚醒 {DEFAULT_WAKE:.0%}(行業常見區間),CMO 可現場調整看敏感度;M5 建議書使用基準值"
+    )
+
+# --- 營收模型(與 M5 一頁建議書同一套口徑,見 lib/kpi.py) ---
+m = revenue_model(df_customers, retention_rate, vip_conv_rate, wake_rate)
+# 悲觀情境 = 達成率打 1/3(跟著拉桿連動)
+m_pes = revenue_model(df_customers, retention_rate / 3, vip_conv_rate / 3, wake_rate / 3)
+n_total, n_vip, n_atrisk, n_sleep = m["n_total"], m["n_vip"], m["n_atrisk"], m["n_sleep"]
+rev_retain, rev_vip, rev_wake, rev_total = m["rev_retain"], m["rev_vip"], m["rev_wake"], m["rev_total"]
+loss_inaction = m["loss_inaction"]
+
+# ============================================================
+# CMO 30 秒結論 + 不作為損失(損失厭惡前置)
+# ============================================================
+st.success(
+    f"📌 **CMO 30 秒結論:聚焦『流失高風險挽留』+『VIP 套組升級』+『沉睡客喚醒』,"
+    f"預估月度淨增營收 +{rev_total:,.0f} 萬**(年化約 +{rev_total*12:,.0f} 萬)"
+    f" ── 挽留 {n_atrisk} 位 +{rev_retain:,.0f} 萬 · VIP {n_vip} 位 +{rev_vip:,.0f} 萬 · "
+    f"喚醒 {n_sleep} 位 +{rev_wake:,.0f} 萬"
+)
+st.error(
+    f"⏳ **什麼都不做,每月損失 −{loss_inaction:,.0f} 萬,且會擴大** ── "
+    f"流失高風險 {n_atrisk} 位的月消費一旦流失就全數蒸發(年化約 −{loss_inaction*12:,.0f} 萬)"
+)
+
+# ============================================================
+# 風險三情境(給 CMO 的決策底線,隨 What-if 連動)
+# ============================================================
+st.subheader("⚖ 風險三情境")
+st.caption("拉動上方 What-if 模擬器,三個情境的金額即時重算 ── 悲觀情境的達成率僅有樂觀情境的 1/3")
+
+r1, r2, r3 = st.columns(3)
+with r1:
+    st.success(
+        f"🟢 **樂觀情境** · 三軸行動全達成"
+        f"(挽留 {retention_rate:.0%} / 轉換 {vip_conv_rate:.0%} / 喚醒 {wake_rate:.0%})"
+    )
+    st.metric("月增營收", f"+{rev_total:,.0f} 萬",
+              delta=f"+{rev_total*12:,.0f} 萬(年化)")
+with r2:
+    st.warning(
+        f"🟡 **悲觀情境** · 達成率僅有樂觀情境的 1/3"
+        f"(挽留 {retention_rate/3:.0%} / 轉換 {vip_conv_rate/3:.0%} / 喚醒 {wake_rate/3:.0%})"
+    )
+    st.metric("月增營收", f"+{m_pes['rev_total']:,.0f} 萬",
+              delta=f"+{m_pes['rev_total']*12:,.0f} 萬(年化)")
+with r3:
+    st.error(f"🔴 **不作為情境** · 流失高風險 {n_atrisk} 位全流失")
+    st.metric("月損營收(機會成本)", f"-{loss_inaction:,.0f} 萬",
+              delta=f"-{loss_inaction*12:,.0f} 萬(年化)")
+
+st.caption(
+    f"計算口徑:月均消費 = Monetary ÷ (Tenure/30);"
+    f"挽留營收 = 流失高風險群月消費 {m['atrisk_monthly_wan']:,.0f} 萬 × 挽留率;"
+    f"VIP 套組 = VIP 人數 × 轉換率 × 平均單筆訂單 {m['vip_avg_order']:,.0f} 元;"
+    f"喚醒 = 沉睡人數 × 喚醒率 × 平均單筆訂單 {m['sleep_avg_order']:,.0f} 元"
+)
+
+st.divider()
+
+# ============================================================
+# 三個前瞻訊號(每張卡都有對照基準)
+# ============================================================
+st.subheader("📡 三個前瞻訊號")
+st.caption("預知風險與需求,再把推薦送進可執行的行銷動作 ── 每個訊號都有對照基準")
+
+s1, s2, s3 = st.columns(3)
+
+s1.metric(
+    "流失預警候選", f"{n_atrisk} 人",
+    delta=f"月消費 {m['atrisk_monthly_wan']:,.0f} 萬待挽留", delta_color="inverse",
+    help=f"D11 決策樹 + D14 分群;客戶經理先聯繫 Top {n_top10} 優先名單(M2)",
+)
+
+if next_total is not None:
+    s2.metric(
+        "Top 5 下月需求", f"{next_total:,.0f} 個",
+        delta=f"{next_total - base3:+,.0f} 個 vs 近 3 月均值 {base3:,.0f}",
+        help="D12 Prophet/Baseline 擇優;逐 SKU 管理缺貨與庫存風險(M3)",
+    )
+else:
+    s2.metric("Top 5 下月需求", "資料未備妥")
+
+s3.metric(
+    "最強推薦訊號", f"Lift {max_lift:.2f}",
+    delta=f"+{max_lift-1:.2f} vs 獨立購買基準 1.00",
+    help=f"{best_rule['antecedent']} → {best_rule['consequent']};共 {n_rules} 條規則,關聯不等於因果(M4)" if best_rule is not None else "",
+)
+
+st.divider()
+
+# ============================================================
+# 五模組故事線(敘事導航)
+# ============================================================
+st.subheader("🗺 五模組故事線")
+st.caption("從認識客戶到一頁決策 ── 點任一站進入模組")
+
+story = [
+    ("pages/1_M1_客戶儀表板.py", "📊 M1", f"認識 {n_total:,} 位客戶", "K-means 4 群 + R/M 散點"),
+    ("pages/2_M2_流失預警.py", "🚨 M2", f"找出誰要走({n_atrisk} 位)", f"Top {n_top10} 優先聯繫名單"),
+    ("pages/3_M3_銷量預測.py", "📈 M3", "算出下月備多少", "Top 5 SKU 區間預測"),
+    ("pages/4_M4_推薦引擎.py", "🎯 M4 ★", "給對的人推對的品", "個人化推薦 + 3 款文案"),
+    ("pages/5_M5_一頁建議書.py", "📝 M5", "一頁決策", "給 CMO 的行動清單"),
+]
+cols = st.columns(5)
+for col, (path, code, name, desc) in zip(cols, story):
+    with col:
+        st.markdown(f"**{code}**")
+        st.caption(desc)
+        st.page_link(path, label=name, icon="➡️")
+
+st.divider()
+
+# ============================================================
+# 主管判讀原則
+# ============================================================
+how_to_read(
+    "客群用來**分流**、風險分數用來**排序**、預測區間用來**備貨**、關聯規則用來**設計推薦**;"
+    "四種結果各司其職,不能互相取代。",
+    caveat="數據可追溯(每頁標注分析基礎)· 相關不等於因果 · 區間用於風險管理,不是保證",
+)
+
+# ============================================================
+# 本組 5 分鐘 Demo 腳本(上台備忘)
+# ============================================================
+with st.expander("🎬 本組 5 分鐘 Demo 腳本"):
+    st.markdown(f"""
+    | 時段 | 頁面 | 重點 |
+    |---|---|---|
+    | 0:00 - 0:30 | Home | SCQA 開場:30 秒結論 +{rev_total:,.0f} 萬 vs 不作為 −{loss_inaction:,.0f} 萬 |
+    | 0:30 - 1:30 | Home | 三前瞻訊號 + What-if 模擬器現場拉一次 |
+    | 1:30 - 2:30 | **M4 ★** | 核心 demo:輸入 ID → 個人化推薦(強調已購排除)+ 3 款文案 |
+    | 2:30 - 3:30 | M5 | 一頁建議書三條支撐 |
+    | 3:30 - 4:30 | Home | 風險三情境 + GenAI prompt 展示 |
+    | 4:30 - 5:00 | 總結 | 本月行動 + 下月預期 |
+    """)
+
+footer()
+</pre></div></div><div id="w3-m1" class="tab-panel"><div class="code-section"><h3><span class="file-icon">🐍</span> 1_M1_客戶儀表板.py</h3><pre># -*- coding: utf-8 -*-
+"""M1 · 客戶儀表板"""
+import sys
+import streamlit as st
+import pandas as pd
+import numpy as np
+import plotly.express as px
+from pathlib import Path
+
+st.set_page_config(page_title="M1 客戶儀表板", page_icon="📊", layout="wide")
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from lib.ui import page_header, how_to_read, footer
+
+page_header(
+    "M1", "看誰是誰",
+    "📊 客戶儀表板",
+    "以 K-means 將 1,500 位客戶分成 4 群,從消費近度 × 消費金額看價值與活躍輪廓,決定行銷資源怎麼分。",
+    "1,500 位客戶 RFM 指標 × K-means 分群(4 群)",
+)
+
+DATA = Path(__file__).parent.parent / "data"
+
+try:
+    df = pd.read_csv(DATA / "customer_clustered.csv", encoding="utf-8-sig")
+except FileNotFoundError:
+    st.error("找不到 data/customer_clustered.csv,請先跑 prepare_data.py")
+    st.stop()
+
+# ============================================================
+# 四群卡片(人數 + R/F/M 中位數 + 建議動作)
+# ============================================================
+st.subheader("四群輪廓與建議動作")
+
+CLUSTER_CARDS = [
+    ("VIP 高頻高額", "👑", "升級服務 / 套組推薦 / 專屬客服"),
+    ("穩定中段",     "🌱", "持續經營 / 新品推薦"),
+    ("流失高風險",   "⚠️", "電話挽留 / 折扣券 / 客服主動聯繫"),
+    ("沉睡客戶",     "💤", "喚醒推送 / 重大優惠 / 重新破冰"),
+]
+
+cluster_counts = df["cluster_name"].value_counts()
+med = df.groupby("cluster_name")[["Recency", "Frequency", "Monetary"]].median()
+
+cols = st.columns(4)
+for col, (name, icon, action) in zip(cols, CLUSTER_CARDS):
+    n = cluster_counts.get(name, 0)
+    pct = n / len(df) * 100 if len(df) &gt; 0 else 0
+    with col.container(border=True):
+        st.markdown(f"**{icon} {name}**")
+        st.metric("人數", f"{n} 人", delta=f"占 {pct:.1f}%", delta_color="off")
+        if name in med.index:
+            st.markdown(
+                f"最近消費(R)中位:**{med.loc[name, 'Recency']:.0f} 天**  \n"
+                f"消費頻率(F)中位:**{med.loc[name, 'Frequency']:.0f} 次**  \n"
+                f"消費金額(M)中位:**{med.loc[name, 'Monetary']:,.0f} 元**"
+            )
+        st.caption(f"🎬 建議動作:{action}")
+
+st.divider()
+
+# ============================================================
+# R × M 散點圖
+# ============================================================
+st.subheader("客戶散點圖(最近消費 R × 消費金額 M)")
+
+df_plot = df.copy()
+df_plot["log_Monetary"] = np.log1p(df_plot["Monetary"])
+
+fig = px.scatter(
+    df_plot,
+    x="Recency",
+    y="log_Monetary",
+    color="cluster_name",
+    hover_data=["customer_id", "Frequency", "Monetary", "ComplaintCnt"],
+    title="客戶 RFM 分布(顏色 = K-means 群)",
+    labels={"Recency": "最近消費 R(天)", "log_Monetary": "消費金額 M(對數)", "cluster_name": "分群"},
+    height=500,
+    color_discrete_map={
+        "VIP 高頻高額": "#E74C3C",
+        "穩定中段":     "#3498DB",
+        "流失高風險":   "#F39C12",
+        "沉睡客戶":     "#95A5A6",
+    },
+)
+st.plotly_chart(fig, use_container_width=True)
+
+st.divider()
+
+# ============================================================
+# 一鍵下載
+# ============================================================
+st.download_button(
+    "📥 下載完整客戶分群表(CSV)",
+    df.to_csv(index=False).encode("utf-8-sig"),
+    "customer_clustered.csv",
+    "text/csv",
+)
+
+# ============================================================
+# 主管判讀 + 頁尾
+# ============================================================
+how_to_read(
+    "客群用來**分流資源**:VIP 拉客單、穩定提頻、流失挽留、沉睡喚醒;"
+    "四群的推薦邏輯與文案調性見 M4 策略速查表。",
+    caveat="群不是永久標籤 ── 客戶行為變了群就變,每月重跑分群",
+)
+footer()
+</pre></div></div><div id="w3-m2" class="tab-panel"><div class="code-section"><h3><span class="file-icon">🐍</span> 2_M2_流失預警.py</h3><pre># -*- coding: utf-8 -*-
+"""M2 · 流失預警
+
+決策樹流失模型 + 門檻拉桿:
+  拉動流失機率門檻 → 高風險人數 / Recall / Precision 即時變化 + PR 曲線上的點跟著移動。
+  模型與資料管線同一組超參數與隨機種子(在頁內重訓,毫秒級,有快取)。
+"""
+import sys
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+from pathlib import Path
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import precision_recall_curve
+
+st.set_page_config(page_title="M2 流失預警", page_icon="🚨", layout="wide")
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from lib.ui import page_header, how_to_read, footer
+from lib.recommend import CLUSTER_STRATEGY
+
+page_header(
+    "M2", "找出誰要走",
+    "🚨 流失預警",
+    "決策樹模型為 1,500 位客戶打流失機率;拉動門檻看覆蓋與準度的取捨,再依風險指數排出本週聯繫優先序。",
+    "決策樹流失模型 × 1,500 位客戶主檔 · 風險指數含業務加權",
+)
+
+DATA = Path(__file__).parent.parent / "data"
+RANDOM_STATE = 42
+FEATURES = ["Recency", "Frequency", "Monetary", "AvgOrder", "ComplaintCnt", "Tenure"]
+
+
+# ============================================================
+# 頁內重訓決策樹(與資料管線同超參數/隨機種子,快取後只跑一次)
+# ============================================================
+@st.cache_data
+def load_scored():
+    churn = pd.read_csv(DATA / "customer_churn.csv", encoding="utf-8-sig")
+    X, y = churn[FEATURES], churn["Churn"]
+    X_tr, _, y_tr, _ = train_test_split(
+        X, y, test_size=0.30, random_state=RANDOM_STATE, stratify=y
+    )
+    clf = DecisionTreeClassifier(
+        max_depth=4, min_samples_split=20, min_samples_leaf=20,
+        class_weight="balanced", random_state=RANDOM_STATE,
+    ).fit(X_tr, y_tr)
+    churn["churn_prob"] = clf.predict_proba(X)[:, 1]
+    return churn
+
+
+try:
+    df_scored = load_scored()
+    df_top10 = pd.read_csv(DATA / "churn_top10.csv", encoding="utf-8-sig")
+except FileNotFoundError as e:
+    st.error(f"找不到資料檔: {e},請先跑 prepare_data.py")
+    st.stop()
+
+y_true = df_scored["Churn"].values
+y_prob = df_scored["churn_prob"].values
+churn_rate = y_true.mean()
+
+# ============================================================
+# 門檻拉桿 → 高風險人數 / Recall / Precision 即時重算
+# ============================================================
+st.subheader("🎚 流失機率門檻:覆蓋與準度的取捨")
+
+threshold = st.slider(
+    "流失機率門檻(機率 ≥ 門檻 → 列為高風險)",
+    0.05, 0.95, 0.50, 0.05,
+    help="門檻調低:抓到更多真流失(Recall ↑)但誤報變多(Precision ↓);門檻調高則相反",
+)
+
+pred = (y_prob &gt;= threshold).astype(int)
+tp = int(((pred == 1) &amp; (y_true == 1)).sum())
+fp = int(((pred == 1) &amp; (y_true == 0)).sum())
+fn = int(((pred == 0) &amp; (y_true == 1)).sum())
+n_flag = int(pred.sum())
+recall = tp / (tp + fn) if (tp + fn) else 0.0
+precision = tp / (tp + fp) if (tp + fp) else 0.0
+
+k1, k2, k3 = st.columns(3)
+k1.metric("高風險人數", f"{n_flag} 人",
+          delta=f"占全體 {n_flag/len(df_scored):.1%}", delta_color="off",
+          help="流失機率 ≥ 門檻的客戶數 = 需要行銷/客服介入的名單規模")
+k2.metric("Recall(召回率)", f"{recall:.0%}",
+          delta=f"漏掉 {fn} 位真流失", delta_color="inverse",
+          help="真正會流失的客戶中,被模型抓到的比例")
+k3.metric("Precision(精確率)", f"{precision:.0%}",
+          delta=f"誤報 {fp} 位", delta_color="inverse",
+          help="被列為高風險的客戶中,真的會流失的比例")
+
+# ============================================================
+# PR 曲線(點隨門檻移動)
+# ============================================================
+prec_curve, rec_curve, thr_curve = precision_recall_curve(y_true, y_prob)
+
+fig = go.Figure()
+fig.add_trace(go.Scatter(
+    x=rec_curve, y=prec_curve,
+    mode="lines", name="PR 曲線",
+    line=dict(color="#3498DB", width=3),
+    hovertemplate="Recall %{x:.0%}&lt;br&gt;Precision %{y:.0%}&lt;extra&gt;&lt;/extra&gt;",
+))
+fig.add_trace(go.Scatter(
+    x=[recall], y=[precision],
+    mode="markers+text", name=f"目前門檻 {threshold:.2f}",
+    marker=dict(color="#E74C3C", size=16, symbol="circle",
+                line=dict(color="white", width=2)),
+    text=[f"門檻 {threshold:.2f}"], textposition="top center",
+    hovertemplate=f"門檻 {threshold:.2f}&lt;br&gt;Recall {recall:.0%}&lt;br&gt;Precision {precision:.0%}&lt;extra&gt;&lt;/extra&gt;",
+))
+fig.add_hline(y=churn_rate, line_dash="dot", line_color="#95A5A6",
+              annotation_text=f"隨機亂猜基準(歷史流失率 {churn_rate:.1%})",
+              annotation_position="bottom right")
+fig.update_layout(
+    height=420,
+    xaxis=dict(title="Recall(召回率)", tickformat=".0%", range=[0, 1.02]),
+    yaxis=dict(title="Precision(精確率)", tickformat=".0%", range=[0, 1.02]),
+    hovermode="closest",
+    margin=dict(l=0, r=10, t=30, b=0),
+)
+st.plotly_chart(fig, use_container_width=True)
+st.caption(
+    "📌 曲線越往右上越好;紅點 = 目前門檻的位置,拉動上方拉桿會沿曲線移動。"
+    "灰虛線是隨機亂猜的基準 ── 模型要明顯高於它才有價值。"
+    "(指標以全體 1,500 位客戶計算,含 70% 訓練資料)"
+)
+
+st.divider()
+
+# ============================================================
+# 主結論 + Top 10 名單(含分群)
+# ============================================================
+n_top = len(df_top10)
+avg_prob = df_top10["churn_prob"].mean() * 100 if "churn_prob" in df_top10.columns else 0
+top_comp = "、".join(f"{k} {v} 位" for k, v in df_top10["cluster_name"].value_counts().items()) \
+           if "cluster_name" in df_top10.columns else ""
+
+st.error(
+    f"⚠️ **本月模型預警 Top {n_top} 高風險客戶({top_comp})** · "
+    f"平均流失機率 **{avg_prob:.0f}%** · "
+    f"建議由客服納入「熱銷喚醒推送」本週優先發送"
+)
+
+st.subheader(f"Top {n_top} 優先聯繫名單")
+
+# 加 Rank + 風險指數(combined score 才能看出 ranking 差異)
+df_show = df_top10.copy().reset_index(drop=True)
+
+# 風險指數 = 模型機率 70% + Recency 久沒下單 20% + 投訴次數 10%
+recency_norm = (df_show["Recency"].clip(0, 365) / 365)
+complaint_norm = df_show["ComplaintCnt"].clip(0, 5) / 5
+df_show["risk_index"] = (
+    df_show["churn_prob"] * 70
+    + recency_norm * 20
+    + complaint_norm * 10
+).round().astype(int)
+
+df_show = df_show.sort_values("risk_index", ascending=False).reset_index(drop=True)
+df_show.insert(0, "Rank", range(1, len(df_show) + 1))
+
+# 建議動作與 M4 推薦引擎的分群策略一致(依所屬分群帶出)
+if "cluster_name" in df_show.columns:
+    df_show["suggested_action"] = df_show["cluster_name"].map(
+        lambda c: CLUSTER_STRATEGY.get(c, {}).get("action", "客戶經理評估")
+    )
+
+show_cols = ["Rank", "customer_id", "cluster_name", "risk_index", "churn_prob", "Recency",
+             "Frequency", "Monetary", "ComplaintCnt", "main_reason", "suggested_action"]
+show_cols = [c for c in show_cols if c in df_show.columns]
+
+column_config = {
+    "Rank": st.column_config.NumberColumn(
+        "優先順序",
+        help="本週優先處理順序(基於風險指數降序)",
+        format="%d",
+        width="small",
+    ),
+    "cluster_name": st.column_config.TextColumn(
+        "分群",
+        help="K-means 客群(M1);挽留話術依群差異化,見 M4 策略速查",
+        width="small",
+    ),
+    "risk_index": st.column_config.ProgressColumn(
+        "風險指數",
+        help="模型機率 70% + Recency 20% + 投訴次數 10%(0-100)",
+        format="%d",
+        min_value=0,
+        max_value=100,
+    ),
+    "churn_prob": st.column_config.NumberColumn(
+        "模型機率",
+        help="決策樹原始預測機率",
+        format="%.3f",
+    ),
+    "Recency": st.column_config.NumberColumn("最近消費(R)", format="%d 天"),
+    "Frequency": st.column_config.NumberColumn("消費頻率(F)", format="%d"),
+    "Monetary": st.column_config.NumberColumn("消費金額(M)", format="%d"),
+    "ComplaintCnt": st.column_config.NumberColumn("投訴", format="%d"),
+    "main_reason": st.column_config.TextColumn("主因", width="medium"),
+    "suggested_action": st.column_config.TextColumn(
+        "建議動作", width="medium",
+        help="依所屬分群帶出,與 M4 推薦引擎的分群策略一致",
+    ),
+}
+st.dataframe(df_show[show_cols], use_container_width=True,
+             column_config=column_config, hide_index=True)
+
+st.caption("📌 **風險指數**是業務調整版分數(0-100):模型機率 + Recency + 投訴加權,"
+           "讓同機率的客戶也排得出先後 ── ML 機率 + 業務規則 = 真實上線決策依據。")
+
+st.divider()
+
+# ============================================================
+# 高風險客戶流失主因分布(門檻連動,主因規則與資料管線一致)
+# ============================================================
+st.subheader(f"高風險客戶流失主因分布(門檻 {threshold:.2f} 以上,共 {n_flag} 人)")
+
+ACTION_MAP = {
+    "長時間沒下單 + 頻次低": "推送優惠通知",
+    "投訴次數高": "客服主動聯繫 + 補救方案",
+    "近期下單變稀": "VIP 電話挽留 + 折扣券",
+    "綜合風險訊號": "客戶經理評估",
+}
+
+
+def main_reason(row):
+    """與資料管線同一套主因規則(決策路徑白話版)"""
+    if row["Recency"] &gt; 60 and row["Frequency"] &lt;= 2:
+        return "長時間沒下單 + 頻次低"
+    if row["ComplaintCnt"] &gt;= 2:
+        return "投訴次數高"
+    if row["Recency"] &gt; 30:
+        return "近期下單變稀"
+    return "綜合風險訊號"
+
+
+flagged = df_scored[df_scored["churn_prob"] &gt;= threshold]
+if len(flagged):
+    reason_df = flagged.apply(main_reason, axis=1).value_counts().rename_axis("主因").reset_index(name="人數")
+    reason_df["占比"] = reason_df["人數"] / len(flagged)
+    reason_df["標籤"] = reason_df.apply(lambda r: f"{r['人數']} 人({r['占比']:.0%})", axis=1)
+    reason_df["建議動作"] = reason_df["主因"].map(ACTION_MAP)
+
+    fig_r = px.bar(
+        reason_df.sort_values("人數"),
+        x="人數", y="主因", orientation="h",
+        color="主因", text="標籤",
+        hover_data={"建議動作": True, "主因": False, "標籤": False},
+        height=max(220, 70 * len(reason_df) + 60),
+        color_discrete_sequence=["#E74C3C", "#F39C12", "#3498DB", "#95A5A6"],
+    )
+    fig_r.update_traces(textposition="outside")
+    fig_r.update_layout(
+        xaxis_title="人數", yaxis_title=None, showlegend=False,
+        margin=dict(l=0, r=10, t=10, b=0),
+        xaxis=dict(range=[0, reason_df["人數"].max() * 1.25]),
+    )
+    st.plotly_chart(fig_r, use_container_width=True)
+
+    # 主因 → 動作對照(給客服/客戶經理的話術入口)
+    for _, r in reason_df.iterrows():
+        st.markdown(f"- **{r['主因']}**({r['人數']} 人,{r['占比']:.0%})→ 建議動作:{r['建議動作']}")
+    st.caption(f"📌 分布隨上方門檻連動;Top {n_top} 名單全數屬「長時間沒下單 + 頻次低」,故以門檻以上全體呈現,主管才看得到次要主因的量。")
+else:
+    st.warning("目前門檻以上沒有客戶,請調低門檻")
+
+# ============================================================
+# 一鍵下載 + 寄送(模擬)
+# ============================================================
+st.divider()
+col1, col2 = st.columns(2)
+
+col1.download_button(
+    "📥 下載 Top 10 名單(CSV,給客服喚醒推送)",
+    df_show[show_cols].to_csv(index=False).encode("utf-8-sig"),
+    "churn_top10.csv",
+    "text/csv",
+)
+
+if col2.button("📧 模擬寄送名單給客服"):
+    st.success("(模擬)已寄送至 sales@company.com 與 csm@company.com")
+
+# ============================================================
+# 模型可解釋性
+# ============================================================
+with st.expander("🔍 模型如何判斷高風險?(可解釋性說明)"):
+    st.markdown("""
+    決策樹模型學了這類規則(範例):
+
+    ```
+    Recency &gt; 60 天?
+      ├─ Yes → Frequency &lt; 3?
+      │         ├─ Yes → 流失機率 92%
+      │         └─ No  → 流失機率 65%
+      └─ No  → 投訴 &gt; 0 次?
+                ├─ Yes → 流失機率 35%
+                └─ No  → 流失機率 5%
+    ```
+
+    每個 Top 10 客戶的「主因」欄就是落到哪條決策路徑。
+    """)
+
+# ============================================================
+# 主管判讀 + 頁尾
+# ============================================================
+how_to_read(
+    "門檻是**覆蓋與準度的取捨**:挽留預算多就調低門檻多抓人,預算緊就調高門檻只抓最準的;"
+    "風險指數用來**排序聯繫優先序**,不是判決,先由客服覆核 Top 10;"
+    "挽留話術搭配 M4 該客戶的「回購喚回」推薦。",
+    caveat="固定同一個模型只調門檻比較覆蓋,不重訓;聯繫後的實際回饋要記錄回來,下月校正模型",
+)
+footer()
+</pre></div></div><div id="w3-m3" class="tab-panel"><div class="code-section"><h3><span class="file-icon">🐍</span> 3_M3_銷量預測.py</h3><pre># -*- coding: utf-8 -*-
+"""M3 · 銷量預測"""
+import sys
+import streamlit as st
+import pandas as pd
+import plotly.graph_objects as go
+from pathlib import Path
+
+st.set_page_config(page_title="M3 銷量預測", page_icon="📈", layout="wide")
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from lib.ui import page_header, how_to_read, footer
+
+DATA = Path(__file__).parent.parent / "data"
+
+try:
+    forecast = pd.read_csv(DATA / "sales_top5_forecast.csv", encoding="utf-8-sig")
+    history = pd.read_csv(DATA / "sales_monthly.csv", parse_dates=["date"], encoding="utf-8-sig")
+except FileNotFoundError:
+    st.error("找不到 data/sales_top5_forecast.csv 或 sales_monthly.csv,請先跑 D12 並 prepare_data.py")
+    st.stop()
+
+# 分析起迄與預測時間點(由資料計算,不寫死)
+hist_start = history["date"].min().strftime("%Y-%m")
+hist_end = history["date"].max().strftime("%Y-%m")
+n_months = history["date"].nunique()
+next_month = (history["date"].max() + pd.DateOffset(months=1)).strftime("%Y-%m")
+
+page_header(
+    "M3", "看下一期賣多少",
+    "📈 銷量預測",
+    "切換 Top 5 品項,看歷史趨勢、下月點估與 80% 信賴區間,加上異常旗提示備貨風險。",
+    f"{n_months} 個月月銷量({hist_start} ~ {hist_end})× Top 5 品項 · 本次預測 {next_month} · Prophet 與 Baseline 同窗擇優",
+)
+
+# 下拉選單字體放大(適度)
+st.markdown("""
+&lt;style&gt;
+[data-testid="stSelectbox"] div[data-baseweb="select"] &gt; div { font-size: 1.25rem; }
+[data-testid="stSelectbox"] label p { font-size: 1.05rem; font-weight: 600; }
+&lt;/style&gt;
+""", unsafe_allow_html=True)
+
+# ============================================================
+# SKU 篩選器
+# ============================================================
+# forecast / history 都有品號(sku_id,與 D12 共用)與品名(sku / sku_name)
+sku_list = forecast["sku"].tolist()          # 品名
+label = dict(zip(forecast["sku"], forecast["sku_id"]))   # 品名 → 品號
+selected = st.selectbox("選擇商品", sku_list,
+                        format_func=lambda n: f"{n}({label[n]})")
+
+row = forecast[forecast["sku"] == selected].iloc[0]
+st.caption(f"品號 `{row['sku_id']}` 連結銷量預測;品名「{selected}」連結交易與推薦規則(M4)── 同一支商品前後說的是同一件事")
+
+# ============================================================
+# 異常旗:下月點估 vs 近 3 月均值(±10% 內視為正常)
+# ============================================================
+hist_sel = history[history["sku_name"] == selected].sort_values("date")
+base3 = hist_sel["qty"].tail(3).mean()
+dev = (row["next_yhat"] - base3) / base3 if base3 else 0
+
+if dev &gt; 0.10:
+    flag = f"🔥 **過熱** · 高於近 3 月均值 {base3:,.0f} 個 {dev:+.0%} → 提早備貨,注意缺貨風險"
+elif dev &lt; -0.10:
+    flag = f"❄️ **過冷** · 低於近 3 月均值 {base3:,.0f} 個 {dev:+.0%} → 保守進貨,注意庫存積壓"
+else:
+    flag = f"✅ **正常** · 與近 3 月均值 {base3:,.0f} 個相差 {dev:+.0%}(±10% 內)"
+
+# ============================================================
+# 採購建議(主結論,大字)+ 異常旗
+# ============================================================
+st.success(
+    f"### 📦 建議備貨 {row['next_yhat']:,.0f} 個 ± {(row['next_upper']-row['next_lower'])/2:,.0f}\n"
+    f"80% 信賴區間:**{row['next_lower']:,.0f} ~ {row['next_upper']:,.0f}** 個"
+)
+st.markdown(flag)
+
+# ============================================================
+# Decision badge
+# ============================================================
+col1, col2, col3 = st.columns(3)
+col1.metric("Prophet MAPE", f"{row['prophet_mape']:.1f}%")
+col2.metric("Best Baseline MAPE", f"{row['baseline_mape']:.1f}%",
+             delta=f"{row['diff_pp']:+.1f}pp",
+             delta_color="normal" if row['diff_pp'] &gt; 0 else "inverse")
+col3.metric("採用模型", "Prophet" if "Prophet" in row['decision'] else "Baseline")
+
+st.caption(f"決策依據:{row['decision']}")
+
+st.divider()
+
+# ============================================================
+# 歷史 + 區間預測線
+# ============================================================
+st.subheader(f"{selected} 月銷量趨勢 + 預測區間")
+
+hist = history[history["sku_name"] == selected].sort_values("date")   # 依品名(品號在 sku_id 欄)
+
+fig = go.Figure()
+
+# 歷史實績
+fig.add_trace(go.Scatter(
+    x=hist["date"], y=hist["qty"],
+    mode="lines+markers", name="歷史實績",
+    line=dict(color="#3498DB", width=2),
+))
+
+# 預測點 + 區間
+last_date = hist["date"].max()
+next_date = last_date + pd.DateOffset(months=1)
+
+fig.add_trace(go.Scatter(
+    x=[last_date, next_date], y=[hist["qty"].iloc[-1], row["next_yhat"]],
+    mode="lines+markers", name="預測點估",
+    line=dict(color="#E74C3C", width=2, dash="dash"),
+    marker=dict(size=12),
+))
+
+fig.add_trace(go.Scatter(
+    x=[next_date, next_date], y=[row["next_lower"], row["next_upper"]],
+    mode="lines", name="80% 信賴區間",
+    line=dict(color="#F39C12", width=8),
+    showlegend=True,
+))
+
+fig.update_layout(
+    height=450,
+    xaxis_title="月份",
+    yaxis_title="銷量(qty)",
+    hovermode="x unified",
+)
+st.plotly_chart(fig, use_container_width=True)
+
+st.divider()
+
+# ============================================================
+# 全 5 SKU 總覽表
+# ============================================================
+st.subheader("Top 5 全部預測表")
+
+def sku_flag(r):
+    """異常旗:下月點估 vs 該 SKU 近 3 月均值(±10% 內視為正常)"""
+    b3 = history[history["sku_name"] == r["sku"]].sort_values("date")["qty"].tail(3).mean()
+    if not b3:
+        return "—"
+    d = (r["next_yhat"] - b3) / b3
+    return f"🔥 過熱 {d:+.0%}" if d &gt; 0.10 else (f"❄️ 過冷 {d:+.0%}" if d &lt; -0.10 else f"✅ 正常 {d:+.0%}")
+
+show_df = pd.DataFrame({
+    "品名":          forecast["sku"],
+    "採用模型":      forecast["decision"],
+    "Prophet MAPE":  forecast["prophet_mape"].map(lambda v: f"{v:.2f}%"),
+    "Baseline MAPE": forecast["baseline_mape"].map(lambda v: f"{v:.2f}%"),
+    "下界":          forecast["next_lower"].round().astype(int),
+    "點估":          forecast["next_yhat"].round().astype(int),
+    "上界":          forecast["next_upper"].round().astype(int),
+    "建議備貨":      forecast.apply(
+        lambda r: f"{r['next_yhat']:.0f} ± {(r['next_upper']-r['next_lower'])/2:.0f}", axis=1),
+    "異常旗":        forecast.apply(sku_flag, axis=1),
+})
+show_df.index = range(1, len(show_df) + 1)
+st.dataframe(show_df, use_container_width=True)
+
+st.download_button(
+    "📥 下載 Top 5 預測(CSV,給採購)",
+    forecast.to_csv(index=False).encode("utf-8-sig"),
+    "sales_top5_forecast.csv",
+    "text/csv",
+)
+
+# ============================================================
+# 主管判讀 + 頁尾
+# ============================================================
+how_to_read(
+    "先看**點估**排定基準量,再用**區間**討論風險:往下界備貨降庫存但提高缺貨風險,往上界相反;"
+    "**逐 SKU 決策**,不要把總量平均分配;過熱/過冷旗先查有無促銷或季節因素再行動。",
+    caveat="區間用於風險管理,不是保證;每個 SKU 用同一測試窗比較 Prophet 與 Baseline,誰準用誰",
+)
+footer()
+</pre></div></div><div id="w3-m4" class="tab-panel"><div class="code-section"><h3><span class="file-icon">🐍</span> 4_M4_推薦引擎.py</h3><pre># -*- coding: utf-8 -*-
+"""M4 · 推薦引擎 ★ 核心展示
+
+D13 Apriori × D14 K-means 真整合:
+  輸入客戶 ID → 購買史長條圖 → 分群差異化推薦(帶理由) → 3 款推銷文案給銷售部門
+"""
+import sys
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+from pathlib import Path
+
+st.set_page_config(page_title="M4 推薦引擎", page_icon="🎯", layout="wide")
+
+# 載入 lib/recommend
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from lib.recommend import recommend, sales_copy, CLUSTER_STRATEGY, MIN_LIFT
+from lib.ui import page_header, how_to_read, footer
+
+page_header(
+    "M4 ★", "給對的人推對的品",
+    "🎯 推薦引擎(核心展示)",
+    "輸入客戶 ID → 匹配他的購買史與所屬客群 → 個人化推薦(已購排除)+ 3 款推銷文案給銷售部門。",
+    f"客戶主檔 × 交易明細 × 購物籃關聯規則(採用門檻 Lift ≥ {MIN_LIFT})",
+)
+
+DATA = Path(__file__).parent.parent / "data"
+
+try:
+    df_customers = pd.read_csv(DATA / "customer_clustered.csv", encoding="utf-8-sig")
+    rules = pd.read_csv(DATA / "apriori_top5_rules.csv", encoding="utf-8-sig")
+except FileNotFoundError as e:
+    st.error(f"找不到資料檔: {e}")
+    st.stop()
+
+# 交易明細(prepare_data.py 已把 D13 的籃子接上主檔的 customer_id)
+try:
+    df_tx = pd.read_csv(DATA / "transactions.csv", encoding="utf-8-sig")
+except FileNotFoundError:
+    df_tx = None
+
+# 商品目錄(找新品 SKU_NEW 用)
+try:
+    df_sku = pd.read_csv(DATA / "sku_catalog.csv", encoding="utf-8-sig")
+except FileNotFoundError:
+    df_sku = None
+
+# ============================================================
+# 客戶 ID 輸入(橫排置頂,下方內容全寬展開)
+# ============================================================
+def pick_representatives(df_customers, df_tx):
+    """每個分群固定挑 1 位代表:Frequency &gt; 0,且優先挑「交易明細筆數最多」者(demo 看得到購買史)"""
+    tx_counts = df_tx["customer_id"].value_counts() if df_tx is not None else pd.Series(dtype=int)
+    reps = {}
+    for cname in ["VIP 高頻高額", "穩定中段", "流失高風險", "沉睡客戶"]:
+        pool = df_customers[
+            (df_customers["cluster_name"] == cname) &amp; (df_customers["Frequency"] &gt; 0)
+        ].copy()
+        if len(pool) == 0:
+            continue
+        pool["tx_n"] = pool["customer_id"].map(tx_counts).fillna(0)
+        # 明細筆數最多者當代表;同筆數時取 customer_id 排序最前(固定、不隨機)
+        rep = pool.sort_values(["tx_n", "customer_id"], ascending=[False, True]).iloc[0]
+        reps[f"{cname} 代表({rep['customer_id']})"] = rep["customer_id"]
+    return reps
+
+
+sample_ids = pick_representatives(df_customers, df_tx)
+
+# 分群策略速查表(給銷售部門)
+st.markdown("##### 📋 四群推薦策略速查")
+df_strategy = pd.DataFrame([
+    {"分群": k, "推薦邏輯": v["logic"].split(":")[0], "文案調性": v["tone"], "建議動作": v["action"]}
+    for k, v in CLUSTER_STRATEGY.items()
+])
+st.dataframe(df_strategy, use_container_width=True, hide_index=True)
+
+in1, in2, in3 = st.columns([2, 2, 1])
+with in1:
+    preset = st.selectbox("快速選擇範例(四群代表)", list(sample_ids.keys()))
+    default_id = sample_ids[preset]
+with in2:
+    cid = st.text_input("或自行輸入 customer_id", value=default_id)
+with in3:
+    top_n = st.slider("推薦商品數", 1, 5, 3)
+
+st.divider()
+
+if cid in df_customers["customer_id"].values:
+    result = recommend(cid, df_customers, rules,
+                       df_tx=df_tx, df_sku=df_sku, top_n=top_n)
+
+    st.subheader(f"客戶 {cid} · {result['cluster']}")
+
+    # 本群策略 / 建議動作(兩欄對齊)
+    c_row = df_customers[df_customers["customer_id"] == cid].iloc[0]
+    if result["strategy"]:
+        stra_l, stra_r = st.columns(2)
+        stra_l.info(f"🧭 **本群策略**\n\n{result['strategy']['logic']}")
+        stra_r.info(f"🎬 **建議動作**\n\n{result['strategy']['action']}")
+
+    # RFM 指標(中文名稱 + 英文縮寫)
+    info_cols = st.columns(4)
+    info_cols[0].metric("最近消費(R)", f"{c_row['Recency']} 天")
+    info_cols[1].metric("消費頻率(F)", f"{c_row['Frequency']} 次")
+    info_cols[2].metric("消費金額(M)", f"{c_row['Monetary']:,.0f} 元")
+    if "ComplaintCnt" in c_row:
+        info_cols[3].metric("投訴次數", c_row["ComplaintCnt"])
+
+    # ============================================================
+    # 過往購買長條圖(購買次數前 10 名 + 其餘彙總)
+    # ============================================================
+    bought_counts = result["bought_counts"]
+    if len(bought_counts):
+        n_orders = df_tx[df_tx["customer_id"] == cid]["order_id"].nunique()
+        st.markdown(f"##### 🧾 過往購買紀錄({n_orders} 張訂單 / {int(bought_counts.sum())} 個品項)")
+
+        top10 = bought_counts.head(10)
+        rest = bought_counts.iloc[10:]
+        df_bought = top10.rename_axis("品項").reset_index(name="購買次數")
+        fig = px.bar(
+            df_bought.sort_values("購買次數"),
+            x="購買次數", y="品項", orientation="h", text="購買次數",
+            height=max(240, 36 * len(df_bought) + 60),
+        )
+        fig.update_traces(textposition="outside", marker_color="#4C78A8")
+        fig.update_layout(
+            margin=dict(l=0, r=10, t=10, b=0),
+            xaxis_title=None, yaxis_title=None, showlegend=False,
+        )
+        st.plotly_chart(fig, use_container_width=True)
+
+        rest_note = (f"僅顯示購買次數前 10 名;其餘 {len(rest)} 個品項共 {int(rest.sum())} 次。"
+                     if len(rest) else "")
+        st.caption(f"💰 {rest_note}品項金額需交易單價資料,以「購買次數」呈現;客戶總消費額見上方 消費金額(M)")
+    else:
+        freq = int(c_row["Frequency"])
+        if freq &gt; 0:
+            st.warning(
+                f"🧾 主檔 RFM 顯示消費頻率(F)= {freq},但交易明細查無此客戶的品項紀錄"
+                f"(明細僅涵蓋部分近期訂單)→ 推薦改走備援邏輯(見下方各品項的推薦來源)"
+            )
+        else:
+            st.warning("🧾 此客戶無任何購買紀錄(沉睡/流失客常見)→ 推薦改走備援邏輯(見下方各品項的推薦來源)")
+
+    st.divider()
+
+    # ============================================================
+    # Top N 推薦商品(帶推薦來源與理由,品名完整顯示)
+    # ============================================================
+    st.subheader(f"🎁 推薦 Top {top_n}")
+
+    SOURCE_ICON = {"關聯規則": "🔗", "熱銷推薦": "🔥", "回購喚回": "🔁", "新品試探": "🆕"}
+    for i, r in enumerate(result["recommendations"], 1):
+        badge_col, info_col = st.columns([1, 4])
+        with badge_col:
+            st.markdown(
+                f"&lt;div style='line-height:1.3'&gt;&lt;span style='font-size:0.85rem;opacity:0.7'&gt;Top {i}&lt;/span&gt;&lt;br&gt;"
+                f"&lt;span style='font-size:1.5rem;font-weight:700'&gt;{r['sku']}&lt;/span&gt;&lt;/div&gt;",
+                unsafe_allow_html=True,
+            )
+        icon = SOURCE_ICON.get(r["source"], "🎁")
+        if r["lift"] is not None:
+            info_col.markdown(
+                f"{icon} **{r['source']}** · Lift **{r['lift']:.2f}** · "
+                f"Confidence {r['confidence']:.0%} · 規則:{r['from_rule']}"
+            )
+        else:
+            info_col.markdown(f"{icon} **{r['source']}** · 來源:{r['from_rule']}")
+        info_col.caption(r["reason"])
+
+    st.caption(f"💡 {result['explain']}")
+
+    # ============================================================
+    # 3 款推銷文案(並列顯示,銷售部門直接複製 / 下載)
+    # ============================================================
+    st.divider()
+    st.subheader("📱 推銷文案 × 3(銷售部門可直接複製)")
+
+    skus = [r["sku"] for r in result["recommendations"]]
+    copies = sales_copy(result["cluster"], skus)
+
+    copy_cols = st.columns(3)
+    for col, (i, c) in zip(copy_cols, enumerate(copies, 1)):
+        with col:
+            st.markdown(f"**文案 {i} · {c['angle']}**")
+            st.code(c["text"], language=None, wrap_lines=True)
+    st.caption("📌 三款各走不同切入角度,銷售可依客戶關係熱度挑選;真實上線可串 GenAI 依此為底自動變體")
+
+    # 一鍵下載:推薦 + 理由 + 3 款文案(給銷售部門)
+    rec_lines = "\n".join(
+        f"  Top {i}. {r['sku']}({r['source']})── {r['reason']}"
+        for i, r in enumerate(result["recommendations"], 1)
+    )
+    copy_lines = "\n".join(f"  文案 {i}({c['angle']}):{c['text']}" for i, c in enumerate(copies, 1))
+    sales_txt = f"""【M4 推薦引擎 · 銷售參考單】
+客戶:{cid}(所屬群:{result['cluster']})
+本群策略:{result['strategy'].get('logic', '')}
+建議動作:{result['strategy'].get('action', '')}
+
+推薦品項:
+{rec_lines}
+
+推銷文案(三款切入角度):
+{copy_lines}
+
+── W3 第 6 組 · BOSS III 精準行銷引擎
+"""
+    st.download_button(
+        "📥 下載本客戶銷售參考單(txt,給銷售部門)",
+        sales_txt.encode("utf-8-sig"),
+        f"銷售參考單_{cid}.txt",
+        "text/plain",
+    )
+
+    # ============================================================
+    # GenAI prompt 預覽(加分項展示用)
+    # ============================================================
+    with st.expander("🤖 給 GenAI 寫文案的 prompt(可複製)"):
+        skus_str = "、".join(skus)
+        prompt = f"""你是 Line OA 行銷文案寫手。客戶屬「{result['cluster']}」群。
+
+推薦商品:{skus_str}
+推薦理由:{[r['reason'] for r in result['recommendations']]}
+本群策略:{result['strategy'].get('logic', '')}
+文案調性:{result['strategy'].get('tone', '')}
+
+文案要求:
+- 80 字以內
+- 第一句鉤子(根據群名:VIP=尊榮、沉睡=喚醒、流失=挽留、穩定=新品)
+- 最後一句行動(出示券碼/點選連結/限期)
+- 結尾加 #物流好夥伴
+
+請輸出 3 段不同切入角度的文案。
+"""
+        st.code(prompt, language=None)
+
+else:
+    st.error(f"找不到客戶 {cid}")
+
+# ============================================================
+# 全 Apriori 規則表(底部 expand)
+# ============================================================
+with st.expander("📜 全 Apriori 規則庫(D13 輸出)"):
+    st.dataframe(rules, use_container_width=True)
+    st.caption(f"規則採用門檻:Lift ≥ {MIN_LIFT}(Lift &gt; 1 代表正相關,1.3 以上才有行銷強度)")
+
+# ============================================================
+# 推薦邏輯說明(方法差異 ── 本組差異化主打)
+# ============================================================
+st.divider()
+st.subheader("🧠 推薦邏輯:個人化在哪?")
+
+diff_l, diff_r = st.columns(2)
+with diff_l:
+    st.markdown("""
+    **常見做法:全域固定推薦**
+    - 所有客戶拿到同一份 Lift Top 3
+    - 可能推薦客戶**已經買過**的商品
+    - 客群只影響文案,不影響推薦內容
+    """)
+with diff_r:
+    st.markdown(f"""
+    **本組做法:個人化重排 + 已購排除**
+    - 用**他買過的品項**匹配規則 antecedent(Lift ≥ {MIN_LIFT})
+    - **排除已購商品**,推「還沒買過」的關聯品
+    - 四群走**不同推薦邏輯**(關聯/新品/回購/熱銷),規則不足自動備援
+    - 每個推薦附**白話理由**,銷售一看就能開口
+    """)
+
+st.caption("驗證方式:切換上方四群代表,推薦內容與理由隨客戶不同 ── 不是所有人同一份名單")
+
+# ============================================================
+# 主管判讀 + 頁尾
+# ============================================================
+how_to_read(
+    "推薦品項用來**設計行銷測試**,不是保證買單:先小量發送、看轉換率,再放大;"
+    "文案三款依客戶關係熱度挑選(熱→套組加值、冷→低門檻折扣)。",
+    caveat="關聯規則反映共現,不等於因果;個人化推薦以交易明細涵蓋範圍為準",
+)
+footer()
+</pre></div></div><div id="w3-m5" class="tab-panel"><div class="code-section"><h3><span class="file-icon">🐍</span> 5_M5_一頁建議書.py</h3><pre># -*- coding: utf-8 -*-
+"""M5 · 一頁建議書(給 CMO)
+
+所有金額由 lib/kpi.py 的營收模型即時計算(基準假設),與 Home 主頁同一套口徑。
+"""
+import sys
+import streamlit as st
+import pandas as pd
+from pathlib import Path
+
+st.set_page_config(page_title="M5 一頁建議書", page_icon="📝", layout="wide")
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from lib.kpi import revenue_model
+from lib.ui import page_header, how_to_read, footer
+
+page_header(
+    "M5", "一頁決策",
+    "📝 一頁建議書",
+    "給 CMO 的單頁總結:主結論 → 三大支撐 → 風險三情境 → 一週行動清單,可下載直接貼 Slack / Email。",
+    "五模組彙整 · 營收模型與決策總覽同口徑(基準假設)· SCQA + 金字塔結構",
+)
+
+DATA = Path(__file__).parent.parent / "data"
+
+# ============================================================
+# 載入所有資料計算總結數字
+# ============================================================
+try:
+    df_customers = pd.read_csv(DATA / "customer_clustered.csv", encoding="utf-8-sig")
+    df_top10 = pd.read_csv(DATA / "churn_top10.csv", encoding="utf-8-sig")
+    df_forecast = pd.read_csv(DATA / "sales_top5_forecast.csv", encoding="utf-8-sig")
+    df_rules = pd.read_csv(DATA / "apriori_top5_rules.csv", encoding="utf-8-sig")
+    df_hist = pd.read_csv(DATA / "sales_monthly.csv", parse_dates=["date"], encoding="utf-8-sig")
+except FileNotFoundError as e:
+    st.error(f"找不到資料檔: {e}")
+    st.stop()
+
+# --- 營收模型(基準假設,與 Home 同一套,見 lib/kpi.py) ---
+m = revenue_model(df_customers)
+# 悲觀情境 = 達成率僅有樂觀情境的 1/3
+m_pes = revenue_model(
+    df_customers,
+    m["retention_rate"] / 3, m["vip_conv_rate"] / 3, m["wake_rate"] / 3,
+)
+
+n_total, n_vip, n_atrisk, n_sleep = m["n_total"], m["n_vip"], m["n_atrisk"], m["n_sleep"]
+n_top10 = len(df_top10)
+n_rules = len(df_rules)
+max_lift = df_rules["lift"].max()
+total_forecast = df_forecast["next_yhat"].sum() if "next_yhat" in df_forecast.columns else 0
+
+# 建議書月份 = 預測月(資料截止月 + 1),與 M3「本次預測」同口徑
+next_dt = df_hist["date"].max() + pd.DateOffset(months=1)
+month = f"{next_dt.year} 年 {next_dt.month} 月"
+
+# ============================================================
+# 一句話結論(SCQA · A,大字顯眼)
+# ============================================================
+st.markdown(f"# {month}精準行銷月度建議書")
+
+st.success(
+    f"## ⭐ 主結論:預估月度淨增營收 +{m['rev_total']:,.0f} 萬\n"
+    f"### 聚焦『流失高風險群挽留』+『VIP 群套組升級』+『沉睡客喚醒』三軸行動"
+)
+
+# ============================================================
+# 三大支撐(MECE · 卡片並排)
+# ============================================================
+st.subheader("三大支撐(MECE)")
+
+sup1, sup2, sup3 = st.columns(3)
+
+with sup1.container(border=True):
+    st.markdown("**① 流失挽留可行**")
+    st.metric("預估月增", f"+{m['rev_retain']:,.0f} 萬")
+    st.markdown(
+        f"- M2 鎖定 **{n_atrisk} 位** 流失高風險客戶\n"
+        f"- 該群月消費 **{m['atrisk_monthly_wan']:,.0f} 萬** × 挽留率 {m['retention_rate']:.0%}\n"
+        f"- 客戶經理本週逐一聯繫 + M4「回購喚回」文案跟進"
+    )
+
+with sup2.container(border=True):
+    st.markdown("**② VIP 套組升級可行**")
+    st.metric("預估月增", f"+{m['rev_vip']:,.0f} 萬")
+    st.markdown(
+        f"- M1 識別 **{n_vip} 位** VIP(占 {n_vip/n_total*100:.1f}%)\n"
+        f"- 平均單筆 **{m['vip_avg_order']:,.0f} 元** × 轉換率 {m['vip_conv_rate']:.0%}\n"
+        f"- M4 交叉銷售(最高 Lift {max_lift:.2f})+ M3 備貨支援"
+    )
+
+with sup3.container(border=True):
+    st.markdown("**③ 沉睡客戶喚醒可行**")
+    st.metric("預估月增", f"+{m['rev_wake']:,.0f} 萬")
+    st.markdown(
+        f"- M1 識別 **{n_sleep} 位** 沉睡客戶\n"
+        f"- 平均單筆 **{m['sleep_avg_order']:,.0f} 元** × 喚醒率 {m['wake_rate']:.0%}\n"
+        f"- M4 推「全站熱銷 Top 3」+ 免運喚醒文案"
+    )
+
+st.divider()
+
+# ============================================================
+# 風險評估三情境(同 Home 口徑)
+# ============================================================
+st.subheader("⚖ 風險評估")
+
+col1, col2, col3 = st.columns(3)
+
+col1.success(
+    f"🟢 **樂觀情境**\n\n三軸行動全達成"
+    f"(挽留 {m['retention_rate']:.0%} / 轉換 {m['vip_conv_rate']:.0%} / 喚醒 {m['wake_rate']:.0%})"
+    f"\n\n**+{m['rev_total']:,.0f} 萬/月**"
+)
+col2.warning(
+    f"🟡 **悲觀情境**\n\n達成率僅有樂觀情境的 1/3"
+    f"(挽留 {m_pes['retention_rate']:.0%} / 轉換 {m_pes['vip_conv_rate']:.0%} / 喚醒 {m_pes['wake_rate']:.0%})"
+    f"\n\n**+{m_pes['rev_total']:,.0f} 萬/月**"
+)
+col3.error(f"🔴 **不作為情境**\n\n流失高風險 {n_atrisk} 位全流失\n\n**-{m['loss_inaction']:,.0f} 萬/月**(機會成本)")
+
+st.caption(
+    f"基準假設:挽留 {m['retention_rate']:.0%} / VIP 轉換 {m['vip_conv_rate']:.0%} / 喚醒 {m['wake_rate']:.0%};"
+    "敏感度分析請至 Home 主頁 What-if 模擬器現場調整"
+)
+
+st.divider()
+
+# ============================================================
+# 行動清單(HTML 表格,字級同內文,可下載成 Slack 訊息)
+# ============================================================
+st.subheader("📋 一週內行動清單")
+
+action_rows = [
+    ("高", "客戶經理", f"負責流失高風險群 {n_atrisk} 位挽留:記錄聯繫回饋,搭配 M4「回購喚回」文案", f"+{m['rev_retain']:,.0f} 萬"),
+    ("高", "行銷", f"VIP 群 {n_vip} 位推套組:M4 交叉銷售推薦,Line OA 一週發 5 段", f"+{m['rev_vip']:,.0f} 萬"),
+    ("中", "採購", f"按 M3 採購建議備貨(總量 {total_forecast:.0f} 個 ± 區間)", "降庫存風險"),
+    ("中", "客服", f"沉睡客戶 {n_sleep} 位 熱銷喚醒推送(含 M2 Top {n_top10} 名單優先),本週分批發", f"+{m['rev_wake']:,.0f} 萬"),
+    ("低", "資料分析師", "下月前重跑 M1-M4,以實際挽留率/轉換率校正營收模型", "下月優化"),
+]
+PRIO_COLOR = {"高": "#E74C3C", "中": "#F39C12", "低": "#95A5A6"}
+rows_html = "".join(
+    f"&lt;tr style='border-bottom:1px solid rgba(128,128,128,0.2)'&gt;"
+    f"&lt;td style='padding:8px 12px;white-space:nowrap'&gt;&lt;b style='color:{PRIO_COLOR[p]}'&gt;{p}&lt;/b&gt;&lt;/td&gt;"
+    f"&lt;td style='padding:8px 12px;white-space:nowrap'&gt;{o}&lt;/td&gt;"
+    f"&lt;td style='padding:8px 12px'&gt;{a}&lt;/td&gt;"
+    f"&lt;td style='padding:8px 12px;white-space:nowrap'&gt;&lt;b&gt;{e}&lt;/b&gt;&lt;/td&gt;"
+    f"&lt;/tr&gt;"
+    for p, o, a, e in action_rows
+)
+st.markdown(
+    f"""&lt;table style='width:100%;font-size:1.05rem;border-collapse:collapse'&gt;
+&lt;thead&gt;&lt;tr style='border-bottom:2px solid rgba(128,128,128,0.4);text-align:left'&gt;
+&lt;th style='padding:8px 12px'&gt;優先級&lt;/th&gt;&lt;th style='padding:8px 12px'&gt;負責人&lt;/th&gt;
+&lt;th style='padding:8px 12px'&gt;動作&lt;/th&gt;&lt;th style='padding:8px 12px'&gt;預期效益&lt;/th&gt;
+&lt;/tr&gt;&lt;/thead&gt;
+&lt;tbody&gt;{rows_html}&lt;/tbody&gt;&lt;/table&gt;""",
+    unsafe_allow_html=True,
+)
+
+st.divider()
+
+# ============================================================
+# 來源模組(小卡,文字完整呈現)
+# ============================================================
+st.subheader("📦 主要產出來源")
+
+source_cols = st.columns(5)
+sources = [
+    ("📊 M1", "客戶儀表板", f"{n_total:,} 客戶 4 群"),
+    ("🚨 M2", "流失預警", f"Top {n_top10} 名單"),
+    ("📈 M3", "銷量預測", "Top 5 SKU"),
+    ("🎯 M4", "推薦引擎", f"{n_rules} 條規則"),
+    ("📝 M5", "一頁建議書", "本頁"),
+]
+for col, (icon, name, kpi) in zip(source_cols, sources):
+    with col.container(border=True):
+        st.markdown(
+            f"&lt;div style='font-size:0.9rem;font-weight:600'&gt;{icon} {name}&lt;/div&gt;"
+            f"&lt;div style='font-size:0.95rem;opacity:0.85;margin-top:2px'&gt;{kpi}&lt;/div&gt;",
+            unsafe_allow_html=True,
+        )
+
+st.download_button(
+    "📥 下載建議書(Markdown,可貼 Slack / Email)",
+    f"""# {month}精準行銷月度建議書
+
+★ **主結論**:聚焦『流失高風險群挽留』+『VIP 群套組升級』+『沉睡客喚醒』,預估月度淨增營收 +{m['rev_total']:,.0f} 萬
+
+## 三大支撐
+1. **流失挽留可行** - M2 鎖定 {n_atrisk} 位流失高風險,挽留率 {m['retention_rate']:.0%} → +{m['rev_retain']:,.0f} 萬/月
+2. **VIP 套組升級** - M1 識別 {n_vip} 位 VIP,M4 交叉銷售(最高 Lift {max_lift:.2f}),轉換率 {m['vip_conv_rate']:.0%} → +{m['rev_vip']:,.0f} 萬/月
+3. **沉睡客戶喚醒** - {n_sleep} 位沉睡客,熱銷推薦 + 喚醒率 {m['wake_rate']:.0%} → +{m['rev_wake']:,.0f} 萬/月
+
+## 風險評估
+- 🟢 樂觀(挽留 {m['retention_rate']:.0%} / 轉換 {m['vip_conv_rate']:.0%} / 喚醒 {m['wake_rate']:.0%}): +{m['rev_total']:,.0f} 萬/月
+- 🟡 悲觀(達成率僅有樂觀的 1/3): +{m_pes['rev_total']:,.0f} 萬/月
+- 🔴 不作為: -{m['loss_inaction']:,.0f} 萬/月
+
+計算口徑:月均消費 = Monetary ÷ (Tenure/30);詳見 App 內 Home 頁 What-if 模擬器
+
+W3 第 6 組 · 智慧物流班 · BOSS III · 2026
+""".encode("utf-8-sig"),
+    f"{next_dt.year}年{next_dt.month}月精準行銷建議書.md",
+    "text/markdown",
+)
+
+# ============================================================
+# 主管判讀 + 頁尾
+# ============================================================
+how_to_read(
+    "本頁是**定稿版**(基準假設);開會時若要現場調整挽留率/轉換率看敏感度,"
+    "用 Home 的 What-if 模擬器,兩邊口徑相同。本頁可截圖直接貼 Slack 或印出。",
+)
+footer()
+</pre></div></div>
+  </div>
+  <script>
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const group = tab.closest('.content') || document;
+        group.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        group.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.target).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
