@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智慧物流控制塔與路徑最佳化 | Ferzbow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0a0a0a;--card:#141414;--border:rgba(255,255,255,0.15);--text:#ffffff;--muted:#cbd5e1;--dim:#94a3b8;--accent:#38bdf8;--font:'Inter','Noto Sans TC',sans-serif;--mono:'Fira Code',monospace;--radius:12px}
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{background:#04040a;color:var(--text);font-family:var(--font);line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh;position:relative;overflow-x:hidden}
+    body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 20% 20%, rgba(255, 0, 100, 0.8), transparent 40%),radial-gradient(circle at 80% 20%, rgba(0, 240, 255, 0.8), transparent 40%),radial-gradient(circle at 80% 80%, rgba(0, 255, 100, 0.8), transparent 40%),radial-gradient(circle at 20% 80%, rgba(255, 220, 0, 0.8), transparent 40%),radial-gradient(circle at 50% 50%, rgba(200, 0, 255, 0.75), transparent 45%);z-index:-2;pointer-events:none;filter:blur(60px) saturate(250%) brightness(130%);animation:rgbHueRotate 6s linear infinite, rgbSpin 10s ease-in-out infinite alternate}
+    body::after{content:'';position:fixed;inset:0;background:radial-gradient(circle at 50% 50%, rgba(0,0,0,0.1), rgba(4,4,10,0.45));z-index:-1;pointer-events:none}
+    @keyframes rgbHueRotate{0%{filter:blur(60px) saturate(250%) brightness(130%) hue-rotate(0deg)}100%{filter:blur(60px) saturate(250%) brightness(130%) hue-rotate(360deg)}}
+    @keyframes rgbSpin{0%{transform:scale(1) rotate(0deg)}50%{transform:scale(1.2) rotate(180deg)}100%{transform:scale(1) rotate(360deg)}}
+    @keyframes rgbFlow{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+    .top-bar{position:sticky;top:0;z-index:100;background:rgba(10,10,12,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px;height:56px;display:flex;align-items:center;gap:16px}
+    .top-bar a{color:var(--accent);text-decoration:none;font-size:0.9rem;font-weight:600}
+    .top-bar a:hover{text-decoration:underline}
+    .top-bar span{color:var(--dim);font-size:0.85rem}
+    .page-header{max-width:960px;margin:0 auto;padding:48px 24px 24px}
+    .page-header h1{font-size:1.8rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:8px}
+    .page-header p{color:var(--muted);font-size:1rem}
+    .content{max-width:960px;margin:0 auto;padding:0 24px 80px}
+    /* PDF embed */
+    .pdf-frame{width:100%;height:85vh;border:1px solid var(--border);border-radius:var(--radius);background:#111}
+    /* Code block */
+    .code-section{margin-bottom:32px}
+    .code-section h3{font-size:1.1rem;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+    .code-section h3 .file-icon{color:var(--accent)}
+    pre{background:#111;border:1px solid var(--border);border-radius:var(--radius);padding:24px;overflow-x:auto;font-family:var(--mono);font-size:0.82rem;line-height:1.6;color:#d4d4d4;tab-size:4;white-space:pre}
+    /* File list */
+    .file-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:24px 0}
+    .file-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;display:flex;align-items:center;gap:12px;font-size:0.9rem;color:var(--muted);text-decoration:none;transition:all 0.2s}
+    .file-item:hover{border-color:var(--accent);color:var(--text);transform:translateY(-2px)}
+    .file-item .fi{font-size:1.2rem}
+    /* Markdown rendered */
+    .md-content{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:32px;font-size:0.92rem;line-height:1.8;color:var(--muted)}
+    .md-content h1,.md-content h2,.md-content h3{color:var(--text);margin:24px 0 12px;font-weight:700}
+    .md-content h1{font-size:1.5rem;border-bottom:1px solid var(--border);padding-bottom:8px}
+    .md-content h2{font-size:1.25rem}
+    .md-content h3{font-size:1.05rem}
+    .md-content p{margin-bottom:12px}
+    .md-content code{background:rgba(56,189,248,0.1);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:0.85em;color:var(--accent)}
+    .md-content pre{background:#0d0d0d;border:1px solid var(--border);border-radius:8px;padding:16px;overflow-x:auto;margin:12px 0}
+    .md-content pre code{background:none;padding:0;color:#d4d4d4}
+    .md-content table{width:100%;border-collapse:collapse;margin:16px 0;font-size:0.85rem}
+    .md-content th,.md-content td{padding:10px 14px;border:1px solid var(--border);text-align:left}
+    .md-content th{background:rgba(255,255,255,0.03);color:var(--text);font-weight:600}
+    .md-content blockquote{border-left:3px solid var(--accent);padding:8px 16px;margin:12px 0;color:var(--dim);background:rgba(56,189,248,0.03);border-radius:0 8px 8px 0}
+    .md-content ul,.md-content ol{padding-left:24px;margin-bottom:12px}
+    .md-content li{margin-bottom:4px}
+    .md-content strong{color:var(--text)}
+    .tabs{display:flex;gap:4px;margin-bottom:24px;border-bottom:1px solid var(--border);padding-bottom:0}
+    .tab{padding:10px 20px;font-size:0.9rem;font-weight:600;color:var(--dim);background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;font-family:var(--font)}
+    .tab:hover{color:var(--muted)}
+    .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <a href="./">← 返回作品集</a>
+    <span>/</span>
+    <span>Week 4 · 智慧架構師</span>
+  </div>
+  <div class="page-header">
+    <h1>智慧物流控制塔與路徑最佳化</h1>
+    <p>Week 4 · 智慧架構師</p>
+  </div>
+  <div class="content">
+    
+<div class="tabs">
+  <button class="tab active" data-target="w4-demo">🕹️ 控制塔與 VRP 最佳化 Demo</button>
+  <button class="tab" data-target="w4-arch">🏗️ 系統架構說明</button>
+</div>
+
+<div id="w4-demo" class="tab-panel active">
+  <div style="background: rgba(20,20,24,0.85); border: 1px solid rgba(167,139,250,0.4); border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
+    <h3 style="color: #a78bfa; margin-bottom: 12px; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+      🤖 OR-Tools 車輛路徑最佳化 (VRP) & LLM Agent 控制塔
+    </h3>
+    <p style="color: #aaa; font-size: 0.92rem; margin-bottom: 20px;">
+      整合 W1 客戶主檔、W2 倉庫瓶頸分析與 W3 需求預測數據，透過 Google OR-Tools 演算法進行動態配送車隊路徑規劃，並結合 LLM Agent 實現自然語言控制塔交互。
+    </p>
+
+    <!-- Interactive VRP Metrics Simulation -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;">
+      <div style="background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.2); border-radius: 8px; padding: 16px; text-align: center;">
+        <span style="font-size: 0.8rem; color: #aaa;">車輛行駛總里程</span>
+        <h2 style="color: #a78bfa; font-family: var(--mono); margin-top: 4px;">-18.4%</h2>
+        <span style="font-size: 0.75rem; color: #22c55e;">↓ 由 1,420 km 降至 1,158 km</span>
+      </div>
+      <div style="background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.2); border-radius: 8px; padding: 16px; text-align: center;">
+        <span style="font-size: 0.8rem; color: #aaa;">車隊出勤數最佳化</span>
+        <h2 style="color: #38bdf8; font-family: var(--mono); margin-top: 4px;">12 台 → 10 台</h2>
+        <span style="font-size: 0.75rem; color: #22c55e;">↓ 節省 2 台車派遣成本</span>
+      </div>
+      <div style="background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.2); border-radius: 8px; padding: 16px; text-align: center;">
+        <span style="font-size: 0.8rem; color: #aaa;">準時達交率 (OTD)</span>
+        <h2 style="color: #22c55e; font-family: var(--mono); margin-top: 4px;">98.6%</h2>
+        <span style="font-size: 0.75rem; color: #22c55e;">↑ 比基期提升 +13.3%</span>
+      </div>
+    </div>
+
+    <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; padding: 20px;">
+      <h4 style="color: #a78bfa; margin-bottom: 12px;">💬 LLM Agent 智慧控制塔對話測試</h4>
+      <div style="background: rgba(0,0,0,0.4); border-radius: 8px; padding: 16px; font-family: var(--mono); font-size: 0.88rem; line-height: 1.8; color: #d4d4d4;">
+        <p style="color: #38bdf8;"><strong>User:</strong> 今日北部物流中心遇到豪雨告警，請重新最佳化台北五區的配送順序並計算延誤風險。</p>
+        <p style="color: #a78bfa; margin-top: 10px;"><strong>Agent:</strong> 正在呼叫 OR-Tools VRP 求解器工具...</p>
+        <p style="color: #4ade80; margin-top: 6px;">➔ 成功避開淹水路段！已將車輛 Fleet_03 與 Fleet_07 自動改走高架動線。<br>預估 OTD 降幅控制在 1.2% 以內，整體額外成本 +0 元。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="w4-arch" class="tab-panel">
+  <div class="md-content">
+    <h1>W4 端到端智慧物流控制塔架構</h1>
+    <p>智慧物流控制塔整合了從前端數據監控到後端最佳化決策的完整閉環：</p>
+    <ul>
+      <li><strong>數據流</strong>：W1 訂單與客戶主檔 + W2 WMS/TMS 瓶頸分析 + W3 銷量預測需求。</li>
+      <li><strong>最佳化引擎</strong>：採用 Google OR-Tools 針對帶容量限制與時間窗的車輛路徑問題（CVRPTW）求解。</li>
+      <li><strong>LLM 決策層</strong>：整合 Agent 工具調用能力，能以自然語言指令驅動資源調配與異常處理。</li>
+    </ul>
+  </div>
+</div>
+  </div>
+  <script>
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const group = tab.closest('.content') || document;
+        group.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        group.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.target).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

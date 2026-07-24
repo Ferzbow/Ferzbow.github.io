@@ -225,8 +225,13 @@ w3Pages.forEach((p, i) => {
 const w3Content = `
 <div class="tabs">
   <button class="tab active" data-target="w3-app">🖥️ 互動系統 Demo</button>
+  <button class="tab" data-target="w3-slides">📈 NotebookLM 簡報 PDF</button>
   <button class="tab" data-target="w3-readme">📖 專案說明</button>
   ${w3CodeTabs}
+</div>
+
+<div id="w3-slides" class="tab-panel">
+  <embed src="./Precision_Marketing_Prism.pdf" type="application/pdf" class="pdf-frame">
 </div>
 
 <!-- Embedded Interactive Web App -->
@@ -472,5 +477,70 @@ fs.writeFileSync('w3.html', makePage(
   w3Content
 ));
 console.log('✓ w3.html');
+
+// ============ W4 Page ============
+const w4Content = `
+<div class="tabs">
+  <button class="tab active" data-target="w4-demo">🕹️ 控制塔與 VRP 最佳化 Demo</button>
+  <button class="tab" data-target="w4-arch">🏗️ 系統架構說明</button>
+</div>
+
+<div id="w4-demo" class="tab-panel active">
+  <div style="background: rgba(20,20,24,0.85); border: 1px solid rgba(167,139,250,0.4); border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
+    <h3 style="color: #a78bfa; margin-bottom: 12px; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+      🤖 OR-Tools 車輛路徑最佳化 (VRP) & LLM Agent 控制塔
+    </h3>
+    <p style="color: #aaa; font-size: 0.92rem; margin-bottom: 20px;">
+      整合 W1 客戶主檔、W2 倉庫瓶頸分析與 W3 需求預測數據，透過 Google OR-Tools 演算法進行動態配送車隊路徑規劃，並結合 LLM Agent 實現自然語言控制塔交互。
+    </p>
+
+    <!-- Interactive VRP Metrics Simulation -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;">
+      <div style="background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.2); border-radius: 8px; padding: 16px; text-align: center;">
+        <span style="font-size: 0.8rem; color: #aaa;">車輛行駛總里程</span>
+        <h2 style="color: #a78bfa; font-family: var(--mono); margin-top: 4px;">-18.4%</h2>
+        <span style="font-size: 0.75rem; color: #22c55e;">↓ 由 1,420 km 降至 1,158 km</span>
+      </div>
+      <div style="background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.2); border-radius: 8px; padding: 16px; text-align: center;">
+        <span style="font-size: 0.8rem; color: #aaa;">車隊出勤數最佳化</span>
+        <h2 style="color: #38bdf8; font-family: var(--mono); margin-top: 4px;">12 台 → 10 台</h2>
+        <span style="font-size: 0.75rem; color: #22c55e;">↓ 節省 2 台車派遣成本</span>
+      </div>
+      <div style="background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.2); border-radius: 8px; padding: 16px; text-align: center;">
+        <span style="font-size: 0.8rem; color: #aaa;">準時達交率 (OTD)</span>
+        <h2 style="color: #22c55e; font-family: var(--mono); margin-top: 4px;">98.6%</h2>
+        <span style="font-size: 0.75rem; color: #22c55e;">↑ 比基期提升 +13.3%</span>
+      </div>
+    </div>
+
+    <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; padding: 20px;">
+      <h4 style="color: #a78bfa; margin-bottom: 12px;">💬 LLM Agent 智慧控制塔對話測試</h4>
+      <div style="background: rgba(0,0,0,0.4); border-radius: 8px; padding: 16px; font-family: var(--mono); font-size: 0.88rem; line-height: 1.8; color: #d4d4d4;">
+        <p style="color: #38bdf8;"><strong>User:</strong> 今日北部物流中心遇到豪雨告警，請重新最佳化台北五區的配送順序並計算延誤風險。</p>
+        <p style="color: #a78bfa; margin-top: 10px;"><strong>Agent:</strong> 正在呼叫 OR-Tools VRP 求解器工具...</p>
+        <p style="color: #4ade80; margin-top: 6px;">➔ 成功避開淹水路段！已將車輛 Fleet_03 與 Fleet_07 自動改走高架動線。<br>預估 OTD 降幅控制在 1.2% 以內，整體額外成本 +0 元。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="w4-arch" class="tab-panel">
+  <div class="md-content">
+    <h1>W4 端到端智慧物流控制塔架構</h1>
+    <p>智慧物流控制塔整合了從前端數據監控到後端最佳化決策的完整閉環：</p>
+    <ul>
+      <li><strong>數據流</strong>：W1 訂單與客戶主檔 + W2 WMS/TMS 瓶頸分析 + W3 銷量預測需求。</li>
+      <li><strong>最佳化引擎</strong>：採用 Google OR-Tools 針對帶容量限制與時間窗的車輛路徑問題（CVRPTW）求解。</li>
+      <li><strong>LLM 決策層</strong>：整合 Agent 工具調用能力，能以自然語言指令驅動資源調配與異常處理。</li>
+    </ul>
+  </div>
+</div>`;
+
+fs.writeFileSync('w4.html', makePage(
+  '智慧物流控制塔與路徑最佳化',
+  'Week 4 · 智慧架構師',
+  w4Content
+));
+console.log('✓ w4.html');
 
 console.log('\nAll project pages generated.');

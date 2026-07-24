@@ -676,6 +676,7 @@
       <ul class="nav-links">
         <li><a href="#about">關於我</a></li>
         <li><a href="#projects">專案作品</a></li>
+        <li><a href="#slides">BOSS_I 簡報</a></li>
         <li><a href="#skills">技術能力</a></li>
         <li><a href="#contact">聯絡</a></li>
       </ul>
@@ -840,7 +841,7 @@
               <span>系統整合</span>
             </div>
             <div class="card-links">
-              <span class="card-note">🔒 整合中，即將上線</span>
+              <a href="./w4.html">查看完整專案 &rarr;</a>
             </div>
           </div>
         </article>
@@ -849,45 +850,91 @@
     </div>
   </section>
 
+  <!-- BOSS_I Presentation Showcase -->
+  <section id="slides" style="background: rgba(20,20,24,0.65);">
+    <div class="container">
+      <h2 class="section-title">BOSS_I 簡報展示 (NotebookLM)</h2>
+      <p class="section-sub">《分群大師：從混沌數據到精準打擊》— Task 13 K-means 與個人化推薦引擎 12 頁簡報成果。</p>
+      
+      <div class="fade-in" style="margin-bottom: 24px;">
+        <embed src="./Precision_Marketing_Prism.pdf" type="application/pdf" style="width: 100%; height: 720px; border-radius: 16px; border: 1px solid rgba(56, 189, 248, 0.3); box-shadow: 0 12px 40px rgba(0,0,0,0.6); background: #111;" />
+      </div>
+
+      <div style="text-align: center;">
+        <a href="./Precision_Marketing_Prism.pdf" target="_blank" class="btn-fill">全螢幕開啟 / 下載簡報 PDF &rarr;</a>
+      </div>
+    </div>
+  </section>
+
   <!-- Skills -->
   <section id="skills">
     <div class="container">
       <h2 class="section-title">技術能力</h2>
-      <div class="skills-grid">
+      <p class="section-sub">涵蓋程式語言、Unity 遊戲引擎開發、AI 數據科學與智慧物流運籌優化之全方位技能棧。</p>
+      
+      <div class="skills-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
         <div class="skill-group fade-in">
-          <h4>程式語言 &amp; 框架</h4>
+          <h4>💻 程式語言 (Languages)</h4>
           <ul>
-            <li>Python (Pandas, NumPy, Scikit-learn)</li>
-            <li>Streamlit</li>
-            <li>SQL</li>
-            <li>HTML / CSS / JavaScript</li>
+            <li>Python (Data Science, ML, Backend)</li>
+            <li>C# / C++ (Unity & 系統層級)</li>
+            <li>JavaScript / TypeScript / Node.js</li>
+            <li>SQL (PostgreSQL, MySQL, SQLite)</li>
+            <li>HTML5 / CSS3 / Modern Web UI</li>
+            <li>Java / Go (常用核心語法)</li>
           </ul>
         </div>
+
         <div class="skill-group fade-in">
-          <h4>數據 &amp; AI</h4>
+          <h4>🎮 遊戲開發 &amp; 引擎 (Unity &amp; 3D)</h4>
           <ul>
-            <li>RFM 客戶分群</li>
-            <li>監督式學習 (分類 / 迴歸)</li>
-            <li>K-means 聚類</li>
-            <li>Apriori 關聯規則</li>
+            <li>Unity 3D / 2D 專案架構開發</li>
+            <li>C# 物件導向與遊戲邏輯設計</li>
+            <li>物理引擎、UI Toolkit 與 Shader</li>
+            <li>互動式物流模擬 (Logistics Sim)</li>
+            <li>跨平台建置 (PC / WebGL / Mobile)</li>
           </ul>
         </div>
+
         <div class="skill-group fade-in">
-          <h4>物流領域知識</h4>
+          <h4>🤖 數據科學 &amp; AI (Data &amp; AI)</h4>
           <ul>
-            <li>WMS / TMS 系統</li>
-            <li>TOC 約束理論</li>
-            <li>OR-Tools 路徑最佳化</li>
-            <li>供應鏈數據治理</li>
+            <li>RFM 客戶價值模型 &amp; K-means 聚類</li>
+            <li>機器學習 (Scikit-learn, XGBoost)</li>
+            <li>Apriori 購物籃關聯規則探勘</li>
+            <li>Prophet / ARIMA 時序銷量預測</li>
+            <li>LLM Agent 串接 &amp; NotebookLM AIGC</li>
           </ul>
         </div>
+
         <div class="skill-group fade-in">
-          <h4>工具 &amp; 其他</h4>
+          <h4>🚚 智慧物流 &amp; 運籌 (Logistics &amp; OR)</h4>
           <ul>
-            <li>Git / GitHub Pages</li>
-            <li>NotebookLM / AIGC</li>
-            <li>LLM Agent 串接</li>
-            <li>資料視覺化 / 儀表板</li>
+            <li>OR-Tools 車輛路徑最佳化 (VRP/TSP)</li>
+            <li>WMS 倉儲管理 &amp; TMS 運輸排程</li>
+            <li>TOC 約束理論 &amp; 瓶頸工序破除</li>
+            <li>供應鏈數據治理與即時控制塔</li>
+            <li>冷鏈溫控監控與品質稽核</li>
+          </ul>
+        </div>
+
+        <div class="skill-group fade-in">
+          <h4>⚡ 網頁 &amp; 全端框架 (Web &amp; Frameworks)</h4>
+          <ul>
+            <li>Streamlit 互動式數據 Web App</li>
+            <li>RESTful API 設計與前端整合</li>
+            <li>Plotly / Dash 動態視覺化儀表板</li>
+            <li>全響應式 UI &amp; RGB 動態特效</li>
+          </ul>
+        </div>
+
+        <div class="skill-group fade-in">
+          <h4>🛠️ 開發工具 &amp; 部署 (Tools &amp; DevOps)</h4>
+          <ul>
+            <li>Git / GitHub / GitHub Pages 部署</li>
+            <li>VS Code / Jupyter Notebook / Colab</li>
+            <li>AIGC 輔助程式開發與 Prompt 工程</li>
+            <li>端到端專案整合與系統架構設計</li>
           </ul>
         </div>
       </div>
