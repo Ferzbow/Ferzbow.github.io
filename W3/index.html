@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>BOSS III 精準行銷引擎</title>
+    <!-- 引入 stlite CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stlite/mountable@0.63.1/build/stlite.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- 引入 stlite JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@stlite/mountable@0.63.1/build/stlite.js"></script>
+    <script>
+      stlite.mount(
+        {
+          // 對應 requirements.txt，Pyodide 會在瀏覽器內載入這些套件
+          requirements: ["pandas", "scikit-learn", "plotly"],
+          entrypoint: "Home.py",
+          // 告訴 stlite 要從哪裡抓取所有 Python 和 CSV 檔案
+          files: {
+            "Home.py": { url: "Home.py" },
+            "lib/kpi.py": { url: "lib/kpi.py" },
+            "lib/recommend.py": { url: "lib/recommend.py" },
+            "lib/ui.py": { url: "lib/ui.py" },
+            "pages/1_M1_客戶儀表板.py": { url: "pages/1_M1_客戶儀表板.py" },
+            "pages/2_M2_流失預警.py": { url: "pages/2_M2_流失預警.py" },
+            "pages/3_M3_銷量預測.py": { url: "pages/3_M3_銷量預測.py" },
+            "pages/4_M4_推薦引擎.py": { url: "pages/4_M4_推薦引擎.py" },
+            "pages/5_M5_一頁建議書.py": { url: "pages/5_M5_一頁建議書.py" },
+            "data/customer_clustered.csv": { url: "data/customer_clustered.csv" },
+            "data/customer_churn.csv": { url: "data/customer_churn.csv" },
+            "data/customer_rfm.csv": { url: "data/customer_rfm.csv" },
+            "data/customers.csv": { url: "data/customers.csv" },
+            "data/churn_top10.csv": { url: "data/churn_top10.csv" },
+            "data/apriori_top5_rules.csv": { url: "data/apriori_top5_rules.csv" },
+            "data/sales_top5_forecast.csv": { url: "data/sales_top5_forecast.csv" },
+            "data/sales_monthly.csv": { url: "data/sales_monthly.csv" },
+            "data/transactions.csv": { url: "data/transactions.csv" },
+            "data/sku_catalog.csv": { url: "data/sku_catalog.csv" }
+          },
+        },
+        document.getElementById("root")
+      );
+    </script>
+  </body>
+</html>

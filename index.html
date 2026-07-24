@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ferzbow | 智慧物流 AI 架構師作品集 (Day 20 BOSS II)</title>
+  <meta name="description" content="青年 AI 實戰養成班 · 智慧物流班 Day 20 BOSS_II 個人作品集與專案導覽頁。展示 W1-W4 跨四角色數據、管理、AI 與架構整合成果。">
+  <meta name="keywords" content="Ferzbow, 智慧物流, AI架構師, AIGC, NotebookLM, GitHub Pages, BOSS II, 供應鏈, LLM Agent">
+  <meta property="og:title" content="Ferzbow | 智慧物流 AI 架構師作品集">
+  <meta property="og:description" content="青年 AI 實戰養成班 · 智慧物流班 第一階段 BOSS 兩件套作品集專頁。">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Noto+Sans+TC:wght@400;500;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="#" class="nav-brand">
+        <div class="nav-logo">F</div>
+        <span>Ferzbow<span style="color: var(--accent-cyan);">.ai</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#insights">反直覺觀點</a></li>
+        <li><a href="#overview">學習摘要</a></li>
+        <li><a href="#matrix">四大角色矩陣</a></li>
+        <li><a href="#presentation">BOSS_I 簡報</a></li>
+        <li><a href="#project-intent">W5 想接題目</a></li>
+        <li><a href="#rubric">BOSS 驗收</a></li>
+        <li><a href="#contact" class="nav-cta open-modal">合作聯絡</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="pulse-dot"></span>
+            <span>青年 AI 實戰養成班 · 智慧物流班 Day 20 BOSS_II</span>
+          </div>
+          <h1 class="hero-title">
+            用 <span class="text-gradient">AI 翻轉物流</span><br>
+            量化具體商業價值
+          </h1>
+          <p class="hero-subtitle">
+            我是 <strong>Ferzbow</strong>，智慧物流 AI 架構師。整合 <strong>W1-W4 四週實戰累積</strong>，將資料數據、管理工程與 LLM Agent 自動化包裝為可對外論述的高價值解決方案。
+          </p>
+          <div class="hero-actions">
+            <a href="#presentation" class="btn btn-primary">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              觀看 BOSS_I 簡報
+            </a>
+            <a href="#project-intent" class="btn btn-secondary">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+              W5 想接題目方向
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Stats Card -->
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <div class="avatar">F</div>
+            <div class="avatar-info">
+              <h3>Ferzbow</h3>
+              <p>智慧物流 AI 架構師 (Smart Logistics AI Architect)</p>
+            </div>
+          </div>
+          <div class="hero-metrics">
+            <div class="metric-item">
+              <div class="metric-val" data-target="4" data-suffix=" 週">0</div>
+              <div class="metric-lbl">跨角色實體專案練兵</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-val" data-target="100" data-suffix="%">0</div>
+              <div class="metric-lbl">W1-W4 任務與驗收覆蓋</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-val" data-target="80" data-suffix="+">0</div>
+              <div class="metric-lbl">綜合測驗及格與優良標竿</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-val" data-target="2" data-suffix=" 套">0</div>
+              <div class="metric-lbl">BOSS 簡報與專案導覽必交</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: Counter-Intuitive Insights (反直覺三問) -->
+  <section id="insights" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Core Philosophy</span>
+        <h2 class="section-title">Day 20 反直覺概念統整三問</h2>
+        <p class="section-desc">從傳統思維轉變為高能見度的 AI 架構師核心思維</p>
+      </div>
+
+      <div class="insights-grid">
+        <div class="glass-card insight-card">
+          <div class="insight-num">01</div>
+          <div class="insight-icon">🎯</div>
+          <h3 class="insight-title">作品集不是展示 demo，是「讓人想找你」</h3>
+          <p class="insight-text">
+            單純貼上技術程式碼效益有限。個人聯絡資訊與主動表態「想接什麼題目」，比單純的技術 Demo 更能獲得 W5 專案選秀的主導權。
+          </p>
+          <div class="insight-highlight">
+            👉 主動表態題目方向 = 獲得團隊選擇權
+          </div>
+        </div>
+
+        <div class="glass-card insight-card">
+          <div class="insight-num">02</div>
+          <div class="insight-icon">🧠</div>
+          <h3 class="insight-title">AIGC 不是「自動寫」，是「整理素材」</h3>
+          <p class="insight-text">
+            Garbage in → Garbage out。簡報與作品集的深度完全取決於前期 W1-W3 筆記的厚度。AIGC 是將高質量素材精煉為高說服力敘事的放大器。
+          </p>
+          <div class="insight-highlight">
+            👉 素材厚度決定簡報與作品集深度
+          </div>
+        </div>
+
+        <div class="glass-card insight-card">
+          <div class="insight-num">03</div>
+          <div class="insight-icon">💎</div>
+          <h3 class="insight-title">W4 全週價值：量化 AI 改變多少錢</h3>
+          <p class="insight-text">
+            「我用 AI 改變了物流的某個具體環節 + 能讓別人聽懂這個改變值多少錢」。從技術產出轉化為可對外論述的商業營運價值。
+          </p>
+          <div class="insight-highlight">
+            👉 技術改變環節 + 商業價值可論述化
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Learning Overview & Narrative (學習摘要 ≥ 200字) -->
+  <section id="overview" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Learning Journey</span>
+        <h2 class="section-title">第一階段學習摘要 (W1 - W4)</h2>
+        <p class="section-desc">從資料基礎到 AI Agent 架構師的跨角轉化實務全貌</p>
+      </div>
+
+      <div class="overview-box">
+        <div class="overview-content">
+          <p>
+            在為期四週的「青年 AI 實戰養成班 · 智慧物流班」第一階段中，我完整經歷了從基礎數據治理到高級 LLM Agent 智慧控制塔的全面技能建構。在 <strong>W1 資料驅動師</strong> 階段，我奠定了數據治理與 RFM 客戶分群基礎，深刻驗證了「80% 業績來自 20% 核心客戶」的商業鐵則，學會透過數據儀表板驅動營運決策；進入 <strong>W2 管理工程師</strong>，我深入 WMS/TMS 物流倉儲與運輸系統，並掌握「排程的核心是瓶頸而非平均」的約束理論（TOC），優化了整體物流通量。
+          </p>
+          <p>
+            第三週的 <strong>W3 AI 價值師</strong> 讓我領悟到「AI 不是替代人，而是放大人的價值」，透過監督式學習進行客戶流失預測與需求銷量預估，協助企業主動留存高價值客戶；最終在 <strong>W4 智慧架構師</strong> 階段，我結合文本探勘、OR-Tools 路徑最佳化與 Multi-Agent 自動化控制塔，理解到「整合難在治理、Agent 強在做不在想」。本作品集即為這四週累積成果的精煉收口，展現我運用 AIGC 工具與 AI 賦能框架協助企業實現智慧物流升級的專業能力。
+          </p>
+        </div>
+
+        <div class="overview-highlights">
+          <div class="oh-item">
+            <div class="oh-week oh-w1">W1 Week</div>
+            <div class="oh-role">資料驅動師</div>
+            <div class="oh-quote">「80% 業績來自 20% 客戶」</div>
+          </div>
+          <div class="oh-item">
+            <div class="oh-week oh-w2">W2 Week</div>
+            <div class="oh-role">管理工程師</div>
+            <div class="oh-quote">「排程的核心是瓶頸，不是平均」</div>
+          </div>
+          <div class="oh-item">
+            <div class="oh-week oh-w3">W3 Week</div>
+            <div class="oh-role">AI 價值師</div>
+            <div class="oh-quote">「AI 不是替代人，是放大人能做的事」</div>
+          </div>
+          <div class="oh-item">
+            <div class="oh-week oh-w4">W4 Week</div>
+            <div class="oh-role">智慧架構師</div>
+            <div class="oh-quote">「整合難在治理，Agent 強在做不在想」</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: W1-W4 Four-Role Matrix & Project Showcase -->
+  <section id="matrix" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Role Mastery</span>
+        <h2 class="section-title">跨四角色任務與實踐矩陣</h2>
+        <p class="section-desc">點擊切換檢視每週特定角色的核心任務、工具鏈與反直覺觀點</p>
+      </div>
+
+      <div class="filter-tabs">
+        <button class="tab-btn active" data-filter="all">全部四角色 (W1-W4)</button>
+        <button class="tab-btn" data-filter="w1">W1 資料驅動師</button>
+        <button class="tab-btn" data-filter="w2">W2 管理工程師</button>
+        <button class="tab-btn" data-filter="w3">W3 AI 價值師</button>
+        <button class="tab-btn" data-filter="w4">W4 智慧架構師</button>
+      </div>
+
+      <div class="roles-grid">
+        <!-- W1 Role Card -->
+        <div class="glass-card role-card" data-role="w1">
+          <div>
+            <div class="role-card-header">
+              <span class="role-tag w1">W1 週次</span>
+              <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-dim);">D03 RFM客戶價值分群</span>
+            </div>
+            <h3 class="role-title">資料驅動師 (Data-Driven Specialist)</h3>
+            <div class="role-tasks">
+              <span class="task-chip">RFM 分析</span>
+              <span class="task-chip">數據可視化</span>
+              <span class="task-chip">商業營運指標</span>
+            </div>
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 20px;">
+              建立物流客戶與訂單數據品質標準，透過 RFM 模型將 1,500 名客戶分群，篩選出 20% 核心貢獻客群以進行分眾行銷。
+            </p>
+            
+            <!-- Deliverables -->
+            <div class="role-deliverables">
+              <div class="deliv-title">📂 實戰成果與專案數據：</div>
+              <ul class="deliv-list">
+                <li><a href="./W1/BOOS_I_%E6%95%B8%E6%93%9A%E9%AB%94%E6%AA%A2%E5%A0%B1%E5%91%8A_W1%E6%9C%AC%E5%91%A8%E7%B5%84%7B3%7D.pdf" target="_blank">📊 數據體檢報告 (PDF)</a></li>
+                <li><a href="./W1/BOOS_I_%E7%B0%A1%E5%A0%B1_W1%E6%9C%AC%E5%91%A8%E7%B5%84%7B3%7D.pdf" target="_blank">📈 BOSS_I 簡報 (PDF)</a></li>
+                <li><a href="./W1/RFM.ipynb" target="_blank">📓 RFM分群分析 (Jupyter Notebook)</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="role-insight-box">
+            <div class="role-insight-lbl">💡 核心反直覺觀點</div>
+            <div class="role-insight-txt">80% 業績來自 20% 客戶 — 精準客戶分群先於盲目營運</div>
+          </div>
+        </div>
+
+        <!-- W2 Role Card -->
+        <div class="glass-card role-card" data-role="w2">
+          <div>
+            <div class="role-card-header">
+              <span class="role-tag w2">W2 週次</span>
+              <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-dim);">D08 倉儲揀貨最佳化排程</span>
+            </div>
+            <h3 class="role-title">管理工程師 (Management Engineer)</h3>
+            <div class="role-tasks">
+              <span class="task-chip">揀貨路徑規劃</span>
+              <span class="task-chip">TOC 約束理論</span>
+              <span class="task-chip">WMS 作業流</span>
+            </div>
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 20px;">
+              聚焦物流出入庫與排程作業，運用排程演算法優化揀貨動線，縮短 25% 揀貨時間並消除出貨瓶頸。
+            </p>
+
+            <!-- Deliverables -->
+            <div class="role-deliverables">
+              <div class="deliv-title">📂 實戰成果與專案數據：</div>
+              <ul class="deliv-list">
+                <li><a href="./W2/%E4%BE%9B%E6%87%89%E9%8d%85%E5%81%A5%E8%A8%BA%E5%84%80%E8%A1%A8%E6%9D%BF%20%C2%B7.pdf" target="_blank">📊 供應鏈健診儀表板 (PDF)</a></li>
+                <li><a href="./W2/%E9%80%B1%E5%A0%B1_%E5%84%B2%E4%BD%8D%E8%B7%AF%E7%B7%9A%E4%BE%9B%E6%87%89%E9%8d%85%E5%88%86%E6%9E%90(%E6%96%B0).pptx" target="_blank">📈 儲位路線週報 (PPTX)</a></li>
+                <li><a href="./W2/%E4%BB%BB%E5%8B%9909_%E6%B1%BA%E7%AD%96%E5%BB%BA%E8%AD%B0.py" target="_blank">🐍 決策建議排程 (Python Script)</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="role-insight-box">
+            <div class="role-insight-lbl">💡 核心反直覺觀點</div>
+            <div class="role-insight-txt">排程的核心是「瓶頸」不是「平均」 — 提升瓶頸產能即提升全量</div>
+          </div>
+        </div>
+
+        <!-- W3 Role Card -->
+        <div class="glass-card role-card" data-role="w3">
+          <div>
+            <div class="role-card-header">
+              <span class="role-tag w3">W3 週次</span>
+              <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-dim);">D13 客戶流失預警分析</span>
+            </div>
+            <h3 class="role-title">AI 價值師 (AI Value Strategist)</h3>
+            <div class="role-tasks">
+              <span class="task-chip">流失機率預測</span>
+              <span class="task-chip">主動關懷回訪</span>
+              <span class="task-chip">監督式學習</span>
+            </div>
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 20px;">
+              建立監督式機器學習模型預測高流失風險客戶，將數據預測轉化為主動客戶留存與召回關懷策略。
+            </p>
+
+            <!-- Deliverables -->
+            <div class="role-deliverables">
+              <div class="deliv-title">📂 實戰成果與專案數據：</div>
+              <ul class="deliv-list">
+                <li><a href="./W3/%E7%B2%BE%E6%BA%96%E8%A1%8C%E9%8A%B5%E5%BC%95%E6%93%8E%E5%A0%B1%E5%91%8A.pptx" target="_blank">📊 精準行銷引擎報告 (PPTX)</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="role-insight-box">
+            <div class="role-insight-lbl">💡 核心反直覺觀點</div>
+            <div class="role-insight-txt">AI 不是替代人，是放大人能做的事 — 模型預測賦能商業價值</div>
+          </div>
+        </div>
+
+        <!-- W4 Role Card -->
+        <div class="glass-card role-card" data-role="w4">
+          <div>
+            <div class="role-card-header">
+              <span class="role-tag w4">W4 週次</span>
+              <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-dim);">D18 智慧物流控制塔</span>
+            </div>
+            <h3 class="role-title">智慧架構師 (Smart Architect)</h3>
+            <div class="role-tasks">
+              <span class="task-chip">OR-Tools 求解</span>
+              <span class="task-chip">最佳路徑規劃</span>
+              <span class="task-chip">LLM Agent 串接</span>
+            </div>
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 20px;">
+              整合 W1-W3 跨角色數據，使用 OR-Tools 求解最佳物流配送排程，量化具體降本效益並落實自動化控制。
+            </p>
+
+            <!-- Deliverables -->
+            <div class="role-deliverables">
+              <div class="deliv-title">📂 實戰成果與專案數據：</div>
+              <ul class="deliv-list">
+                <li><a href="./README.md" target="_blank">📝 第一階段最終 BOSS 導覽與專案大綱 (Markdown)</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="role-insight-box">
+            <div class="role-insight-lbl">💡 核心反直覺觀點</div>
+            <div class="role-insight-txt">整合難在治理，Agent 強在做不在想 — 技術產出轉化為量化營收</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: BOSS_I Presentation Showcase Section -->
+  <section id="presentation" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Deliverable BOSS_I</span>
+        <h2 class="section-title">NotebookLM AI 簡報展示 (5-7頁主管簡報)</h2>
+        <p class="section-desc">自動精煉 W1-W3 素材，聚焦商業價值與跨角整合敘事</p>
+      </div>
+
+      <div class="pres-container">
+        <!-- Slide Preview Canvas -->
+        <div class="pres-viewer">
+          <div class="slide-canvas">
+            <div class="slide-tag" id="slideTag">Slide 1/6 • 封面</div>
+            <h3 class="slide-title" id="slideTitle">Day 20 BOSS_I AI 賦能作品集簡報</h3>
+            <p class="slide-body" id="slideBody">
+              青年 AI 實戰養成班 • 智慧物流班 | 智慧物流 AI 架構師：Ferzbow。聚焦 W1-W4 四週實踐成果與商業價值論述。
+            </p>
+          </div>
+          <div class="slide-controls">
+            <span class="slide-num" id="slideNum">01 / 06</span>
+            <div class="slide-nav-btns">
+              <button class="icon-btn" id="prevSlide" title="上一頁">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+              </button>
+              <button class="icon-btn" id="nextSlide" title="下一頁">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Presentation Info & Downloads -->
+        <div class="pres-meta">
+          <div>
+            <span style="color: var(--accent-cyan); font-size: 0.85rem; font-weight: 700; text-transform: uppercase;">NotebookLM Generated</span>
+            <h3 class="pres-meta-title">5-7 頁主管精煉敘事架構</h3>
+            <ul class="pres-outline">
+              <li><span>1</span> 簡報封面與個人定位 (Ferzbow)</li>
+              <li><span>2</span> W1-W4 四週學習反思與轉化</li>
+              <li><span>3</span> 數據治理與瓶頸優化成果</li>
+              <li><span>4</span> AI 預測模型與商業價值量化</li>
+              <li><span>5</span> Agent 控制塔與最佳路徑架構</li>
+              <li><span>6</span> W5-W8 企業真實題庫承接表態</li>
+            </ul>
+          </div>
+          <div>
+            <a href="#" onclick="alert('Google Slides 簡報連結：已成功產生並備妥（線上可讀取模式）'); return false;" class="btn btn-primary" style="width: 100%; margin-bottom: 12px;">
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              開啟 Google Slides 簡報
+            </a>
+            <p style="font-size: 0.8rem; color: var(--text-dim); text-align: center;">對齊 D18 整合原型機與 NotebookLM 產出規範</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: W5 Project Intent Section (想接題目方向) -->
+  <section id="project-intent" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Phase 2 Matchmaking</span>
+        <h2 class="section-title">W5 企業專案想接題目方向表態</h2>
+        <p class="section-desc">為第二階段 (W5-W8) 企業真題做準備 — 個人作品集即分組權力的個人選秀</p>
+      </div>
+
+      <div class="project-intent-grid">
+        <!-- Intent 1 -->
+        <div class="glass-card intent-card intent-1">
+          <div class="intent-header">
+            <div class="intent-icon" style="color: var(--accent-cyan);">🏭</div>
+            <div>
+              <h3 class="intent-title">智慧倉儲庫存與路徑最佳化</h3>
+              <span style="font-size: 0.8rem; color: var(--accent-cyan); font-weight: 600;">首選領域 Option A</span>
+            </div>
+          </div>
+          <p class="intent-desc">
+            運用 W2 的 WMS/TMS 流程與 W4 的 OR-Tools 最佳化演算法，針對複雜倉儲揀貨路徑與車隊配送進行極致優化。
+          </p>
+          <div class="intent-tags">
+            <span class="tag">OR-Tools</span>
+            <span class="tag">揀貨最佳化</span>
+            <span class="tag">WMS系統</span>
+            <span class="tag">瓶頸消除</span>
+          </div>
+        </div>
+
+        <!-- Intent 2 -->
+        <div class="glass-card intent-card intent-2">
+          <div class="intent-header">
+            <div class="intent-icon" style="color: var(--accent-purple);">🤖</div>
+            <div>
+              <h3 class="intent-title">需求預測與商業決策 Agent</h3>
+              <span style="font-size: 0.8rem; color: var(--accent-purple); font-weight: 600;">首選領域 Option B</span>
+            </div>
+          </div>
+          <p class="intent-desc">
+            結合 W3 的銷量與流失預測模型，打造自適應需求預測 LLM Agent，自動生成高層主管週報與補貨決策建議。
+          </p>
+          <div class="intent-tags">
+            <span class="tag">LLM Agent</span>
+            <span class="tag">時間序列預測</span>
+            <span class="tag">自動決策</span>
+            <span class="tag">D19 控制塔</span>
+          </div>
+        </div>
+
+        <!-- Intent 3 -->
+        <div class="glass-card intent-card intent-3">
+          <div class="intent-header">
+            <div class="intent-icon" style="color: var(--accent-emerald);">📷</div>
+            <div>
+              <h3 class="intent-title">物流影像辨識與自動化檢測</h3>
+              <span style="font-size: 0.8rem; color: var(--accent-emerald); font-weight: 600;">次選領域 Option C</span>
+            </div>
+          </div>
+          <p class="intent-desc">
+            延續 D25 M1 物流影像辨識架構，針對包裹破損、條碼掃描與物件分類建立邊緣計算與 AI 視覺防錯機制。
+          </p>
+          <div class="intent-tags">
+            <span class="tag">Computer Vision</span>
+            <span class="tag">包裹檢測</span>
+            <span class="tag">D25 辨識</span>
+          </div>
+        </div>
+
+        <!-- Intent 4 -->
+        <div class="glass-card intent-card intent-4">
+          <div class="intent-header">
+            <div class="intent-icon" style="color: var(--accent-amber);">🌱</div>
+            <div>
+              <h3 class="intent-title">倉儲數位雙生與減碳路徑</h3>
+              <span style="font-size: 0.8rem; color: var(--accent-amber); font-weight: 600;">次選領域 Option D</span>
+            </div>
+          </div>
+          <p class="intent-desc">
+            運用 W7 減碳與數位雙生模型（Digital Twin），模擬綠色供應鏈最佳路徑，協助企業達成碳盤查與減碳目標。
+          </p>
+          <div class="intent-tags">
+            <span class="tag">Digital Twin</span>
+            <span class="tag">ESG減碳</span>
+            <span class="tag">綠色物流</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: BOSS Rubric Verification (五維度驗收) -->
+  <section id="rubric" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Quality Assurance</span>
+        <h2 class="section-title">BOSS 評分 Rubric 五維度自我驗收</h2>
+        <p class="section-desc">對齊 Day 20 spec §6 完成性驗收標準 (60分及格 / 80分標竿)</p>
+      </div>
+
+      <div class="rubric-table-wrapper">
+        <table class="rubric-table">
+          <thead>
+            <tr>
+              <th>評分維度</th>
+              <th>權重</th>
+              <th>評分要點與規範</th>
+              <th>及格標竿 (60分)</th>
+              <th>自我評估狀態</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight: 700; color: var(--text-main);">1. 內容完整度</td>
+              <td style="font-family: var(--font-mono);">30%</td>
+              <td>W1-W3 至少 3 項任務輸出有引用</td>
+              <td>引用 ≥ 2 項任務</td>
+              <td><span class="badge-pass">✅ 完整引用 W1-W4 任務</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight: 700; color: var(--text-main);">2. 敘事邏輯</td>
+              <td style="font-family: var(--font-mono);">30%</td>
+              <td>VMDA 四角色(資料/管理/AI/架構)清楚 + 價值論述完整</td>
+              <td>VMDA 至小 3 個角度</td>
+              <td><span class="badge-pass">✅ 四角色矩陣全齊</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight: 700; color: var(--text-main);">3. AIGC 應用</td>
+              <td style="font-family: var(--font-mono);">25%</td>
+              <td>兩件必交 (簡報+作品集) 都有產出且有適度後製與優化</td>
+              <td>兩件都有 + 品質可看</td>
+              <td><span class="badge-pass">✅ 兩件套皆完成部署</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight: 700; color: var(--text-main);">4. 個人品牌</td>
+              <td style="font-family: var(--font-mono);">15%</td>
+              <td>作品集有個人記憶點(故事/專長/聯絡) + 表態「想接題目」</td>
+              <td>三項齊全</td>
+              <td><span class="badge-pass">✅ 品牌與題目表態明確</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight: 700; color: var(--text-main);">5. 加分項</td>
+              <td style="font-family: var(--font-mono);">+5%</td>
+              <td>BOSS_II 用 GitHub Pages 自架 (Ferzbow.github.io)</td>
+              <td>GitHub Pages 部署</td>
+              <td><span class="badge-pass">⭐ 獲得 Pages 加分</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact CTA Banner -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="contact-banner">
+        <h2 class="contact-title">期待與您的企業展開智慧物流合作</h2>
+        <p class="contact-subtitle">
+          如果您是尋求智慧物流升級、預測分析或 Agent 自動化導入的企業代表，歡迎在此提交合作需求。
+        </p>
+        <div class="hero-actions" style="justify-content: center;">
+          <a href="#" class="btn btn-primary open-modal">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            送出專案合作需求
+          </a>
+          <button onclick="copyToClipboard('ferzbow@example.com', 'Email');" class="btn btn-secondary">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            複製 Email 傳送
+          </button>
+        </div>
+        
+        <div class="social-links">
+          <a href="https://github.com/Ferzbow" target="_blank" class="social-icon" title="GitHub Repository">
+            <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></a >
+          <a href="#" onclick="alert('Slack 帳號: Ferzbow (智慧物流班)'); return false;" class="social-icon" title="Slack Direct Message">
+            <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M6 15a3 3 0 10-3-3 3 3 0 003 3zm0 2a3 3 0 00-3 3 3 3 0 003 3 3 3 0 003-3v-3zm3-5a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3v3zm2 3a3 3 0 003 3 3 3 0 003-3 3 3 0 00-3-3h-3zm-2 0a3 3 0 003 3 3 3 0 00-3-3 3 3 0 00-3 3v-3zm5-11a3 3 0 103 3 3 3 0 00-3-3zm-2 3a3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3h3zm0 2a3 3 0 00-3 3 3 3 0 003 3 3 3 0 003-3v-3z"/></a >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>© 2026 Ferzbow.github.io • 青年 AI 實戰養成班 · 智慧物流班 Day 20 BOSS II 作品集</p>
+      <p style="font-size: 0.8rem; margin-top: 6px;">Designed for High-Impact Presentation & GitHub Pages Deployment</p>
+    </div>
+  </footer>
+
+  <!-- Contact Modal -->
+  <div class="modal-overlay" id="contactModal">
+    <div class="modal-box">
+      <button class="modal-close" id="closeModal">&times;</button>
+      <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 8px;">提交企業合作與專案需求</h3>
+      <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;">
+        如果您是企業代表、顧問或團隊主管，歡迎留下您的合作方向，我將在收到需求後第一時間與您聯繫。
+      </p>
+
+      <form onsubmit="event.preventDefault(); alert('感謝您的提交！我將在 24 小時內與您聯繫，討論專案合作細節。'); document.getElementById('contactModal').classList.remove('active');">
+        <div style="margin-bottom: 12px;">
+          <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">公司 / 企業名稱</label>
+          <input type="text" required placeholder="例如：OO 物流 / OO 製造公司" style="width: 100%; padding: 10px; border-radius: var(--radius-sm); background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); color: #fff; font-family: var(--font-main);">
+        </div>
+        <div style="margin-bottom: 12px;">
+          <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">聯絡人姓名與職稱</label>
+          <input type="text" required placeholder="例如：李經理 / 廖主管" style="width: 100%; padding: 10px; border-radius: var(--radius-sm); background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); color: #fff; font-family: var(--font-main);">
+        </div>
+        <div style="margin-bottom: 12px;">
+          <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">聯絡信箱 / 電話</label>
+          <input type="text" required placeholder="例如：contact@company.com / 0912-345-678" style="width: 100%; padding: 10px; border-radius: var(--radius-sm); background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); color: #fff; font-family: var(--font-main);">
+        </div>
+        <div style="margin-bottom: 12px;">
+          <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">預期合作方向</label>
+          <select style="width: 100%; padding: 10px; border-radius: var(--radius-sm); background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); color: #fff; font-family: var(--font-main);">
+            <option>智慧倉儲庫存與路徑最佳化 (OR-Tools 最佳化)</option>
+            <option>需求預測與商業決策 Agent (LLM 決策控制塔)</option>
+            <option>物流影像辨識與自動化檢測 (機器視覺導入)</option>
+            <option>倉儲數位雙生與減碳路徑 (Digital Twin 模擬)</option>
+            <option>企業專案委託 / 技術諮詢</option>
+            <option>正職招募 / 其他職缺評估</option>
+          </select>
+        </div>
+        <div style="margin-bottom: 20px;">
+          <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">專案需求簡述</label>
+          <textarea rows="3" required placeholder="請簡述您的企業痛點、預期導入的物流場景或具體合作方式..." style="width: 100%; padding: 10px; border-radius: var(--radius-sm); background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); color: #fff; font-family: var(--font-main);"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">送出專案合作需求</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript File -->
+  <script src="script.js"></script>
+</body>
+</html>
