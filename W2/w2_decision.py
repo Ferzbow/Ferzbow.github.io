@@ -1,85 +1,4 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>供應鏈健診與倉儲路徑最佳化 | Ferzbow</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    :root{--bg:#0a0a0a;--card:#141414;--border:rgba(255,255,255,0.08);--text:#e5e5e5;--muted:#888;--dim:#555;--accent:#38bdf8;--font:'Inter','Noto Sans TC',sans-serif;--mono:'Fira Code',monospace;--radius:12px}
-    *{margin:0;padding:0;box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.7;-webkit-font-smoothing:antialiased}
-    .top-bar{position:sticky;top:0;z-index:100;background:rgba(10,10,10,0.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px;height:56px;display:flex;align-items:center;gap:16px}
-    .top-bar a{color:var(--accent);text-decoration:none;font-size:0.9rem;font-weight:600}
-    .top-bar a:hover{text-decoration:underline}
-    .top-bar span{color:var(--dim);font-size:0.85rem}
-    .page-header{max-width:960px;margin:0 auto;padding:48px 24px 24px}
-    .page-header h1{font-size:1.8rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:8px}
-    .page-header p{color:var(--muted);font-size:1rem}
-    .content{max-width:960px;margin:0 auto;padding:0 24px 80px}
-    /* PDF embed */
-    .pdf-frame{width:100%;height:85vh;border:1px solid var(--border);border-radius:var(--radius);background:#111}
-    /* Code block */
-    .code-section{margin-bottom:32px}
-    .code-section h3{font-size:1.1rem;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-    .code-section h3 .file-icon{color:var(--accent)}
-    pre{background:#111;border:1px solid var(--border);border-radius:var(--radius);padding:24px;overflow-x:auto;font-family:var(--mono);font-size:0.82rem;line-height:1.6;color:#d4d4d4;tab-size:4;white-space:pre}
-    /* File list */
-    .file-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:24px 0}
-    .file-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;display:flex;align-items:center;gap:12px;font-size:0.9rem;color:var(--muted);text-decoration:none;transition:all 0.2s}
-    .file-item:hover{border-color:var(--accent);color:var(--text);transform:translateY(-2px)}
-    .file-item .fi{font-size:1.2rem}
-    /* Markdown rendered */
-    .md-content{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:32px;font-size:0.92rem;line-height:1.8;color:var(--muted)}
-    .md-content h1,.md-content h2,.md-content h3{color:var(--text);margin:24px 0 12px;font-weight:700}
-    .md-content h1{font-size:1.5rem;border-bottom:1px solid var(--border);padding-bottom:8px}
-    .md-content h2{font-size:1.25rem}
-    .md-content h3{font-size:1.05rem}
-    .md-content p{margin-bottom:12px}
-    .md-content code{background:rgba(56,189,248,0.1);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:0.85em;color:var(--accent)}
-    .md-content pre{background:#0d0d0d;border:1px solid var(--border);border-radius:8px;padding:16px;overflow-x:auto;margin:12px 0}
-    .md-content pre code{background:none;padding:0;color:#d4d4d4}
-    .md-content table{width:100%;border-collapse:collapse;margin:16px 0;font-size:0.85rem}
-    .md-content th,.md-content td{padding:10px 14px;border:1px solid var(--border);text-align:left}
-    .md-content th{background:rgba(255,255,255,0.03);color:var(--text);font-weight:600}
-    .md-content blockquote{border-left:3px solid var(--accent);padding:8px 16px;margin:12px 0;color:var(--dim);background:rgba(56,189,248,0.03);border-radius:0 8px 8px 0}
-    .md-content ul,.md-content ol{padding-left:24px;margin-bottom:12px}
-    .md-content li{margin-bottom:4px}
-    .md-content strong{color:var(--text)}
-    .tabs{display:flex;gap:4px;margin-bottom:24px;border-bottom:1px solid var(--border);padding-bottom:0}
-    .tab{padding:10px 20px;font-size:0.9rem;font-weight:600;color:var(--dim);background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;font-family:var(--font)}
-    .tab:hover{color:var(--muted)}
-    .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
-    .tab-panel{display:none}
-    .tab-panel.active{display:block}
-  </style>
-</head>
-<body>
-  <div class="top-bar">
-    <a href="./">← 返回作品集</a>
-    <span>/</span>
-    <span>Week 2 · 管理工程師</span>
-  </div>
-  <div class="page-header">
-    <h1>供應鏈健診與倉儲路徑最佳化</h1>
-    <p>Week 2 · 管理工程師</p>
-  </div>
-  <div class="content">
-    
-<div class="tabs">
-  <button class="tab active" data-target="w2-dashboard">📊 供應鏈健診儀表板</button>
-  <button class="tab" data-target="w2-code">🐍 決策建議腳本</button>
-</div>
-<div id="w2-dashboard" class="tab-panel active">
-  <embed src="./W2/w2_dashboard.pdf" type="application/pdf" class="pdf-frame">
-</div>
-<div id="w2-code" class="tab-panel">
-  <div class="code-section">
-    <h3><span class="file-icon">🐍</span> w2_decision.py</h3>
-    <pre># -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 D9 任務 09「決策簡報」· 完整實作版
 ============================================================
@@ -237,7 +156,7 @@ else:
         "LT 變異 CV (%)": [32, 28, 80, 25, 41],
         "風險": ["正常", "正常", "🔴 紅標", "正常", "注意"],
     })
-    colors = ["#10B981" if v &lt; 50 else ("#F59E0B" if v &lt; 60 else "#EF4444")
+    colors = ["#10B981" if v < 50 else ("#F59E0B" if v < 60 else "#EF4444")
               for v in sup_data["LT 變異 CV (%)"]]
     fig = go.Figure()
     fig.add_bar(
@@ -336,15 +255,15 @@ with st.expander("🔄 反直覺三點（Day 9 §2.4）— 點擊展開"):
     st.markdown("""
 **1. 結論要先講，不是最後才揭曉**
 
-&gt; 業界匯報應從「結論 → 理由 → 證據」由上往下。老闆要的是決定，不是坐在那裡聽你做分析過程回放。先給答案，再告訴我為什麼。
+> 業界匯報應從「結論 → 理由 → 證據」由上往下。老闆要的是決定，不是坐在那裡聽你做分析過程回放。先給答案，再告訴我為什麼。
 
 **2. 圖表愈多愈不專業（≤ 5 張原則）**
 
-&gt; 一份建議書超過 5 張圖，老闆反而覺得你沒底。圖愈多，代表你對哪張最重要沒把握，信心降一格。選一張最有說服力的圖，其餘放附錄。
+> 一份建議書超過 5 張圖，老闆反而覺得你沒底。圖愈多，代表你對哪張最重要沒把握，信心降一格。選一張最有說服力的圖，其餘放附錄。
 
 **3. 沒有風險評估，老闆不會 buy-in**
 
-&gt; 老闆更怕「沒看見失敗風險的方案」。把樂觀、悲觀、不作為三情境都列出來，老闆反而點頭，因為他看到你想過了最壞的情況，他才能放心拍板。
+> 老闆更怕「沒看見失敗風險的方案」。把樂觀、悲觀、不作為三情境都列出來，老闆反而點頭，因為他看到你想過了最壞的情況，他才能放心拍板。
 """)
 
 st.divider()
@@ -411,20 +330,3 @@ st.caption(
     "✅ 任務 09 完整實作版 · 8 個 TODO 全部完成。"
     "若要查看骨架版請開啟 `D9_決策建議_示範.py`，完整答案版請開啟 `D9_決策建議_答案版.py`。"
 )
-</pre>
-  </div>
-</div>
-  </div>
-  <script>
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        const group = tab.closest('.content') || document;
-        group.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        group.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.target).classList.add('active');
-      });
-    });
-  </script>
-</body>
-</html>

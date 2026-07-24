@@ -151,10 +151,10 @@ const w1Content = `
   <button class="tab" data-target="w1-notebook">📓 RFM Notebook</button>
 </div>
 <div id="w1-report" class="tab-panel active">
-  <embed src="./W1/BOOS_I_%E6%95%B8%E6%93%9A%E9%AB%94%E6%AA%A2%E5%A0%B1%E5%91%8A_W1%E6%9C%AC%E5%91%A8%E7%B5%84%7B3%7D.pdf" type="application/pdf" class="pdf-frame">
+  <embed src="./W1/w1_data_report.pdf" type="application/pdf" class="pdf-frame">
 </div>
 <div id="w1-slides" class="tab-panel">
-  <embed src="./W1/BOOS_I_%E7%B0%A1%E5%A0%B1_W1%E6%9C%AC%E5%91%A8%E7%B5%84%7B3%7D.pdf" type="application/pdf" class="pdf-frame">
+  <embed src="./W1/w1_slides.pdf" type="application/pdf" class="pdf-frame">
 </div>
 <div id="w1-notebook" class="tab-panel">
   ${notebookHtml}
@@ -168,7 +168,7 @@ fs.writeFileSync('w1.html', makePage(
 console.log('✓ w1.html');
 
 // ============ W2 Page ============
-const w2Py = readFile('W2/任務09_決策建議.py');
+const w2Py = readFile('W2/w2_decision.py');
 
 const w2Content = `
 <div class="tabs">
@@ -176,11 +176,11 @@ const w2Content = `
   <button class="tab" data-target="w2-code">🐍 決策建議腳本</button>
 </div>
 <div id="w2-dashboard" class="tab-panel active">
-  <embed src="./W2/%E4%BE%9B%E6%87%89%E9%8D%85%E5%81%A5%E8%A8%BA%E5%84%80%E8%A1%A8%E6%9D%BF%20%C2%B7.pdf" type="application/pdf" class="pdf-frame">
+  <embed src="./W2/w2_dashboard.pdf" type="application/pdf" class="pdf-frame">
 </div>
 <div id="w2-code" class="tab-panel">
   <div class="code-section">
-    <h3><span class="file-icon">🐍</span> 任務09_決策建議.py</h3>
+    <h3><span class="file-icon">🐍</span> w2_decision.py</h3>
     <pre>${escapeHtml(w2Py)}</pre>
   </div>
 </div>`;
