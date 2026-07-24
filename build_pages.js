@@ -16,11 +16,13 @@ function makePage(title, subtitle, content, backLink = './') {
     :root{--bg:#0a0a0a;--card:#141414;--border:rgba(255,255,255,0.08);--text:#e5e5e5;--muted:#888;--dim:#555;--accent:#38bdf8;--font:'Inter','Noto Sans TC',sans-serif;--mono:'Fira Code',monospace;--radius:12px}
     *{margin:0;padding:0;box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{background:linear-gradient(-45deg, #070913, #0f0c1b, #05141c, #0a0f1d, #14081c);background-size:400% 400%;animation:rgbBackground 16s ease infinite;color:var(--text);font-family:var(--font);line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh;position:relative}
-    body::before{content:'';position:fixed;top:-30%;left:-30%;width:160%;height:160%;background:radial-gradient(circle at 20% 30%, rgba(56, 189, 248, 0.15), transparent 40%),radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.15), transparent 40%),radial-gradient(circle at 50% 85%, rgba(236, 72, 153, 0.12), transparent 40%),radial-gradient(circle at 10% 75%, rgba(16, 185, 129, 0.12), transparent 40%);z-index:-1;pointer-events:none;animation:rgbGlow 20s ease-in-out infinite alternate;filter:blur(80px)}
-    @keyframes rgbBackground{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-    @keyframes rgbGlow{0%{transform:scale(1) rotate(0deg)}50%{transform:scale(1.15) rotate(180deg)}100%{transform:scale(1) rotate(360deg)}}
-    .top-bar{position:sticky;top:0;z-index:100;background:rgba(10,10,10,0.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px;height:56px;display:flex;align-items:center;gap:16px}
+    body{background:#04040a;color:var(--text);font-family:var(--font);line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh;position:relative;overflow-x:hidden}
+    body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 20% 20%, rgba(255, 0, 100, 0.8), transparent 40%),radial-gradient(circle at 80% 20%, rgba(0, 240, 255, 0.8), transparent 40%),radial-gradient(circle at 80% 80%, rgba(0, 255, 100, 0.8), transparent 40%),radial-gradient(circle at 20% 80%, rgba(255, 220, 0, 0.8), transparent 40%),radial-gradient(circle at 50% 50%, rgba(200, 0, 255, 0.75), transparent 45%);z-index:-2;pointer-events:none;filter:blur(60px) saturate(250%) brightness(130%);animation:rgbHueRotate 6s linear infinite, rgbSpin 10s ease-in-out infinite alternate}
+    body::after{content:'';position:fixed;inset:0;background:radial-gradient(circle at 50% 50%, rgba(0,0,0,0.1), rgba(4,4,10,0.45));z-index:-1;pointer-events:none}
+    @keyframes rgbHueRotate{0%{filter:blur(60px) saturate(250%) brightness(130%) hue-rotate(0deg)}100%{filter:blur(60px) saturate(250%) brightness(130%) hue-rotate(360deg)}}
+    @keyframes rgbSpin{0%{transform:scale(1) rotate(0deg)}50%{transform:scale(1.2) rotate(180deg)}100%{transform:scale(1) rotate(360deg)}}
+    @keyframes rgbFlow{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+    .top-bar{position:sticky;top:0;z-index:100;background:rgba(10,10,12,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px;height:56px;display:flex;align-items:center;gap:16px}
     .top-bar a{color:var(--accent);text-decoration:none;font-size:0.9rem;font-weight:600}
     .top-bar a:hover{text-decoration:underline}
     .top-bar span{color:var(--dim);font-size:0.85rem}
@@ -222,10 +224,242 @@ w3Pages.forEach((p, i) => {
 
 const w3Content = `
 <div class="tabs">
-  <button class="tab active" data-target="w3-readme">📖 專案說明</button>
+  <button class="tab active" data-target="w3-app">🖥️ 互動系統 Demo</button>
+  <button class="tab" data-target="w3-readme">📖 專案說明</button>
   ${w3CodeTabs}
 </div>
-<div id="w3-readme" class="tab-panel active">
+
+<!-- Embedded Interactive Web App -->
+<div id="w3-app" class="tab-panel active">
+  <div style="background: rgba(20,20,24,0.85); border: 1px solid rgba(56,189,248,0.3); border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
+    
+    <!-- Sub-navigation -->
+    <div style="display: flex; gap: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 14px; margin-bottom: 20px; flex-wrap: wrap;">
+      <button class="app-subtab active" onclick="switchSubtab(event, 'sub-home')">🎯 決策總覽</button>
+      <button class="app-subtab" onclick="switchSubtab(event, 'sub-m1')">📊 M1 客戶儀表板</button>
+      <button class="app-subtab" onclick="switchSubtab(event, 'sub-m2')">⚠️ M2 流失預警</button>
+      <button class="app-subtab" onclick="switchSubtab(event, 'sub-m3')">📈 M3 銷量預測</button>
+      <button class="app-subtab" onclick="switchSubtab(event, 'sub-m4')">🛒 M4 推薦引擎</button>
+      <button class="app-subtab" onclick="switchSubtab(event, 'sub-m5')">📋 M5 一頁建議書</button>
+    </div>
+
+    <!-- Subtab 1: Home / 決策總覽 -->
+    <div id="sub-home" class="subtab-panel active">
+      <div style="background: rgba(56,189,248,0.06); border: 1px solid rgba(56,189,248,0.2); border-radius: 10px; padding: 18px; margin-bottom: 20px;">
+        <h3 style="color: #38bdf8; margin-bottom: 12px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+          🎛️ What-if 模擬器：調整行銷假設，結論與風險即時重算
+        </h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 12px;">
+          <div>
+            <label style="font-size: 0.85rem; color: #aaa; display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span>流失挽留成功率</span>
+              <span id="lbl-retention" style="color: #38bdf8; font-weight: 700; font-family: var(--mono);">30%</span>
+            </label>
+            <input type="range" id="slider-retention" min="0" max="100" value="30" step="5" style="width:100%; accent-color: #38bdf8;" oninput="updateWhatif()">
+          </div>
+          <div>
+            <label style="font-size: 0.85rem; color: #aaa; display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span>VIP 套組轉換率</span>
+              <span id="lbl-vip" style="color: #38bdf8; font-weight: 700; font-family: var(--mono);">20%</span>
+            </label>
+            <input type="range" id="slider-vip" min="0" max="100" value="20" step="5" style="width:100%; accent-color: #38bdf8;" oninput="updateWhatif()">
+          </div>
+          <div>
+            <label style="font-size: 0.85rem; color: #aaa; display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span>沉睡客喚醒率</span>
+              <span id="lbl-wake" style="color: #38bdf8; font-weight: 700; font-family: var(--mono);">10%</span>
+            </label>
+            <input type="range" id="slider-wake" min="0" max="100" value="10" step="5" style="width:100%; accent-color: #38bdf8;" oninput="updateWhatif()">
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI Live Output Banner -->
+      <div style="background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); border-radius: 10px; padding: 16px; margin-bottom: 12px; color: #4ade80;">
+        📌 <strong>CMO 30 秒結論：聚焦『流失高風險挽留』+『VIP 套組升級』+『沉睡客喚醒』</strong><br>
+        預估月度淨增營收 <span id="kpi-total-rev" style="font-size: 1.2rem; font-weight: 800; font-family: var(--mono); color: #86efac;">+64.5 萬</span>（年化約 <span id="kpi-yearly-rev" style="font-weight: 700; color: #86efac;">+774 萬</span>）── 
+        挽留 107 位 (<span id="kpi-retain-rev">+25.7 萬</span>) · VIP 354 位 (<span id="kpi-vip-rev">+35.4 萬</span>) · 喚醒 429 位 (<span id="kpi-wake-rev">+3.4 萬</span>)
+      </div>
+
+      <div style="background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 10px; padding: 16px; margin-bottom: 12px; color: #f87171;">
+        ⏳ <strong>什麼都不做，每月損失 −85.6 萬，且會擴大</strong> ── 流失高風險 107 位的月消費一旦流失就全數蒸發（年化約 −1,027 萬）
+      </div>
+    </div>
+
+    <!-- Subtab 2: M1 客戶儀表板 -->
+    <div id="sub-m1" class="subtab-panel">
+      <h3 style="margin-bottom: 16px; color: #e5e5e5;">📊 客戶集群分佈概覽 (1,500 人主檔)</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;">
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center;">
+          <span style="font-size: 0.8rem; color: #888;">總客戶數</span>
+          <h2 style="color: #38bdf8; font-family: var(--mono); margin-top: 4px;">1,500 人</h2>
+        </div>
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center;">
+          <span style="font-size: 0.8rem; color: #888;">核心 VIP 客群</span>
+          <h2 style="color: #22c55e; font-family: var(--mono); margin-top: 4px;">354 人 (23.6%)</h2>
+        </div>
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center;">
+          <span style="font-size: 0.8rem; color: #888;">流失高風險客群</span>
+          <h2 style="color: #ef4444; font-family: var(--mono); margin-top: 4px;">107 人 (7.1%)</h2>
+        </div>
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center;">
+          <span style="font-size: 0.8rem; color: #888;">沉睡客群</span>
+          <h2 style="color: #f59e0b; font-family: var(--mono); margin-top: 4px;">429 人 (28.6%)</h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subtab 3: M2 流失預警 -->
+    <div id="sub-m2" class="subtab-panel">
+      <h3 style="margin-bottom: 16px; color: #e5e5e5;">⚠️ 流失高風險 TOP 10 名單與建議處方</h3>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+          <thead>
+            <tr style="background: rgba(255,255,255,0.05); text-align: left;">
+              <th style="padding: 10px; border-bottom: 1px solid var(--border);">客戶 ID</th>
+              <th style="padding: 10px; border-bottom: 1px solid var(--border);">流失機率</th>
+              <th style="padding: 10px; border-bottom: 1px solid var(--border);">未購買天數</th>
+              <th style="padding: 10px; border-bottom: 1px solid var(--border);">消費金額 (NT$)</th>
+              <th style="padding: 10px; border-bottom: 1px solid var(--border);">主要主因</th>
+              <th style="padding: 10px; border-bottom: 1px solid var(--border);">建議動作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:10px; border-bottom:1px solid var(--border);">C1358</td><td style="padding:10px; color:#ef4444; font-weight:700;">99.5%</td><td style="padding:10px;">364 天</td><td style="padding:10px;">$12,295</td><td style="padding:10px;">長時間沒下單 + 頻次低</td><td style="padding:10px; color:#38bdf8;">VIP 電話挽留 + 折扣券</td></tr>
+            <tr><td style="padding:10px; border-bottom:1px solid var(--border);">C1397</td><td style="padding:10px; color:#ef4444; font-weight:700;">99.5%</td><td style="padding:10px;">360 天</td><td style="padding:10px;">$10,808</td><td style="padding:10px;">長時間沒下單 + 頻次低</td><td style="padding:10px; color:#38bdf8;">VIP 電話挽留 + 折扣券</td></tr>
+            <tr><td style="padding:10px; border-bottom:1px solid var(--border);">C1373</td><td style="padding:10px; color:#ef4444; font-weight:700;">99.5%</td><td style="padding:10px;">360 天</td><td style="padding:10px;">$8,726</td><td style="padding:10px;">長時間沒下單 + 頻次低</td><td style="padding:10px; color:#38bdf8;">VIP 電話挽留 + 折扣券</td></tr>
+            <tr><td style="padding:10px; border-bottom:1px solid var(--border);">C1444</td><td style="padding:10px; color:#ef4444; font-weight:700;">99.5%</td><td style="padding:10px;">357 天</td><td style="padding:10px;">$23,346</td><td style="padding:10px;">長時間沒下單 + 頻次低</td><td style="padding:10px; color:#38bdf8;">VIP 電話挽留 + 折扣券</td></tr>
+            <tr><td style="padding:10px; border-bottom:1px solid var(--border);">C1485</td><td style="padding:10px; color:#ef4444; font-weight:700;">99.5%</td><td style="padding:10px;">354 天</td><td style="padding:10px;">$8,046</td><td style="padding:10px;">長時間沒下單 + 頻次低</td><td style="padding:10px; color:#38bdf8;">VIP 電話挽留 + 折扣券</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Subtab 4: M3 銷量預測 -->
+    <div id="sub-m3" class="subtab-panel">
+      <h3 style="margin-bottom: 16px; color: #e5e5e5;">📈 Top 5 品項下月需求預測 (Prophet vs Baseline)</h3>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+          <thead>
+            <tr style="background: rgba(255,255,255,0.05); text-align: left;">
+              <th style="padding: 10px; border-bottom: 1px solid var(--border);">品名</th>
+              <th style="padding: 10px; border-bottom: 1px solid var(--border);">Prophet MAPE</th>
+              <th style="padding: 10px; border-bottom: 1px solid var(--border);">Baseline MAPE</th>
+              <th style="padding: 10px; border-bottom: 1px solid var(--border);">決策模型</th>
+              <th style="padding: 10px; border-bottom: 1px solid var(--border);">採購建議</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:10px; border-bottom:1px solid var(--border); font-weight:700; color:#38bdf8;">尿布</td><td style="padding:10px;">4.49%</td><td style="padding:10px;">14.54%</td><td style="padding:10px; color:#22c55e;">★ 用 Prophet (領先 10.1pp)</td><td style="padding:10px;">備貨 1,480 ± 164 件</td></tr>
+            <tr><td style="padding:10px; border-bottom:1px solid var(--border); font-weight:700; color:#38bdf8;">啤酒</td><td style="padding:10px;">9.40%</td><td style="padding:10px;">9.32%</td><td style="padding:10px; color:#f59e0b;">用 Baseline</td><td style="padding:10px;">備貨 620 ± 42 件</td></tr>
+            <tr><td style="padding:10px; border-bottom:1px solid var(--border); font-weight:700; color:#38bdf8;">紅酒</td><td style="padding:10px;">6.36%</td><td style="padding:10px;">11.52%</td><td style="padding:10px; color:#22c55e;">★ 用 Prophet (領先 5.2pp)</td><td style="padding:10px;">備貨 863 ± 38 件</td></tr>
+            <tr><td style="padding:10px; border-bottom:1px solid var(--border); font-weight:700; color:#38bdf8;">起司</td><td style="padding:10px;">3.66%</td><td style="padding:10px;">4.33%</td><td style="padding:10px; color:#f59e0b;">用 Baseline</td><td style="padding:10px;">備貨 862 ± 25 件</td></tr>
+            <tr><td style="padding:10px; border-bottom:1px solid var(--border); font-weight:700; color:#38bdf8;">米</td><td style="padding:10px;">15.69%</td><td style="padding:10px;">18.71%</td><td style="padding:10px; color:#22c55e;">★ 用 Prophet (領先 3.0pp)</td><td style="padding:10px;">備貨 800 ± 19 件</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Subtab 5: M4 推薦引擎 -->
+    <div id="sub-m4" class="subtab-panel">
+      <h3 style="margin-bottom: 16px; color: #e5e5e5;">🛒 購物籃關聯規則 (Apriori Top 5 Rules)</h3>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+          <thead>
+            <tr style="background: rgba(255,255,255,0.05); text-align: left;">
+              <th style="padding: 10px; border-bottom: 1px solid var(--border);">先驗商品 (A)</th>
+              <th style="padding: 10px; border-bottom: 1px solid var(--border);">後繼商品 (B)</th>
+              <th style="padding: 10px; border-bottom: 1px solid var(--border);">支持度 (Support)</th>
+              <th style="padding: 10px; border-bottom: 1px solid var(--border);">置信度 (Confidence)</th>
+              <th style="padding: 10px; border-bottom: 1px solid var(--border);">提升度 (Lift)</th>
+              <th style="padding: 10px; border-bottom: 1px solid var(--border);">建議策略</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:10px; border-bottom:1px solid var(--border);">尿布</td><td style="padding:10px; color:#22c55e; font-weight:700;">啤酒</td><td style="padding:10px;">14.88%</td><td style="padding:10px;">63.03%</td><td style="padding:10px; color:#38bdf8; font-weight:700;">3.13x</td><td style="padding:10px;">配套販售（經典套組）</td></tr>
+            <tr><td style="padding:10px; border-bottom:1px solid var(--border);">啤酒</td><td style="padding:10px; color:#22c55e; font-weight:700;">尿布</td><td style="padding:10px;">14.88%</td><td style="padding:10px;">73.83%</td><td style="padding:10px; color:#38bdf8; font-weight:700;">3.13x</td><td style="padding:10px;">配套販售（經典套組）</td></tr>
+            <tr><td style="padding:10px; border-bottom:1px solid var(--border);">醬油</td><td style="padding:10px; color:#22c55e; font-weight:700;">米</td><td style="padding:10px;">13.39%</td><td style="padding:10px;">55.04%</td><td style="padding:10px; color:#38bdf8; font-weight:700;">3.04x</td><td style="padding:10px;">配套販售（經典套組）</td></tr>
+            <tr><td style="padding:10px; border-bottom:1px solid var(--border);">米</td><td style="padding:10px; color:#22c55e; font-weight:700;">醬油</td><td style="padding:10px;">13.39%</td><td style="padding:10px;">73.91%</td><td style="padding:10px; color:#38bdf8; font-weight:700;">3.04x</td><td style="padding:10px;">配套販售（經典套組）</td></tr>
+            <tr><td style="padding:10px; border-bottom:1px solid var(--border);">紅酒</td><td style="padding:10px; color:#22c55e; font-weight:700;">起司</td><td style="padding:10px;">13.30%</td><td style="padding:10px;">56.14%</td><td style="padding:10px; color:#38bdf8; font-weight:700;">3.01x</td><td style="padding:10px;">配套販售（經典套組）</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Subtab 6: M5 一頁建議書 -->
+    <div id="sub-m5" class="subtab-panel">
+      <h3 style="margin-bottom: 16px; color: #e5e5e5;">📋 CMO 一頁執行建議書與情境分析</h3>
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; padding: 20px; line-height: 1.8;">
+        <h4 style="color: #38bdf8; margin-bottom: 10px;">一、核心策略聚焦</h4>
+        <p>1. <strong>流失高風險挽留</strong>：針對 107 位 High-Risk 客戶派發專屬回流優惠券，預估挽留 32 人，保護月營收 +25.7 萬元。</p>
+        <p>2. <strong>VIP 升級套組</strong>：對 354 位 VIP 推動交叉銷售關聯套裝（如紅酒+起司/啤酒+尿布），預估轉換 +35.4 萬元。</p>
+        <p>3. <strong>沉睡客喚醒</strong>：對 429 位 沉睡客自動發送簡訊/EDM 喚醒觸發，預估動員 +3.4 萬元。</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .app-subtab {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .app-subtab:hover {
+    color: var(--text);
+    background: rgba(255,255,255,0.1);
+  }
+  .app-subtab.active {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+  }
+  .subtab-panel {
+    display: none;
+  }
+  .subtab-panel.active {
+    display: block;
+  }
+</style>
+
+<script>
+  function switchSubtab(e, id) {
+    document.querySelectorAll('.app-subtab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.subtab-panel').forEach(p => p.classList.remove('active'));
+    e.target.classList.add('active');
+    document.getElementById(id).classList.add('active');
+  }
+
+  function updateWhatif() {
+    const ret = parseInt(document.getElementById('slider-retention').value) / 100;
+    const vip = parseInt(document.getElementById('slider-vip').value) / 100;
+    const wake = parseInt(document.getElementById('slider-wake').value) / 100;
+
+    document.getElementById('lbl-retention').innerText = Math.round(ret * 100) + '%';
+    document.getElementById('lbl-vip').innerText = Math.round(vip * 100) + '%';
+    document.getElementById('lbl-wake').innerText = Math.round(wake * 100) + '%';
+
+    const revRetain = 107 * 8000 * ret / 10000;
+    const revVip = 354 * 5000 * vip / 10000;
+    const revWake = 429 * 800 * wake / 10000;
+    const revTotal = revRetain + revVip + revWake;
+
+    document.getElementById('kpi-retain-rev').innerText = '+' + revRetain.toFixed(1) + ' 萬';
+    document.getElementById('kpi-vip-rev').innerText = '+' + revVip.toFixed(1) + ' 萬';
+    document.getElementById('kpi-wake-rev').innerText = '+' + revWake.toFixed(1) + ' 萬';
+    document.getElementById('kpi-total-rev').innerText = '+' + revTotal.toFixed(1) + ' 萬';
+    document.getElementById('kpi-yearly-rev').innerText = '+' + Math.round(revTotal * 12) + ' 萬';
+  }
+</script>
+
+<div id="w3-readme" class="tab-panel">
   <div class="md-content">
     ${mdToHtml(w3Readme)}
   </div>
