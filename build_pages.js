@@ -13,7 +13,7 @@ function makePage(title, subtitle, content, backLink = './') {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#0a0a0a;--card:#141414;--border:rgba(255,255,255,0.08);--text:#e5e5e5;--muted:#888;--dim:#555;--accent:#38bdf8;--font:'Inter','Noto Sans TC',sans-serif;--mono:'Fira Code',monospace;--radius:12px}
+    :root{--bg:#0a0a0a;--card:#141414;--border:rgba(255,255,255,0.15);--text:#ffffff;--muted:#cbd5e1;--dim:#94a3b8;--accent:#38bdf8;--font:'Inter','Noto Sans TC',sans-serif;--mono:'Fira Code',monospace;--radius:12px}
     *{margin:0;padding:0;box-sizing:border-box}
     html{scroll-behavior:smooth}
     body{background:#04040a;color:var(--text);font-family:var(--font);line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh;position:relative;overflow-x:hidden}
