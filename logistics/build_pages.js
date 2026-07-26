@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Shared page template
-function makePage(title, subtitle, content, backLink = './') {
+function makePage(title, subtitle, content, backLink = '../') {
   return `<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>

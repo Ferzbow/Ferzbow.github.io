@@ -721,7 +721,7 @@
               <span class="proj-tag">RFM</span>
             </div>
             <div class="proj-links-row">
-              <a href="./logistics.html" class="proj-link">查看物流課程專頁 &rarr;</a>
+              <a href="./logistics/index.html" class="proj-link">查看物流課程專頁 &rarr;</a>
             </div>
           </div>
         </article>
@@ -761,7 +761,7 @@
               <span class="proj-tag">精準行銷</span>
             </div>
             <div class="proj-links-row">
-              <a href="./Precision_Marketing_Prism.pdf" target="_blank" class="proj-link">開啟 PDF &rarr;</a>
+              <a href="./logistics/Precision_Marketing_Prism.pdf" target="_blank" class="proj-link">開啟 PDF &rarr;</a>
             </div>
           </div>
         </article>
@@ -920,55 +920,11 @@
     </div>
   </footer>
 
+  <!-- Locales & i18n Manager -->
+  <script src="./locales/locales.js"></script>
+  <script src="./scripts/i18n.js"></script>
+
   <script>
-    // ---- MULTI-LANGUAGE (i18n) SWITCHER ----
-    (function() {
-      var DICT = {
-        zh: {
-          navAbout: "關於我", navProjects: "作品集", navSkills: "技術能力", navContact: "聯絡",
-          btnPortfolio: "查看作品集", btnContact: "聯絡我"
-        },
-        en: {
-          navAbout: "About", navProjects: "Works", navSkills: "Skills", navContact: "Contact",
-          btnPortfolio: "View Portfolio", btnContact: "Contact Me"
-        },
-        de: {
-          navAbout: "Über Mich", navProjects: "Werke", navSkills: "Fähigkeiten", navContact: "Kontakt",
-          btnPortfolio: "Portfolio Ansehen", btnContact: "Kontaktieren"
-        },
-        it: {
-          navAbout: "Su di Me", navProjects: "Lavori", navSkills: "Competenze", navContact: "Contatto",
-          btnPortfolio: "Vedi Portfolio", btnContact: "Contattami"
-        }
-      };
-
-      var btns = document.querySelectorAll('.lang-btn');
-      function setLang(lang) {
-        if (!DICT[lang]) lang = 'zh';
-        localStorage.setItem('lang', lang);
-        btns.forEach(function(b) {
-          if (b.getAttribute('data-lang') === lang) b.classList.add('active');
-          else b.classList.remove('active');
-        });
-        var data = DICT[lang];
-        var elNavAbout = document.getElementById('nav-about'); if (elNavAbout) elNavAbout.textContent = data.navAbout;
-        var elNavProj  = document.getElementById('nav-projects'); if (elNavProj) elNavProj.textContent = data.navProjects;
-        var elNavSkill = document.getElementById('nav-skills'); if (elNavSkill) elNavSkill.textContent = data.navSkills;
-        var elNavCont  = document.getElementById('nav-contact'); if (elNavCont) elNavCont.textContent = data.navContact;
-        var elBtnPort  = document.getElementById('btn-portfolio'); if (elBtnPort) elBtnPort.textContent = data.btnPortfolio;
-        var elBtnCont  = document.getElementById('btn-contact'); if (elBtnCont) elBtnCont.textContent = data.btnContact;
-      }
-
-      btns.forEach(function(b) {
-        b.addEventListener('click', function() {
-          setLang(b.getAttribute('data-lang'));
-        });
-      });
-
-      var savedLang = localStorage.getItem('lang') || 'zh';
-      setLang(savedLang);
-    })();
-
     // ---- THEME TOGGLE ----
     (function() {
       var html = document.documentElement;
