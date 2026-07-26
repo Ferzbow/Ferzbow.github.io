@@ -433,13 +433,86 @@
     [data-theme="light"] .contact-handle { color: var(--text-muted); }
     [data-theme="light"] footer { border-color: rgba(124,58,237,0.12); color: var(--text-dim); }
 
+    /* ---- DUAL TEXT VARIATION (Dark vs Light Persona) ---- */
+    .dual-text .text-light { display: none; opacity: 0; transition: opacity 0.4s ease; }
+    .dual-text .text-dark  { display: inline; opacity: 1; transition: opacity 0.4s ease; }
+    [data-theme="light"] .dual-text .text-light { display: inline; opacity: 1; }
+    [data-theme="light"] .dual-text .text-dark  { display: none; opacity: 0; }
+
+    /* ---- FLOATING CORNER LANGUAGE BUTTONS ---- */
+    .hero-corner-lang {
+      position: absolute;
+      z-index: 20;
+      pointer-events: auto;
+    }
+    .hero-corner-lang .lang-btn {
+      background: rgba(16, 16, 26, 0.65);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.82rem; font-weight: 600;
+      padding: 8px 18px; border-radius: 50px;
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+      cursor: pointer; transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    [data-theme="light"] .hero-corner-lang .lang-btn {
+      background: rgba(255, 255, 255, 0.72);
+      border-color: rgba(124, 58, 237, 0.18);
+      color: #3b0764;
+      box-shadow: 0 8px 24px rgba(124, 58, 237, 0.12);
+    }
+    .hero-corner-lang .lang-btn:hover {
+      transform: translateY(-3px) scale(1.06);
+      color: var(--text); border-color: var(--accent);
+      box-shadow: 0 12px 32px rgba(56, 189, 248, 0.3);
+    }
+    [data-theme="light"] .hero-corner-lang .lang-btn:hover {
+      color: #7c3aed; border-color: #7c3aed;
+      box-shadow: 0 12px 32px rgba(124, 58, 237, 0.22);
+    }
+    .hero-corner-lang .lang-btn.active {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: var(--accent);
+      color: var(--text);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
+    }
+    [data-theme="light"] .hero-corner-lang .lang-btn.active {
+      background: #7c3aed;
+      border-color: #7c3aed;
+      color: #fff;
+      box-shadow: 0 6px 22px rgba(124, 58, 237, 0.35);
+    }
+
+    /* 四個角落精密定位 + 獨立微波浮動動畫 */
+    .hero-corner-lang.top-left     { top: 120px; left: 4%;  animation: floatTopLeft 4s ease-in-out infinite alternate; }
+    .hero-corner-lang.top-right    { top: 120px; right: 4%; animation: floatTopRight 4.5s ease-in-out infinite alternate; }
+    .hero-corner-lang.bottom-left  { top: 380px; left: 3.5%; animation: floatBottomLeft 4.2s ease-in-out infinite alternate; }
+    .hero-corner-lang.bottom-right { top: 380px; right: 3.5%; animation: floatBottomRight 4.8s ease-in-out infinite alternate; }
+
+    @keyframes floatTopLeft     { 0% { transform: translateY(0); } 100% { transform: translateY(-8px) rotate(-1deg); } }
+    @keyframes floatTopRight    { 0% { transform: translateY(0); } 100% { transform: translateY(-10px) rotate(1deg); } }
+    @keyframes floatBottomLeft  { 0% { transform: translateY(0); } 100% { transform: translateY(8px) rotate(-1deg); } }
+    @keyframes floatBottomRight { 0% { transform: translateY(0); } 100% { transform: translateY(10px) rotate(1deg); } }
+
+    @media (max-width: 1024px) {
+      .hero-corner-lang.top-left     { top: 100px; left: 2%; }
+      .hero-corner-lang.top-right    { top: 100px; right: 2%; }
+      .hero-corner-lang.bottom-left  { top: 440px; left: 2%; }
+      .hero-corner-lang.bottom-right { top: 440px; right: 2%; }
+    }
+    @media (max-width: 768px) {
+      .hero-corner-lang { position: static; display: inline-block; margin: 4px; animation: none; }
+      .hero-corner-wrapper { display: flex; flex-wrap: wrap; justify-content: center; margin-top: 24px; }
+    }
+
     /* ---- THEME TOGGLE BUTTON ---- */
     #theme-toggle {
       display: flex; align-items: center; justify-content: center;
       width: 40px; height: 40px; border-radius: 50%;
       background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
       cursor: pointer; font-size: 1.15rem; transition: all 0.3s ease;
-      flex-shrink: 0; position: relative; overflow: hidden;
+      flex-shrink: 0; position: relative; overflow: visible;
     }
     #theme-toggle:hover { background: rgba(255,255,255,0.15); transform: scale(1.1); box-shadow: 0 0 16px rgba(56,189,248,0.3); }
     [data-theme="light"] #theme-toggle { background: rgba(124,58,237,0.08); border-color: rgba(124,58,237,0.2); }
@@ -449,6 +522,41 @@
     .icon-sun  { opacity: 0; transform: translateY(24px) rotate(90deg); }
     [data-theme="light"] .icon-moon { opacity: 0; transform: translateY(-24px) rotate(-90deg); }
     [data-theme="light"] .icon-sun  { opacity: 1; transform: translateY(0) rotate(0deg); }
+
+    /* ---- TOOLTIP & HINT BADGES ---- */
+    #theme-toggle::after {
+      content: attr(data-tooltip);
+      position: absolute; right: 50px; top: 50%; transform: translateY(-50%) translateX(6px);
+      background: rgba(10, 10, 18, 0.92); color: var(--text-muted);
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 5px 12px; font-size: 0.75rem; white-space: nowrap;
+      pointer-events: none; opacity: 0; transition: all 0.25s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5); backdrop-filter: blur(8px);
+    }
+    #theme-toggle:hover::after {
+      opacity: 1; transform: translateY(-50%) translateX(0);
+    }
+    [data-theme="light"] #theme-toggle::after {
+      background: rgba(255, 255, 255, 0.95); color: #1a0a3c;
+      border-color: rgba(124, 58, 237, 0.2); box-shadow: 0 4px 20px rgba(124,58,237,0.15);
+    }
+
+    .hint-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 12px; padding: 4px 14px; border-radius: 50px;
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--accent); background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      animation: hintPulse 2.5s ease-in-out infinite alternate;
+    }
+    [data-theme="light"] .hint-badge {
+      color: #7c3aed; background: rgba(124, 58, 237, 0.08);
+      border-color: rgba(124, 58, 237, 0.2);
+    }
+    @keyframes hintPulse {
+      0%   { opacity: 0.85; transform: translateY(0); }
+      100% { opacity: 1;    transform: translateY(-2px); box-shadow: 0 4px 12px rgba(56,189,248,0.15); }
+    }
   </style>
 </head>
 
@@ -460,12 +568,12 @@
       <a href="#" class="logo rgb-text">F.</a>
       <div class="nav-right">
         <ul class="nav-links">
-          <li><a href="#about">關於我</a></li>
-          <li><a href="#projects">作品集</a></li>
-          <li><a href="#skills">技術能力</a></li>
-          <li><a href="#contact">聯絡</a></li>
+          <li><a href="#about" id="nav-about">關於我</a></li>
+          <li><a href="#projects" id="nav-projects">作品集</a></li>
+          <li><a href="#skills" id="nav-skills">技術能力</a></li>
+          <li><a href="#contact" id="nav-contact">聯絡</a></li>
         </ul>
-        <button id="theme-toggle" aria-label="切換主題">
+        <button id="theme-toggle" aria-label="切換主題" data-tooltip="切換 ☀️/🌙 雙主題與懸停特效">
           <span class="toggle-icon icon-moon">🌙</span>
           <span class="toggle-icon icon-sun">☀️</span>
         </button>
@@ -474,7 +582,21 @@
   </nav>
 
   <!-- Hero -->
-  <header id="hero">
+  <header id="hero" style="position: relative;">
+    <!-- 4 Corner Floating Language Orbs -->
+    <div class="hero-corner-lang top-left">
+      <button class="lang-btn active" data-lang="zh">🇹🇼 讓我們說中文</button>
+    </div>
+    <div class="hero-corner-lang top-right">
+      <button class="lang-btn" data-lang="en">🇬🇧 I speak English</button>
+    </div>
+    <div class="hero-corner-lang bottom-left">
+      <button class="lang-btn" data-lang="de">🇩🇪 Ich spreche ein wenig Deutsch</button>
+    </div>
+    <div class="hero-corner-lang bottom-right">
+      <button class="lang-btn" data-lang="it">🇮🇹 Sto imparando l'italiano</button>
+    </div>
+
     <div class="container">
       <p class="hero-tag">Hi, I'm</p>
       <h1 class="hero-name rgb-text">Ferzbow</h1>
@@ -483,13 +605,19 @@
         <span class="role-pill ai">🤖 AI 工程師</span>
         <span class="role-pill dev">💻 全端開發者</span>
       </div>
-      <p class="hero-desc">
-        熱衷於遊戲開發、AI 數據分析與現代 Web 架構。<br>
-        從 Unity 2D 冒險遊戲、AI 物流優化引擎到全端網頁，用程式碼打造極致體驗。
+      <p class="hero-desc dual-text">
+        <span class="text-dark">
+          熱衷於遊戲開發、AI 數據分析與現代 Web 架構。<br>
+          在深夜用程式碼與咖啡因將混沌腦洞化為現實，打造極致體驗。
+        </span>
+        <span class="text-light">
+          專注於遊戲設計、AI 數據視覺化與現代 Web 架構。<br>
+          以清晰邏輯與精緻 UI 打造優雅的產品與使用者體驗。
+        </span>
       </p>
       <div class="hero-btns">
-        <a href="#projects" class="btn-fill">查看作品集</a>
-        <a href="#contact" class="btn-ghost">聯絡我</a>
+        <a href="#projects" class="btn-fill" id="btn-portfolio">查看作品集</a>
+        <a href="#contact" class="btn-ghost" id="btn-contact">聯絡我</a>
       </div>
     </div>
   </header>
@@ -501,14 +629,25 @@
         <div class="about-text">
           <div class="section-label">👤 About Me</div>
           <h2 class="section-title">關於我</h2>
-          <p>
-            我是 <strong>Ferzbow</strong>，一個熱愛跨領域創作的開發者。遊戲設計讓我學會如何說故事，AI 讓我學會如何從混沌中找規律，全端開發讓我學會如何把想法部署給世界。
+          <p class="dual-text">
+            <span class="text-dark">
+              我是 <strong>Ferzbow</strong>，一個帶有夜貓屬性的跨領域創作者。遊戲設計讓我學會掌控遊戲規則，AI 讓我學會從資料混沌中捕捉規律，全端開發則是我向世界輸出想法的實態介面。
+            </span>
+            <span class="text-light">
+              我是 <strong>Ferzbow</strong>，一個專注於優雅體驗的產品開發者。遊戲設計讓我學會說好故事，AI 讓我學會從數據中尋找洞察，全端開發則是我將創意優雅落地的產品載體。
+            </span>
           </p>
-          <p>
-            目前正在持續累積作品——<strong>Unity 2D 地牢冒險遊戲 Fluxus</strong>、<strong>智慧物流 AI 四週完整課程成果</strong>，以及各種 Web 與後端實驗。我相信好的作品不只是技術 Demo，而是能讓人感受到用心的東西。
+          <p class="dual-text">
+            <span class="text-dark">
+              目前正在持續累積作品——包含 <strong>Unity 2D 地牢冒險 Fluxus</strong>、<strong>智慧物流 AI 控制塔</strong> 與各式極客實驗。我相信真正酷的作品不只是技術 Demo，而是帶有靈魂與細節的藝術品。
+            </span>
+            <span class="text-light">
+              目前正在持續累積作品——包含 <strong>Unity 2D 地牢冒險 Fluxus</strong>、<strong>智慧物流 AI 控制塔</strong> 與各式 Web 應用。我相信好的作品不只是技術展示，而是能兼具美感與實用價值的溝通橋樑。
+            </span>
           </p>
-          <p>
-            未來想做什麼？繼續做好玩的東西。
+          <p class="dual-text">
+            <span class="text-dark">未來想做什麼？繼續把腦中那些瘋狂的想法實態化。</span>
+            <span class="text-light">未來想做什麼？繼續打造讓人耳目一新的高品質體驗。</span>
           </p>
         </div>
         <div class="stat-row">
@@ -538,7 +677,10 @@
     <div class="container">
       <div class="section-label">🗂️ Works</div>
       <h2 class="section-title">作品集</h2>
-      <p class="section-sub">涵蓋遊戲開發、AI 應用、智慧物流與 Web 開發的多元作品。</p>
+      <p class="section-sub">
+        涵蓋遊戲開發、AI 應用、智慧物流與 Web 開發的多元作品。<br>
+        <span class="hint-badge">✨ 懸停卡片觸發專屬動態特效 · 試試點擊右上角切換 ☀️/🌙</span>
+      </p>
 
       <div class="projects-grid">
 
@@ -779,6 +921,54 @@
   </footer>
 
   <script>
+    // ---- MULTI-LANGUAGE (i18n) SWITCHER ----
+    (function() {
+      var DICT = {
+        zh: {
+          navAbout: "關於我", navProjects: "作品集", navSkills: "技術能力", navContact: "聯絡",
+          btnPortfolio: "查看作品集", btnContact: "聯絡我"
+        },
+        en: {
+          navAbout: "About", navProjects: "Works", navSkills: "Skills", navContact: "Contact",
+          btnPortfolio: "View Portfolio", btnContact: "Contact Me"
+        },
+        de: {
+          navAbout: "Über Mich", navProjects: "Werke", navSkills: "Fähigkeiten", navContact: "Kontakt",
+          btnPortfolio: "Portfolio Ansehen", btnContact: "Kontaktieren"
+        },
+        it: {
+          navAbout: "Su di Me", navProjects: "Lavori", navSkills: "Competenze", navContact: "Contatto",
+          btnPortfolio: "Vedi Portfolio", btnContact: "Contattami"
+        }
+      };
+
+      var btns = document.querySelectorAll('.lang-btn');
+      function setLang(lang) {
+        if (!DICT[lang]) lang = 'zh';
+        localStorage.setItem('lang', lang);
+        btns.forEach(function(b) {
+          if (b.getAttribute('data-lang') === lang) b.classList.add('active');
+          else b.classList.remove('active');
+        });
+        var data = DICT[lang];
+        var elNavAbout = document.getElementById('nav-about'); if (elNavAbout) elNavAbout.textContent = data.navAbout;
+        var elNavProj  = document.getElementById('nav-projects'); if (elNavProj) elNavProj.textContent = data.navProjects;
+        var elNavSkill = document.getElementById('nav-skills'); if (elNavSkill) elNavSkill.textContent = data.navSkills;
+        var elNavCont  = document.getElementById('nav-contact'); if (elNavCont) elNavCont.textContent = data.navContact;
+        var elBtnPort  = document.getElementById('btn-portfolio'); if (elBtnPort) elBtnPort.textContent = data.btnPortfolio;
+        var elBtnCont  = document.getElementById('btn-contact'); if (elBtnCont) elBtnCont.textContent = data.btnContact;
+      }
+
+      btns.forEach(function(b) {
+        b.addEventListener('click', function() {
+          setLang(b.getAttribute('data-lang'));
+        });
+      });
+
+      var savedLang = localStorage.getItem('lang') || 'zh';
+      setLang(savedLang);
+    })();
+
     // ---- THEME TOGGLE ----
     (function() {
       var html = document.documentElement;
