@@ -41,8 +41,36 @@
     if (heroDark && t.hero.descDark) heroDark.innerHTML = t.hero.descDark;
     var heroLight = document.querySelector('.hero-desc .text-light');
     if (heroLight && t.hero.descLight) heroLight.innerHTML = t.hero.descLight;
-    var btnPort = document.getElementById('btn-portfolio'); if (btnPort && t.hero.btnPortfolio) btnPort.textContent = t.hero.btnPortfolio;
-    var btnCont = document.getElementById('btn-contact'); if (btnCont && t.hero.btnContact) btnCont.textContent = t.hero.btnContact;
+    var isCorrupted = document.documentElement.getAttribute('data-theme') === 'corrupted';
+    var isDecoding = window.isDecodingRescue;
+    var btnPort = document.getElementById('btn-portfolio');
+    var btnCont = document.getElementById('btn-contact');
+    var egg = t.easterEgg || { rescueDark: "🌑 沉入黑暗", rescueLight: "☀️ 擁抱光明" };
+
+    var quoteEl = document.querySelector('[data-i18n="corruptedQuote"]');
+    if (quoteEl && egg.corruptedQuote) quoteEl.innerHTML = egg.corruptedQuote;
+
+    if (isDecoding) {
+      if (window.currentRescueType === 'dark') {
+        if (btnPort) {
+          btnPort.innerHTML = egg.rescueDark;
+          btnPort.className = 'btn-fill btn-rescue-dark chosen-rescue-dark';
+        }
+        if (btnCont && t.hero.btnContact) btnCont.textContent = t.hero.btnContact;
+      } else if (window.currentRescueType === 'light') {
+        if (btnCont) {
+          btnCont.innerHTML = egg.rescueLight;
+          btnCont.className = 'btn-ghost btn-rescue-light chosen-rescue-light';
+        }
+        if (btnPort && t.hero.btnPortfolio) btnPort.textContent = t.hero.btnPortfolio;
+      }
+    } else if (isCorrupted) {
+      if (btnPort) btnPort.innerHTML = egg.rescueDark;
+      if (btnCont) btnCont.innerHTML = egg.rescueLight;
+    } else {
+      if (btnPort && t.hero.btnPortfolio) btnPort.textContent = t.hero.btnPortfolio;
+      if (btnCont && t.hero.btnContact) btnCont.textContent = t.hero.btnContact;
+    }
 
     // Update About
     var aboutLabel = document.querySelector('#about .section-label'); if (aboutLabel && t.about.label) aboutLabel.textContent = t.about.label;

@@ -8,7 +8,8 @@ window.I18N_LOCALES = {
     tooltipTheme: "切換 ☀️/🌙 雙主題（⚠️ 警告：請勿連續快速點擊！）",
     easterEgg: {
       rescueDark: "🌑 沉入黑暗",
-      rescueLight: "☀️ 擁抱光明"
+      rescueLight: "☀️ 擁抱光明",
+      corruptedQuote: "「這裡已經沒有彩蛋了...<br>如你所見，一直在兩種情緒下切換的人，是會壞掉的。」"
     },
     nav: {
       about: "關於我",
@@ -20,7 +21,7 @@ window.I18N_LOCALES = {
       tag: "Hi, I'm",
       name: "Ferzbow",
       roles: ["🎮 遊戲開發者", "🤖 AI 工程師", "💻 全端開發者"],
-      descDark: "熱衷於遊戲開發、AI 數據分析與現代 Web 架構。<br>在深夜用程式碼與咖啡因將混沌腦洞化為現實，打造極致體驗。",
+      descDark: "沒什麼，一個路過的遊戲開發者罷了。<br>在深夜用程式碼與咖啡因將混沌腦洞化為現實，打造極致體驗。",
       descLight: "專注於遊戲設計、AI 數據視覺化與現代 Web 架構。<br>以清晰邏輯與精緻 UI 打造優雅的產品與使用者體驗。",
       btnPortfolio: "查看作品集",
       btnContact: "聯絡我"
@@ -150,7 +151,8 @@ window.I18N_LOCALES = {
     tooltipTheme: "Switch ☀️/🌙 themes (⚠️ Warning: Do NOT click repeatedly!)",
     easterEgg: {
       rescueDark: "🌑 Sink into Darkness",
-      rescueLight: "☀️ Embrace the Light"
+      rescueLight: "☀️ Embrace the Light",
+      corruptedQuote: "\"There are no more easter eggs here...<br>As you can see, someone who constantly toggles between two emotions eventually breaks.\""
     },
     nav: {
       about: "About",
@@ -162,7 +164,7 @@ window.I18N_LOCALES = {
       tag: "Hi, I'm",
       name: "Ferzbow",
       roles: ["🎮 Game Dev", "🤖 AI Engineer", "💻 Full-Stack Dev"],
-      descDark: "Passionate about game dev, AI data science, and modern web architecture.<br>Crafting wild ideas into reality with code & caffeine late at night.",
+      descDark: "Just a passing-by game developer, nothing more.<br>Crafting wild ideas into reality with code & caffeine late at night.",
       descLight: "Focused on game design, AI data visualization, and modern web architecture.<br>Building elegant products & UX with clear logic and refined UI.",
       btnPortfolio: "View Portfolio",
       btnContact: "Contact Me"
@@ -292,7 +294,8 @@ window.I18N_LOCALES = {
     tooltipTheme: "☀️/🌙 Themen wechseln (⚠️ Warnung: Nicht zu schnell klicken!)",
     easterEgg: {
       rescueDark: "🌑 In die Dunkelheit",
-      rescueLight: "☀️ Das Licht Umarmen"
+      rescueLight: "☀️ Das Licht Umarmen",
+      corruptedQuote: "\"Hier gibt es keine Easter Eggs mehr...<br>Wie du siehst: Jemand, der ständig zwischen zwei Emotionen wechselt, geht am Ende kaputt.\""
     },
     nav: {
       about: "Über Mich",
@@ -304,7 +307,7 @@ window.I18N_LOCALES = {
       tag: "Hallo, ich bin",
       name: "Ferzbow",
       roles: ["🎮 Spieleentwickler", "🤖 KI-Ingenieur", "💻 Full-Stack-Entwickler"],
-      descDark: "Ich spreche ein wenig Deutsch. Leidenschaftlich für Spieleentwicklung, KI-Datenanalyse und moderne Web-Architektur.<br>Wilde Ideen nachts mit Code & Koffein umsetzen.",
+      descDark: "Nichts weiter als ein vorbeiziehender Spieleentwickler.<br>Wilde Ideen nachts mit Code & Koffein umsetzen.",
       descLight: "Ich spreche ein wenig Deutsch. Konzentriert auf Spieldesign, KI-Datenvisualisierung und elegante Produkte.<br>Klare Logik und raffiniertes UI.",
       btnPortfolio: "Portfolio Ansehen",
       btnContact: "Kontaktieren"
@@ -434,7 +437,8 @@ window.I18N_LOCALES = {
     tooltipTheme: "Cambia temi ☀️/🌙 (⚠️ Attenzione: Non cliccare troppo velocemente!)",
     easterEgg: {
       rescueDark: "🌑 Sprofonda nell'Oscurità",
-      rescueLight: "☀️ Abbraccia la Luce"
+      rescueLight: "☀️ Abbraccia la Luce",
+      corruptedQuote: "\"Non ci sono più easter egg qui...<br>Come puoi vedere, chi passa continuamente da un'emozione all'altra finisce per rompersi.\""
     },
     nav: {
       about: "Su di Me",
@@ -446,7 +450,7 @@ window.I18N_LOCALES = {
       tag: "Ciao, sono",
       name: "Ferzbow",
       roles: ["🎮 Sviluppatore Giochi", "🤖 Ingegnere AI", "💻 Sviluppatore Full-Stack"],
-      descDark: "Sto imparando l'italiano. Appassionato di sviluppo di giochi, analisi dati AI e architettura web moderna.<br>Trasformo le idee folli in realtà di notte con codice e caffeina.",
+      descDark: "Niente di che, solo uno sviluppatore di giochi di passaggio.<br>Trasformo le idee folli in realtà di notte con codice e caffeina.",
       descLight: "Sto imparando l'italiano. Focalizzato sul design di giochi, visualizzazione dati AI e architettura web.<br>Creazione di prodotti eleganti con logica chiara e UI raffinata.",
       btnPortfolio: "Vedi Portfolio",
       btnContact: "Contattami"
@@ -454,7 +458,7 @@ window.I18N_LOCALES = {
     about: {
       label: "👤 Su di Me",
       title: "Su di Me",
-      p1Dark: "Sono <strong>Ferzbow</strong>, un creatore notturno multidisciplinare. Il game design mi insegna il controllo, l'AI trova l'ordine nel caos, il web dev è la mia interfaccia.",
+      p1Dark: "Sono <strong>Ferzbow</strong>, un creatore notturno multidisciplinare. Il game design mi insegna il controllo, l'AI trova l’ordine nel caos, il web dev è la mia interfaccia.",
       p1Light: "Sono <strong>Ferzbow</strong>, uno sviluppatore orientato ai prodotti. Il game design racconta storie, l'AI estrae intuizioni, il full-stack realizza le idee.",
       p2Dark: "Progetti come <strong>Fluxus 2D Dungeon</strong>, <strong>Torre di Controllo Logistica AI</strong> ed esperimenti. L'artigianato reale ha un'anima nei dettagli.",
       p2Light: "Progetti come <strong>Fluxus 2D Dungeon</strong>, <strong>Torre di Controllo Logistica AI</strong> e app web. Il buon codice unisce estetica e utilità.",
