@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-Hant" data-theme="light">
 
 <head>
   <meta charset="UTF-8">
@@ -1131,8 +1131,12 @@
     (function() {
       var html = document.documentElement;
       var btn  = document.getElementById('theme-toggle');
-      var saved = localStorage.getItem('theme') || 'dark';
-      if (saved === 'light') html.setAttribute('data-theme', 'light');
+      var saved = localStorage.getItem('theme') || 'light';
+      if (saved === 'dark') {
+        html.removeAttribute('data-theme');
+      } else {
+        html.setAttribute('data-theme', 'light');
+      }
 
       var clickHistory = [];
       var isCorrupted = false;
