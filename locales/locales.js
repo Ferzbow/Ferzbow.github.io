@@ -5,7 +5,11 @@
 window.I18N_LOCALES = {
   zh: {
     meta: { name: "讓我們說中文", flag: "🇹🇼" },
-    tooltipTheme: "切換 ☀️/🌙 雙主題與懸停特效",
+    tooltipTheme: "切換 ☀️/🌙 雙主題（⚠️ 警告：請勿連續快速點擊！）",
+    easterEgg: {
+      rescueDark: "🌑 沉入黑暗",
+      rescueLight: "☀️ 擁抱光明"
+    },
     nav: {
       about: "關於我",
       projects: "作品集",
@@ -143,7 +147,11 @@ window.I18N_LOCALES = {
 
   en: {
     meta: { name: "I speak English", flag: "🇬🇧" },
-    tooltipTheme: "Switch ☀️/🌙 themes & hover effects",
+    tooltipTheme: "Switch ☀️/🌙 themes (⚠️ Warning: Do NOT click repeatedly!)",
+    easterEgg: {
+      rescueDark: "🌑 Sink into Darkness",
+      rescueLight: "☀️ Embrace the Light"
+    },
     nav: {
       about: "About",
       projects: "Works",
@@ -281,7 +289,11 @@ window.I18N_LOCALES = {
 
   de: {
     meta: { name: "Ich spreche ein wenig Deutsch", flag: "🇩🇪" },
-    tooltipTheme: "☀️/🌙 Themen & Effekte wechseln",
+    tooltipTheme: "☀️/🌙 Themen wechseln (⚠️ Warnung: Nicht zu schnell klicken!)",
+    easterEgg: {
+      rescueDark: "🌑 In die Dunkelheit",
+      rescueLight: "☀️ Das Licht Umarmen"
+    },
     nav: {
       about: "Über Mich",
       projects: "Werke",
@@ -419,7 +431,11 @@ window.I18N_LOCALES = {
 
   it: {
     meta: { name: "Sto imparando l'italiano", flag: "🇮🇹" },
-    tooltipTheme: "Cambia temi ☀️/🌙 ed effetti",
+    tooltipTheme: "Cambia temi ☀️/🌙 (⚠️ Attenzione: Non cliccare troppo velocemente!)",
+    easterEgg: {
+      rescueDark: "🌑 Sprofonda nell'Oscurità",
+      rescueLight: "☀️ Abbraccia la Luce"
+    },
     nav: {
       about: "Su di Me",
       projects: "Lavori",
@@ -442,8 +458,8 @@ window.I18N_LOCALES = {
       p1Light: "Sono <strong>Ferzbow</strong>, uno sviluppatore orientato ai prodotti. Il game design racconta storie, l'AI estrae intuizioni, il full-stack realizza le idee.",
       p2Dark: "Progetti come <strong>Fluxus 2D Dungeon</strong>, <strong>Torre di Controllo Logistica AI</strong> ed esperimenti. L'artigianato reale ha un'anima nei dettagli.",
       p2Light: "Progetti come <strong>Fluxus 2D Dungeon</strong>, <strong>Torre di Controllo Logistica AI</strong> e app web. Il buon codice unisce estetica e utilità.",
-      p3Dark: "Cosa c'è dopo? Continuare a trasformare le idee folli in realtà.",
-      p3Light: "Cosa c'è dopo? Continuare a creare esperienze di alta qualità.",
+      p3Dark: "Cosa c'est dopo? Continuare a trasformare le idee folli in realtà.",
+      p3Light: "Cosa c'est dopo? Continuare a creare esperienze di alta qualità.",
       stats: [
         { num: "Unity", label: "Sviluppo Game Engine" },
         { num: "7+", label: "Progetti AI Realizzati" },

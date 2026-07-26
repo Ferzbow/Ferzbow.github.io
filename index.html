@@ -518,10 +518,67 @@
     [data-theme="light"] #theme-toggle { background: rgba(124,58,237,0.08); border-color: rgba(124,58,237,0.2); }
     [data-theme="light"] #theme-toggle:hover { background: rgba(124,58,237,0.15); box-shadow: 0 0 16px rgba(124,58,237,0.25); }
     .toggle-icon { position: absolute; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s; }
-    .icon-moon { opacity: 1; transform: translateY(0) rotate(0deg); }
-    .icon-sun  { opacity: 0; transform: translateY(24px) rotate(90deg); }
-    [data-theme="light"] .icon-moon { opacity: 0; transform: translateY(-24px) rotate(-90deg); }
-    [data-theme="light"] .icon-sun  { opacity: 1; transform: translateY(0) rotate(0deg); }
+    .icon-sun { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+    .icon-moon { opacity: 1; transform: rotate(0deg) scale(1); }
+    [data-theme="light"] .icon-sun { opacity: 1; transform: rotate(0deg) scale(1); }
+    [data-theme="light"] .icon-moon { opacity: 0; transform: rotate(90deg) scale(0.5); }
+
+    /* ---- CORRUPTED SYSTEM GLITCH EASTER EGG ---- */
+    [data-theme="corrupted"] {
+      --bg: #121216;
+      --bg-card: rgba(30, 30, 35, 0.9);
+      --border: rgba(255, 0, 85, 0.5);
+      --text: #ff0055;
+      --text-muted: #888899;
+      --text-dim: #555566;
+      --accent: #ff0055;
+    }
+    [data-theme="corrupted"] body {
+      background: #121216 !important;
+      color: #ff0055 !important;
+      font-family: var(--mono) !important;
+      animation: glitchScreenShake 0.18s infinite alternate ease-in-out;
+    }
+    [data-theme="corrupted"] body::before {
+      background: radial-gradient(circle at 50% 50%, rgba(255, 0, 85, 0.35), rgba(0, 0, 0, 0.95)) !important;
+      filter: grayscale(0.8) contrast(2) !important;
+    }
+    [data-theme="corrupted"] .rgb-text {
+      background: linear-gradient(90deg, #ff0000, #555, #000, #ff0055) !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+    }
+    #noise-canvas {
+      position: fixed; inset: 0; width: 100vw; height: 100vh;
+      z-index: 999; pointer-events: none; opacity: 0.28;
+      mix-blend-mode: overlay; display: none;
+    }
+    [data-theme="corrupted"] #noise-canvas {
+      display: block !important;
+    }
+    [data-theme="corrupted"] .btn-fill {
+      background: #000 !important; border: 2px solid #ff0055 !important; color: #ff0055 !important;
+      box-shadow: 0 0 25px rgba(255, 0, 85, 0.8) !important; animation: pulseRescue 1s infinite alternate;
+      font-weight: 800 !important; font-size: 1rem !important;
+    }
+    [data-theme="corrupted"] .btn-ghost {
+      background: #fff !important; border: 2px solid #7c3aed !important; color: #7c3aed !important;
+      box-shadow: 0 0 25px rgba(124, 58, 237, 0.8) !important; animation: pulseRescue 1s 0.5s infinite alternate;
+      font-weight: 800 !important; font-size: 1rem !important;
+    }
+
+    @keyframes glitchScreenShake {
+      0% { transform: translate(0, 0) skew(0deg); }
+      20% { transform: translate(-2px, 1px) skew(-0.5deg); }
+      40% { transform: translate(2px, -1px) skew(0.5deg); }
+      60% { transform: translate(-1px, -2px) skew(0.2deg); }
+      80% { transform: translate(1px, 2px) skew(-0.2deg); }
+      100% { transform: translate(0, 0) skew(0deg); }
+    }
+    @keyframes pulseRescue {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.08); }
+    }
 
     /* ---- TOOLTIP & HINT BADGES ---- */
     #theme-toggle::after {
@@ -561,6 +618,7 @@
 </head>
 
 <body>
+  <canvas id="noise-canvas"></canvas>
 
   <!-- Nav -->
   <nav id="nav">
@@ -573,7 +631,7 @@
           <li><a href="#skills" id="nav-skills">技術能力</a></li>
           <li><a href="#contact" id="nav-contact">聯絡</a></li>
         </ul>
-        <button id="theme-toggle" aria-label="切換主題" data-tooltip="切換 ☀️/🌙 雙主題與懸停特效">
+        <button id="theme-toggle" aria-label="切換主題" data-tooltip="切換 ☀️/🌙 雙主題（⚠️ 警告：請勿連續快速點擊！）">
           <span class="toggle-icon icon-moon">🌙</span>
           <span class="toggle-icon icon-sun">☀️</span>
         </button>
@@ -925,13 +983,148 @@
   <script src="./scripts/i18n.js"></script>
 
   <script>
-    // ---- THEME TOGGLE ----
+    // ---- THEME TOGGLE WITH CORRUPTED SYSTEM GLITCH EASTER EGG ----
     (function() {
       var html = document.documentElement;
       var btn  = document.getElementById('theme-toggle');
       var saved = localStorage.getItem('theme') || 'dark';
       if (saved === 'light') html.setAttribute('data-theme', 'light');
+
+      var clickHistory = [];
+      var isCorrupted = false;
+      var glitchTimer = null;
+      var noiseAnim = null;
+      var canvas = document.getElementById('noise-canvas');
+      var ctx = canvas ? canvas.getContext('2d') : null;
+      var textBackup = [];
+      var scrambleChars = '!?@#$%&*⚡⚙️⚠️CRASH_NULL_ERR_0x8F_01';
+
+      function drawStaticNoise() {
+        if (!canvas || !ctx || !isCorrupted) return;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        var imgData = ctx.createImageData(canvas.width, canvas.height);
+        var data = imgData.data;
+        for (var i = 0; i < data.length; i += 4) {
+          var v = Math.random() * 255;
+          data[i] = v;
+          data[i+1] = v;
+          data[i+2] = v;
+          data[i+3] = Math.random() > 0.6 ? 210 : 50;
+        }
+        ctx.putImageData(imgData, 0, 0);
+        noiseAnim = requestAnimationFrame(drawStaticNoise);
+      }
+
+      function enterCorruptedMode() {
+        if (isCorrupted) return;
+        isCorrupted = true;
+        html.setAttribute('data-theme', 'corrupted');
+
+        textBackup = [];
+        var targets = document.querySelectorAll('h1, h2, h3, h4, p, span.role-pill, span.stat-l, .proj-cat, a.proj-link');
+        targets.forEach(function(el) {
+          textBackup.push({ el: el, html: el.innerHTML });
+        });
+
+        glitchTimer = setInterval(function() {
+          targets.forEach(function(el) {
+            if (Math.random() > 0.45) {
+              var len = el.textContent.length || 8;
+              var scrambled = '';
+              for (var k = 0; k < Math.min(len, 24); k++) {
+                scrambled += scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+              }
+              if (Math.random() > 0.72) scrambled = '??? ERROR_404_NULL ???';
+              el.textContent = scrambled;
+            }
+          });
+        }, 80);
+
+        drawStaticNoise();
+
+        var lang = localStorage.getItem('lang') || 'zh';
+        var locales = window.I18N_LOCALES || {};
+        var egg = (locales[lang] && locales[lang].easterEgg) ? locales[lang].easterEgg : {
+          rescueDark: "🌑 沉入黑暗",
+          rescueLight: "☀️ 擁抱光明"
+        };
+
+        var btnPort = document.getElementById('btn-portfolio');
+        var btnCont = document.getElementById('btn-contact');
+        if (btnPort) {
+          btnPort.innerHTML = egg.rescueDark;
+          btnPort.className = 'btn-fill btn-rescue-dark';
+          btnPort.href = 'javascript:void(0);';
+        }
+        if (btnCont) {
+          btnCont.innerHTML = egg.rescueLight;
+          btnCont.className = 'btn-ghost btn-rescue-light';
+          btnCont.href = 'javascript:void(0);';
+        }
+      }
+
+      function exitCorruptedMode(targetTheme) {
+        if (!isCorrupted) return;
+        isCorrupted = false;
+        clearInterval(glitchTimer);
+        if (noiseAnim) cancelAnimationFrame(noiseAnim);
+
+        textBackup.forEach(function(item) {
+          item.el.innerHTML = item.html;
+        });
+
+        var btnPort = document.getElementById('btn-portfolio');
+        var btnCont = document.getElementById('btn-contact');
+        if (btnPort) {
+          btnPort.className = 'btn-fill';
+          btnPort.href = '#projects';
+        }
+        if (btnCont) {
+          btnCont.className = 'btn-ghost';
+          btnCont.href = '#contact';
+        }
+
+        if (targetTheme === 'light') {
+          html.setAttribute('data-theme', 'light');
+          localStorage.setItem('theme', 'light');
+        } else {
+          html.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'dark');
+        }
+
+        var savedLang = localStorage.getItem('lang') || 'zh';
+        var activeLangBtn = document.querySelector('.lang-btn[data-lang="' + savedLang + '"]');
+        if (activeLangBtn) activeLangBtn.click();
+      }
+
+      document.addEventListener('click', function(e) {
+        if (!isCorrupted) return;
+        var t = e.target.closest('#btn-portfolio, #btn-contact');
+        if (t) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (t.id === 'btn-portfolio') {
+            exitCorruptedMode('dark');
+          } else if (t.id === 'btn-contact') {
+            exitCorruptedMode('light');
+          }
+        }
+      }, true);
+
       btn.addEventListener('click', function() {
+        if (isCorrupted) return;
+
+        var now = Date.now();
+        clickHistory.push(now);
+        clickHistory = clickHistory.filter(function(t) { return now - t < 3200; });
+
+        if (clickHistory.length >= 7) {
+          clickHistory = [];
+          enterCorruptedMode();
+          return;
+        }
+
         var isLight = html.getAttribute('data-theme') === 'light';
         if (isLight) {
           html.removeAttribute('data-theme');
