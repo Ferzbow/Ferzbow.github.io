@@ -211,7 +211,7 @@
       border-color: rgba(255, 255, 255, 0.3);
       box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
     }
-    .proj-stripe { height: 4px; width: 100%; }
+    .proj-stripe { height: 4px; width: 100%; border-radius: var(--radius) var(--radius) 0 0; }
     .stripe-game { background: linear-gradient(90deg, #a78bfa, #ec4899); }
     .stripe-log  { background: linear-gradient(90deg, #38bdf8, #34d399); }
     .stripe-ai   { background: linear-gradient(90deg, #fbbf24, #f87171); }
@@ -255,9 +255,16 @@
     .proj-link-secondary:hover { color: var(--text); border-color: var(--text-dim); }
 
     /* ---- SKILLS GRID ---- */
+    #skills {
+      background: rgba(10, 10, 18, 0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
     .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .skill-card {
-      background: var(--bg-card); border: 1px solid var(--border);
+      background: rgba(16, 16, 26, 0.75); border: 1px solid var(--border);
       border-radius: var(--radius); padding: 28px;
       backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       position: relative; overflow: hidden;
@@ -334,9 +341,9 @@
     /* ---- GLASS SHARD EFFECT (Light Hover) ---- */
     .glass-shard {
       position: absolute; pointer-events: none; user-select: none;
-      border: 1px solid rgba(255,255,255,0.92);
-      box-shadow: inset 0 0 10px rgba(255,255,255,0.5), 0 2px 12px rgba(180,200,255,0.25), 0 0 4px rgba(255,255,255,0.3);
-      backdrop-filter: blur(1.5px); -webkit-backdrop-filter: blur(1.5px);
+      border: 1px solid rgba(255,255,255,0.75);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22), 0 2px 8px rgba(124, 58, 237, 0.25), inset 0 0 10px rgba(255,255,255,0.5);
+      backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
       will-change: opacity, transform, filter;
     }
     @keyframes shardIn {
@@ -344,13 +351,14 @@
       to   { opacity: 1; transform: rotate(var(--sr)) scale(1)    translate(0, 0); }
     }
     @keyframes shardShimmer {
-      0%   { filter: brightness(1)    hue-rotate(0deg);   }
-      40%  { filter: brightness(1.28) hue-rotate(22deg);  }
-      70%  { filter: brightness(0.88) hue-rotate(-14deg); }
-      100% { filter: brightness(1)    hue-rotate(0deg);   }
+      0%   { filter: brightness(1.0) hue-rotate(0deg); opacity: 0.9; }
+      50%  { filter: brightness(1.15) hue-rotate(20deg); opacity: 1; }
+      100% { filter: brightness(1.0) hue-rotate(0deg); opacity: 0.9; }
     }
 
-    [data-theme="light"] .enchant-overlay {
+    [data-theme="light"] .enchant-overlay,
+    [data-theme="light"] .proj-card,
+    [data-theme="light"] .skill-card {
       overflow: visible;
     }
 
@@ -873,35 +881,37 @@
         if (card.querySelector('.enchant-overlay')) return;
         var overlay = document.createElement('div');
         overlay.className = 'enchant-overlay';
-        var count = Math.max(10, Math.min(Math.floor((card.offsetWidth + card.offsetHeight) / 45), 20));
+        var count = 16; // 固定 16 個碎片，確保 4 條邊各分配 4 個
         for (var i = 0; i < count; i++) {
           var s = document.createElement('div');
           s.className = 'glass-shard';
           var r  = (Math.random() - 0.5) * 80;
-          var tx = (Math.random() - 0.5) * 20;
-          var ty = (Math.random() - 0.5) * 20;
+          var tx = (Math.random() - 0.5) * 16;
+          var ty = (Math.random() - 0.5) * 16;
 
-          // 環繞卡片 4 個邊緣（Top, Bottom, Left, Right），完全避開卡片中心文字區
-          var edge = Math.floor(Math.random() * 4);
+          var edge = i % 4; // 0: 上, 1: 右, 2: 下, 3: 左 (強制 4 邊極度勻稱)
+          var slot = Math.floor(i / 4); // 在該邊長度上的 4 個分區段
+          var slotPos = (slot + Math.random() * 0.7) / 4 * 90 + 5; // 均勻散落在 5% ~ 95%
+
           var posX, posY;
-          if (edge === 0) { // 上邊緣 (-6% ~ 8%)
-            posX = Math.random() * 96 + 2;
-            posY = Math.random() * 14 - 6;
-          } else if (edge === 1) { // 下邊緣 (92% ~ 106%)
-            posX = Math.random() * 96 + 2;
-            posY = Math.random() * 14 + 92;
-          } else if (edge === 2) { // 左邊緣 (-6% ~ 8%)
-            posX = Math.random() * 14 - 6;
-            posY = Math.random() * 96 + 2;
-          } else { // 右邊緣 (92% ~ 106%)
-            posX = Math.random() * 14 + 92;
-            posY = Math.random() * 96 + 2;
+          if (edge === 0) { // 上邊緣 (Top)
+            posX = slotPos;
+            posY = Math.random() * 12 - 8;
+          } else if (edge === 1) { // 右邊緣 (Right)
+            posX = Math.random() * 12 + 94;
+            posY = slotPos;
+          } else if (edge === 2) { // 下邊緣 (Bottom)
+            posX = slotPos;
+            posY = Math.random() * 12 + 94;
+          } else { // 左邊緣 (Left)
+            posX = Math.random() * 12 - 8;
+            posY = slotPos;
           }
 
           s.style.left      = posX + '%';
           s.style.top       = posY + '%';
-          s.style.width     = (14 + Math.random() * 24) + 'px';
-          s.style.height    = (18 + Math.random() * 32) + 'px';
+          s.style.width     = (16 + Math.random() * 24) + 'px';
+          s.style.height    = (20 + Math.random() * 32) + 'px';
           s.style.clipPath  = CLIPS[Math.floor(Math.random() * CLIPS.length)];
           s.style.background = GRADS[Math.floor(Math.random() * GRADS.length)];
           s.style.setProperty('--sr',  r  + 'deg');
